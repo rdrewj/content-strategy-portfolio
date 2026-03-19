@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drew Johnson — Content Strategy & AI Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f2ec;
+      --ink: #1a1814;
+      --ink-light: #5a5550;
+      --ink-faint: #b0aba4;
+      --rule: #d8d2c8;
+      --accent: #8b3a2a;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(245, 242, 236, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-mark {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-mark span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 4rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--ink-light);
+    }
+
+    .hero-descriptor {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      max-width: 38ch;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 0.2rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .hero-cta:hover { color: var(--accent); border-color: var(--accent); }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 6rem 4rem;
+    }
+
+    .hero-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .hero-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 7rem 4rem;
+      border-bottom: 1px solid var(--rule);
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-number {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.1;
+    }
+
+    /* ── PHILOSOPHY ── */
+    #philosophy {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .philosophy-body {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .philosophy-pull {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--ink);
+      border-left: 2px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+
+    .philosophy-text p {
+      font-size: 1rem;
+      color: var(--ink-light);
+      margin-bottom: 1.25rem;
+      max-width: 60ch;
+    }
+
+    .philosophy-text p:last-child { margin-bottom: 0; }
+
+    /* ── WORK ── */
+    #work {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .work-filters {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1rem;
+    }
+
+    .filter-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      padding-bottom: 0.75rem;
+      margin-bottom: -1px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2px;
+    }
+
+    .work-card {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      padding: 2.5rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      position: relative;
+    }
+
+    .work-card:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      z-index: 2;
+    }
+
+    .card-type {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+    }
+
+    .card-arrow {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      font-size: 1rem;
+      color: var(--ink-faint);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .work-card:hover .card-arrow {
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 24, 20, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--cream);
+      max-width: 760px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 3.5rem;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--ink-faint);
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: var(--ink); }
+
+    .modal-type {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .modal-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+
+    .modal-rule {
+      height: 1px;
+      background: var(--rule);
+      margin-bottom: 2rem;
+    }
+
+    .modal-body {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+    }
+
+    .modal-body p { margin-bottom: 1.25rem; }
+    .modal-body h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 5rem;
+    }
+
+    .about-bio p {
+      font-size: 1rem;
+      color: var(--ink-light);
+      margin-bottom: 1.25rem;
+      max-width: 58ch;
+    }
+
+    .about-bio p strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .about-sidebar h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .about-sidebar h3:first-child { margin-top: 0; }
+
+    .about-sidebar ul {
+      list-style: none;
+    }
+
+    .about-sidebar li {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ── RESUME ── */
+    #resume {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .resume-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 0.9rem 1.75rem;
+      text-decoration: none;
+      margin-bottom: 4rem;
+      transition: background 0.2s;
+    }
+
+    .resume-download:hover { background: var(--accent); }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 5rem;
+    }
+
+    .resume-section h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .resume-item {
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .resume-item:last-child {
+      border-bottom: none;
+    }
+
+    .resume-role {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.2rem;
+    }
+
+    .resume-org {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+    }
+
+    .resume-dates {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-faint);
+      margin-top: 0.3rem;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .contact-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-intro {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .contact-links {
+      list-style: none;
+    }
+
+    .contact-links li {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .contact-links a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .contact-links a:hover { color: var(--accent); }
+
+    .contact-links .link-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-mark {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      color: var(--ink-faint);
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .hero-left > * {
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-eyebrow  { animation-delay: 0.1s; }
+    .hero-name     { animation-delay: 0.25s; }
+    .hero-descriptor { animation-delay: 0.4s; }
+    .hero-cta      { animation-delay: 0.55s; }
+
+    .hero-right > * {
+      animation: fadeUp 0.8s ease both;
+      animation-delay: 0.6s;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      #hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 5rem 2rem 3rem; border-right: none; border-bottom: 1px solid var(--rule); }
+      .hero-right { padding: 3rem 2rem 4rem; }
+      section { padding: 4rem 2rem; }
+      .philosophy-body { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .resume-grid { grid-template-columns: 1fr; }
+      .contact-body { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-mark">Drew Johnson<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#philosophy">Approach</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#resume">CV</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" style="padding:0; border-bottom: 1px solid var(--rule); opacity:1; transform:none;">
+    <div class="hero-left">
+      <p class="hero-eyebrow">UX Content Strategy &nbsp;·&nbsp; AI Content Architecture</p>
+      <h1 class="hero-name">Drew<br><em>Johnson</em></h1>
+      <p class="hero-descriptor">
+        I work at the intersection of language, systems, and emerging technology — building the governance frameworks, voice standards, and content infrastructure that organizations need to scale intelligently.
+      </p>
+      <a href="#work" class="hero-cta">View Selected Work &rarr;</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-grid">
+        <div>
+          <p class="stat-label">Current Role</p>
+          <p class="stat-value">Sr. Manager, UX Content Strategy</p>
+        </div>
+        <div>
+          <p class="stat-label">Organization</p>
+          <p class="stat-value">Charles Schwab</p>
+        </div>
+        <div>
+          <p class="stat-label">Focus Areas</p>
+          <p class="stat-value">AI Governance · Content Systems · Voice Architecture</p>
+        </div>
+        <div>
+          <p class="stat-label">Education</p>
+          <p class="stat-value">MA, Professional Writing — Carnegie Mellon</p>
+        </div>
+      </div>
+      <div class="hero-rule"></div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section id="philosophy">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Approach</h2>
+    </div>
+    <div class="philosophy-body">
+      <p class="philosophy-pull">Content is infrastructure. Governance is the architecture that makes it scale.</p>
+      <div class="philosophy-text">
+        <p>
+          I came to content strategy through writing — poetry and long-form fiction — which means I've always understood that precision in language isn't cosmetic. Words are the load-bearing walls of any system designed for humans to navigate.
+        </p>
+        <p>
+          My work has moved from execution toward architecture: how do you build content systems that hold their shape across teams, tools, and AI-augmented workflows? How do you govern voice without calcifying it? How do you design for the model as well as the user?
+        </p>
+        <p>
+          The transition from senior practitioner to AI content architect isn't a pivot — it's a longer arc becoming visible. I'm interested in owning the content layer as a transformation function: where editorial judgment, systems thinking, and emerging technology meet.
+        </p>
+        <p>
+          I operate best in the space between the blank page and the production pipeline — where strategic questions still have enough room to matter.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+
+    <div class="work-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="writing">Writing Samples</button>
+      <button class="filter-btn" data-filter="case-study">Case Studies</button>
+      <button class="filter-btn" data-filter="deck">Presentations</button>
+    </div>
+
+    <div class="work-grid">
+
+      <!-- SAMPLE 1 -->
+      <div class="work-card" data-category="writing" data-modal="modal-1">
+        <p class="card-type">Writing Sample</p>
+        <h3 class="card-title">AI Content Governance Framework: Voice Standards in the Age of LLMs</h3>
+        <p class="card-desc">A structured approach to maintaining brand voice integrity when content is generated, augmented, or reviewed by large language models.</p>
+        <p class="card-meta">Charles Schwab · 2024</p>
+        <span class="card-arrow">↗</span>
+      </div>
+
+      <!-- SAMPLE 2 -->
+      <div class="work-card" data-category="case-study" data-modal="modal-2">
+        <p class="card-type">Case Study</p>
+        <h3 class="card-title">Enterprise Writing Guide: From Style Sheet to Living System</h3>
+        <p class="card-desc">How we transformed a static editorial guide into a governed, versioned resource that scales across 200+ writers and content contributors.</p>
+        <p class="card-meta">Charles Schwab · 2023–2024</p>
+        <span class="card-arrow">↗</span>
+      </div>
+
+      <!-- SAMPLE 3 -->
+      <div class="work-card" data-category="deck" data-modal="modal-3">
+        <p class="card-type">Presentation</p>
+        <h3 class="card-title">Content as Infrastructure: Positioning AI Governance as a Strategic Function</h3>
+        <p class="card-desc">Leadership presentation articulating the case for elevating content governance from a support function to a core capability in AI-enabled organizations.</p>
+        <p class="card-meta">Internal Presentation · 2024</p>
+        <span class="card-arrow">↗</span>
+      </div>
+
+      <!-- SAMPLE 4 -->
+      <div class="work-card" data-category="writing" data-modal="modal-4">
+        <p class="card-type">Writing Sample</p>
+        <h3 class="card-title">Talent Architecture: Defining the Content Strategist Role Ladder</h3>
+        <p class="card-desc">A competency framework and role definition system for UX content strategy practitioners, from associate to principal.</p>
+        <p class="card-meta">Charles Schwab · 2024</p>
+        <span class="card-arrow">↗</span>
+      </div>
+
+      <!-- SAMPLE 5 -->
+      <div class="work-card" data-category="case-study" data-modal="modal-5">
+        <p class="card-type">Case Study</p>
+        <h3 class="card-title">Prompt Engineering for Editorial Quality: A Practitioner's Approach</h3>
+        <p class="card-desc">A working methodology for developing, testing, and maintaining prompt libraries that produce on-brand, on-strategy content output.</p>
+        <p class="card-meta">Independent Research · 2024</p>
+        <span class="card-arrow">↗</span>
+      </div>
+
+      <!-- SAMPLE 6 -->
+      <div class="work-card" data-category="deck" data-modal="modal-6">
+        <p class="card-type">Presentation</p>
+        <h3 class="card-title">Voice in a Multi-Model World: Consistency at Scale</h3>
+        <p class="card-desc">A framework presentation exploring how organizations maintain authentic, coherent voice standards when content production is distributed across human and AI systems.</p>
+        <p class="card-meta">Conference Talk Draft · 2025</p>
+        <span class="card-arrow">↗</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal-content">
+      <button class="modal-close" id="modal-close">✕</button>
+      <p class="modal-type" id="modal-type"></p>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-rule"></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-bio">
+        <p>
+          I'm a <strong>Senior Manager of UX Content Strategy</strong> at Charles Schwab, where I lead AI content governance, enterprise writing standards, and talent architecture for a matrixed creative organization.
+        </p>
+        <p>
+          My work sits at an inflection point: the moment when content stopped being a production output and started being an infrastructure problem. The questions I find most interesting now are about governance at scale — how do you design systems that preserve judgment while enabling velocity?
+        </p>
+        <p>
+          Before Schwab, I held content leadership roles at Wells Fargo and McKesson. I hold a <strong>BA from the University of Dallas</strong> and an <strong>MA in Professional Writing from Carnegie Mellon</strong>, where I focused on the architecture of communication — how structure shapes meaning before a reader ever arrives.
+        </p>
+        <p>
+          Outside of work, I write poetry and fiction. I think the discipline of writing literary work — the demand for precision, compression, and earned resonance — is deeply related to what makes content systems function at their best.
+        </p>
+      </div>
+      <div class="about-sidebar">
+        <h3>Expertise</h3>
+        <ul>
+          <li>AI Content Governance</li>
+          <li>Voice & Tone Systems</li>
+          <li>Content Architecture</li>
+          <li>Prompt Engineering</li>
+          <li>UX Writing</li>
+          <li>Talent Development</li>
+        </ul>
+        <h3>Tools & Methods</h3>
+        <ul>
+          <li>RAG & LLM Integration</li>
+          <li>VSCode / Python / APIs</li>
+          <li>Figma / Contentful</li>
+          <li>Content Auditing</li>
+          <li>Agile / Matrixed Orgs</li>
+        </ul>
+        <h3>Location</h3>
+        <ul>
+          <li>Marin County, California</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <a href="#" class="resume-download">↓ Download Full CV</a>
+    <div class="resume-grid">
+      <div class="resume-section">
+        <h3>Experience</h3>
+        <div class="resume-item">
+          <p class="resume-role">Senior Manager, UX Content Strategy</p>
+          <p class="resume-org">Charles Schwab</p>
+          <p class="resume-dates">2022 — Present</p>
+        </div>
+        <div class="resume-item">
+          <p class="resume-role">[Previous Role Title]</p>
+          <p class="resume-org">Wells Fargo</p>
+          <p class="resume-dates">20XX — 20XX</p>
+        </div>
+        <div class="resume-item">
+          <p class="resume-role">[Previous Role Title]</p>
+          <p class="resume-org">McKesson</p>
+          <p class="resume-dates">20XX — 20XX</p>
+        </div>
+      </div>
+      <div class="resume-section">
+        <h3>Education</h3>
+        <div class="resume-item">
+          <p class="resume-role">MA, Professional Writing</p>
+          <p class="resume-org">Carnegie Mellon University</p>
+        </div>
+        <div class="resume-item">
+          <p class="resume-role">BA, [Field]</p>
+          <p class="resume-org">University of Dallas</p>
+        </div>
+        <h3 style="margin-top:2.5rem;">Recognition</h3>
+        <div class="resume-item">
+          <p class="resume-role">Exceeds Expectations</p>
+          <p class="resume-org">Performance Review · Charles Schwab</p>
+          <p class="resume-dates">2024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Get in Touch</h2>
+    </div>
+    <div class="contact-body">
+      <p class="contact-intro">Interested in content architecture, AI governance, or something I haven't considered yet? I'm open to the right conversation.</p>
+      <ul class="contact-links">
+        <li>
+          <a href="mailto:your@email.com">
+            your@email.com
+            <span class="link-label">Email</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank">
+            linkedin.com/in/yourprofile
+            <span class="link-label">LinkedIn</span>
+          </a>
+        </li>
+        <li>
+          <a href="#resume">
+            View Full CV
+            <span class="link-label">Resume</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-mark">Drew Johnson</p>
+    <p class="footer-copy">© 2025 · Marin County, CA</p>
+  </footer>
+
+  <script>
+    // ── SCROLL REVEAL ──
+    const sections = document.querySelectorAll('section:not(#hero)');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    sections.forEach(s => observer.observe(s));
+
+    // ── WORK FILTER ──
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.work-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          const show = filter === 'all' || card.dataset.category === filter;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+
+    // ── MODAL CONTENT ──
+    const modalData = {
+      'modal-1': {
+        type: 'Writing Sample',
+        title: 'AI Content Governance Framework: Voice Standards in the Age of LLMs',
+        body: `
+          <p><strong>Context:</strong> As Charles Schwab began integrating LLM-assisted content production across multiple teams, it became clear that existing style guides were not designed to govern non-human authorship. This piece addresses that gap.</p>
+          <h3>The Problem</h3>
+          <p>Traditional voice and tone documentation assumes a human author who can interpret guidelines contextually. LLMs require a different approach — one that operationalizes editorial judgment into structured, testable criteria.</p>
+          <h3>The Framework</h3>
+          <p>This governance model establishes three tiers of content standards: (1) non-negotiable brand constraints encoded as hard rules, (2) interpretive voice guidelines structured as weighted preference criteria, and (3) contextual registers mapped to product surface and user intent.</p>
+          <p>Each tier includes evaluation rubrics for human review, as well as prompt-level implementations for LLM instruction.</p>
+          <h3>Outcomes</h3>
+          <p>[Add specific outcomes, metrics, or adoption results here.]</p>
+          <p><em>Note: This is a placeholder preview. Replace with your actual work sample content, excerpts, or methodology description.</em></p>
+        `
+      },
+      'modal-2': {
+        type: 'Case Study',
+        title: 'Enterprise Writing Guide: From Style Sheet to Living System',
+        body: `
+          <p><strong>Context:</strong> The Schwab writing guide had grown organically over years — a collection of decisions without a governing architecture. As the content team scaled, inconsistency increased proportionally.</p>
+          <h3>Approach</h3>
+          <p>Working with a cross-functional team and a core co-author, we audited the existing guide, identified structural gaps, and redesigned it as a versioned, modular system with clear ownership and update protocols.</p>
+          <h3>Key Design Decisions</h3>
+          <p>We moved from a document model to a system model — distinguishing between foundational principles (stable), application guidelines (updated quarterly), and surface-specific rules (maintained by product teams). This created a governance layer that could evolve without destabilizing core standards.</p>
+          <h3>Impact</h3>
+          <p>[Add measurable outcomes, adoption rates, stakeholder feedback, or qualitative impact here.]</p>
+          <p><em>Note: Replace with your actual case study content.</em></p>
+        `
+      },
+      'modal-3': {
+        type: 'Presentation',
+        title: 'Content as Infrastructure: Positioning AI Governance as a Strategic Function',
+        body: `
+          <p><strong>Context:</strong> A leadership-facing presentation making the case for elevating content governance from a reactive, support-oriented function to a proactive strategic capability in an AI-enabled organization.</p>
+          <h3>Core Argument</h3>
+          <p>As AI systems begin to author, evaluate, and distribute content at scale, the editorial decisions embedded in governance frameworks become load-bearing organizational infrastructure — not a communications function, but a product and technology function.</p>
+          <h3>Structure</h3>
+          <p>The presentation moves through three sections: (1) the changing content production landscape, (2) governance as a strategic moat, and (3) a proposed organizational model for the Content Architecture function.</p>
+          <p><em>Note: Replace with your actual presentation summary, key slides, or narrative arc.</em></p>
+        `
+      },
+      'modal-4': {
+        type: 'Writing Sample',
+        title: 'Talent Architecture: Defining the Content Strategist Role Ladder',
+        body: `
+          <p><strong>Context:</strong> A competency framework developed to bring clarity and consistency to how UX content strategy roles are defined, leveled, and evaluated at Schwab.</p>
+          <h3>The Gap</h3>
+          <p>Content strategy as a discipline lacks the role definition maturity of design or engineering. This creates hiring inconsistency, unclear growth paths, and compensation ambiguity — problems that compound at scale.</p>
+          <h3>The Framework</h3>
+          <p>The resulting document defines five role levels from Associate to Principal, with competency dimensions across craft, systems thinking, influence, and business acumen. Each level includes behavioral indicators, scope of impact, and sample deliverables.</p>
+          <p><em>Note: Replace with your actual document content or excerpts.</em></p>
+        `
+      },
+      'modal-5': {
+        type: 'Case Study',
+        title: 'Prompt Engineering for Editorial Quality: A Practitioner's Approach',
+        body: `
+          <p><strong>Context:</strong> Independent research and methodology development, exploring how content strategists — rather than engineers — can own prompt quality as a discipline.</p>
+          <h3>The Problem with Current Practice</h3>
+          <p>Most prompt libraries in enterprise settings are developed ad hoc, untested against editorial criteria, and undocumented. This creates inconsistency and erodes trust in AI-assisted output.</p>
+          <h3>A Content Strategist's Methodology</h3>
+          <p>This case study presents a practitioner workflow: prompt drafting, rubric-based evaluation, iteration protocols, and library governance. The methodology is tool-agnostic and can be applied across LLM platforms.</p>
+          <p><em>Note: Replace with your actual research content, examples, or methodology details.</em></p>
+        `
+      },
+      'modal-6': {
+        type: 'Presentation',
+        title: 'Voice in a Multi-Model World: Consistency at Scale',
+        body: `
+          <p><strong>Context:</strong> A conference talk draft exploring the emerging challenge of voice consistency when content is produced, augmented, and distributed across multiple AI models and human teams simultaneously.</p>
+          <h3>Central Question</h3>
+          <p>When a brand's voice is instantiated in a dozen different models, tools, and workflows, what does "consistency" even mean — and who owns it?</p>
+          <h3>Framework Presented</h3>
+          <p>The talk introduces a three-layer model of voice governance: the canonical layer (brand definition), the operational layer (tool-level implementation), and the review layer (human judgment at key decision points). Each layer requires different governance mechanisms and different organizational ownership.</p>
+          <p><em>Note: Replace with your actual talk content, outline, or supporting materials.</em></p>
+        `
+      }
+    };
+
+    const overlay = document.getElementById('modal-overlay');
+    const modalType = document.getElementById('modal-type');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const key = card.dataset.modal;
+        const data = modalData[key];
+        if (!data) return;
+        modalType.textContent = data.type;
+        modalTitle.textContent = data.title;
+        modalBody.innerHTML = data.body;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>
