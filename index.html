@@ -520,12 +520,142 @@
       font-family: var(--serif);
       font-size: 0.9rem;
       color: var(--ink-faint);
+      cursor: pointer;
+      transition: color 0.2s;
+      user-select: none;
     }
+
+    .footer-mark:hover { color: var(--accent); }
 
     .footer-copy {
       font-size: 0.72rem;
       letter-spacing: 0.08em;
       color: var(--ink-faint);
+    }
+
+    /* ── BRIEF PANEL ── */
+    .brief-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 600;
+      background: #f0ece4;
+      border-top: 1px solid var(--rule);
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 3rem 4rem 4rem;
+    }
+
+    .brief-panel.open { transform: translateY(0); }
+
+    .brief-panel-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .brief-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2.5rem;
+    }
+
+    .brief-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .brief-title {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 300;
+      line-height: 1.15;
+    }
+
+    .brief-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      margin-top: 0.5rem;
+    }
+
+    .brief-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--ink-faint);
+      transition: color 0.2s;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    .brief-close:hover { color: var(--ink); }
+
+    .brief-rule {
+      height: 1px;
+      background: var(--rule);
+      margin-bottom: 2.5rem;
+    }
+
+    .brief-section {
+      margin-bottom: 2rem;
+    }
+
+    .brief-section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .brief-section p {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+      max-width: 62ch;
+    }
+
+    .brief-section ul {
+      list-style: none;
+      margin-top: 0.25rem;
+    }
+
+    .brief-section ul li {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .brief-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--ink-faint);
+    }
+
+    .brief-note {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--ink-faint);
+      border-left: 2px solid var(--rule);
+      padding-left: 1rem;
+      margin-top: 0.75rem;
+      max-width: 56ch;
+    }
+
+    @media (max-width: 900px) {
+      .brief-panel { padding: 2rem 2rem 3rem; }
+      .brief-header { flex-direction: column; gap: 1rem; }
     }
 
     /* ── ANIMATIONS ── */
@@ -789,9 +919,60 @@
 
   <!-- FOOTER -->
   <footer>
-    <p class="footer-mark">Drew Johnson</p>
+    <p class="footer-mark" id="brief-trigger">Drew Johnson</p>
     <p class="footer-copy">© 2025 · Marin County, CA</p>
   </footer>
+
+  <!-- BEHIND THE BRIEF PANEL -->
+  <div class="brief-panel" id="brief-panel" aria-hidden="true">
+    <div class="brief-panel-inner">
+      <div class="brief-header">
+        <div>
+          <p class="brief-eyebrow">Behind the Brief</p>
+          <h2 class="brief-title">Content Strategy Brief: drewjohnson.io</h2>
+          <p class="brief-meta">Version 1.2 &nbsp;·&nbsp; Personal project &nbsp;·&nbsp; Audience-reviewed draft</p>
+        </div>
+        <button class="brief-close" id="brief-close" aria-label="Close">✕</button>
+      </div>
+      <div class="brief-rule"></div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Audience</p>
+        <p>Primary: Content strategy hiring managers and design leaders at financial services, fintech, and enterprise tech companies. Secondary: Recruiters sourcing for senior IC and people-manager roles.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">The Core Problem</p>
+        <p>Most content strategy portfolios are either (a) too vague to demonstrate real skill, or (b) so focused on deliverables they forget to show thinking. Mine needed to do both — show the work, show the mind behind it.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Voice Direction</p>
+        <p>Precise but not cold. Confident without performing it. The writing should feel like it was made by someone who thinks carefully about words — not because the brief says so, but because you can tell.</p>
+        <p class="brief-note">Working note: First draft leaned too formal. Killed the word "leverage." Killed it twice.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Content Pillars</p>
+        <ul>
+          <li>Systems thinker — not just a writer</li>
+          <li>Operational credibility — I ship things</li>
+          <li>Human at the center — I write poetry. It matters.</li>
+        </ul>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">What I Decided Not to Include</p>
+        <p>A photo. A personal statement that opens with "I'm passionate about." Every project I've ever touched. The awards I'm proud of but that don't prove anything.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Success Metric</p>
+        <p>Someone reads this and thinks: <em>I want to work with that person.</em> Not: <em>impressive résumé.</em> There's a difference.</p>
+        <p class="brief-note">Final note: The site being clean is part of the argument. A content strategist's portfolio should demonstrate content strategy.</p>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ── SCROLL REVEAL ──
@@ -880,6 +1061,26 @@
       overlay.classList.remove('open');
       document.body.style.overflow = '';
     }
+
+    // ── BEHIND THE BRIEF ──
+    const briefPanel = document.getElementById('brief-panel');
+    const briefTrigger = document.getElementById('brief-trigger');
+    const briefClose = document.getElementById('brief-close');
+
+    briefTrigger.addEventListener('click', () => {
+      briefPanel.classList.add('open');
+      briefPanel.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeBrief() {
+      briefPanel.classList.remove('open');
+      briefPanel.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    briefClose.addEventListener('click', closeBrief);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBrief(); });
   </script>
 </body>
 </html>
