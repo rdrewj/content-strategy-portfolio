@@ -11,7 +11,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cream: #f5f2ec;
+      --cream: #f0f0f0;
       --ink: #1a1814;
       --ink-light: #5a5550;
       --ink-faint: #b0aba4;
@@ -32,75 +32,18 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 4rem;
-      background: rgba(245, 242, 236, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .nav-mark {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .nav-mark span { color: var(--accent); }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--ink); }
-
     /* ── HERO ── */
     #hero {
-      min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      padding-top: 80px;
+      border-bottom: 1px solid var(--rule);
     }
 
     .hero-left {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4rem 4rem 4rem 4rem;
+      padding: 2.5rem 3rem;
       border-right: 1px solid var(--rule);
     }
 
@@ -109,16 +52,16 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
     }
 
     .hero-name {
       font-family: var(--serif);
-      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-size: clamp(3rem, 5vw, 5rem);
       font-weight: 300;
       line-height: 1.05;
       letter-spacing: -0.01em;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
     }
 
     .hero-name em {
@@ -127,71 +70,75 @@
     }
 
     .hero-descriptor {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--ink-light);
-      max-width: 38ch;
-      line-height: 1.8;
-      margin-bottom: 3rem;
+      max-width: 40ch;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
     }
 
-    .hero-cta {
+    .hero-cv-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      gap: 0.5rem;
+      font-size: 0.82rem;
       color: var(--ink);
       text-decoration: none;
       border-bottom: 1px solid var(--ink);
-      padding-bottom: 0.2rem;
+      padding-bottom: 0.15rem;
+      width: fit-content;
       transition: color 0.2s, border-color 0.2s;
+      margin-bottom: 1rem;
     }
 
-    .hero-cta:hover { color: var(--accent); border-color: var(--accent); }
+    .hero-cv-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    .hero-work-link {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .hero-work-link:hover { color: var(--ink); }
 
     .hero-right {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4rem 4rem;
+      padding: 2.5rem 3rem;
     }
 
     .hero-stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem 2rem;
-      margin-bottom: 3rem;
+      gap: 1.5rem 2rem;
     }
 
     .stat-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-faint);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
     .stat-value {
       font-family: var(--serif);
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       font-weight: 400;
       line-height: 1.3;
     }
 
-    .hero-rule {
-      width: 100%;
-      height: 1px;
-      background: var(--rule);
-    }
-
     /* ── SECTION BASE ── */
     section {
-      padding: 5rem 4rem;
+      padding: 2.5rem 3rem;
       border-bottom: 1px solid var(--rule);
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
     section.visible {
@@ -202,8 +149,8 @@
     .section-header {
       display: flex;
       align-items: baseline;
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .section-number {
@@ -215,7 +162,7 @@
 
     .section-title {
       font-family: var(--serif);
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
       font-weight: 300;
       line-height: 1.1;
     }
@@ -229,25 +176,25 @@
     .philosophy-body {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 4rem;
+      gap: 2.5rem;
       align-items: start;
     }
 
     .philosophy-pull {
       font-family: var(--serif);
-      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      font-size: clamp(1.2rem, 1.8vw, 1.6rem);
       font-weight: 300;
       font-style: italic;
       line-height: 1.4;
       color: var(--ink);
       border-left: 2px solid var(--accent);
-      padding-left: 1.5rem;
+      padding-left: 1.25rem;
     }
 
     .philosophy-text p {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--ink-light);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       max-width: 60ch;
     }
 
@@ -259,44 +206,16 @@
       margin: 0 auto;
     }
 
-    .work-filters {
-      display: flex;
-      gap: 2rem;
-      margin-bottom: 3.5rem;
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 1rem;
-    }
-
-    .filter-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      padding-bottom: 0.75rem;
-      margin-bottom: -1px;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .filter-btn.active, .filter-btn:hover {
-      color: var(--ink);
-      border-bottom-color: var(--accent);
-    }
-
     .work-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2px;
     }
 
     .work-card {
       background: var(--cream);
       border: 1px solid var(--rule);
-      padding: 2.5rem;
+      padding: 2rem;
       cursor: pointer;
       transition: background 0.2s, transform 0.2s;
       position: relative;
@@ -313,34 +232,34 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .card-title {
       font-family: var(--serif);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 400;
       line-height: 1.25;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
 
     .card-desc {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--ink-light);
-      line-height: 1.65;
-      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
     }
 
     .card-meta {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.08em;
       color: var(--ink-faint);
     }
 
     .card-arrow {
       position: absolute;
-      bottom: 2.5rem;
-      right: 2.5rem;
+      bottom: 2rem;
+      right: 2rem;
       font-size: 1rem;
       color: var(--ink-faint);
       transition: color 0.2s, transform 0.2s;
@@ -372,14 +291,14 @@
       width: 100%;
       max-height: 85vh;
       overflow-y: auto;
-      padding: 3.5rem;
+      padding: 3rem;
       position: relative;
     }
 
     .modal-close {
       position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
+      top: 1.25rem;
+      right: 1.25rem;
       background: none;
       border: none;
       cursor: pointer;
@@ -396,21 +315,21 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .modal-title {
       font-family: var(--serif);
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
       font-weight: 300;
       line-height: 1.15;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .modal-rule {
       height: 1px;
       background: var(--rule);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .modal-body {
@@ -419,13 +338,13 @@
       line-height: 1.8;
     }
 
-    .modal-body p { margin-bottom: 1.25rem; }
+    .modal-body p { margin-bottom: 1rem; }
     .modal-body h3 {
       font-family: var(--serif);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 400;
       color: var(--ink);
-      margin: 2rem 0 0.75rem;
+      margin: 1.5rem 0 0.5rem;
     }
 
     /* ── ABOUT ── */
@@ -441,9 +360,9 @@
     }
 
     .about-bio p {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--ink-light);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       max-width: 58ch;
     }
 
@@ -459,11 +378,11 @@
     }
 
     .about-skills h3 {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-faint);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       margin-top: 0;
     }
 
@@ -472,9 +391,9 @@
     }
 
     .about-skills li {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--ink-light);
-      padding: 0.4rem 0;
+      padding: 0.3rem 0;
       border-bottom: 1px solid var(--rule);
     }
 
@@ -488,14 +407,14 @@
       display: inline-flex;
       align-items: center;
       gap: 0.75rem;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--cream);
       background: var(--ink);
-      padding: 0.9rem 1.75rem;
+      padding: 0.75rem 1.5rem;
       text-decoration: none;
-      margin-bottom: 4rem;
+      margin-bottom: 2.5rem;
       transition: background 0.2s;
     }
 
@@ -504,20 +423,20 @@
     .resume-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem 5rem;
+      gap: 2rem 4rem;
     }
 
     .resume-section h3 {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .resume-item {
-      padding-bottom: 1.5rem;
-      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.25rem;
       border-bottom: 1px solid var(--rule);
     }
 
@@ -527,9 +446,9 @@
 
     .resume-role {
       font-family: var(--serif);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 400;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.15rem;
     }
 
     .resume-org {
@@ -541,7 +460,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.06em;
       color: var(--ink-faint);
-      margin-top: 0.3rem;
+      margin-top: 0.2rem;
     }
 
     /* ── CONTACT ── */
@@ -553,13 +472,13 @@
     .contact-body {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 5rem;
+      gap: 3.5rem;
       align-items: start;
     }
 
     .contact-intro {
       font-family: var(--serif);
-      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      font-size: clamp(1.3rem, 2vw, 1.8rem);
       font-weight: 300;
       line-height: 1.35;
       color: var(--ink);
@@ -577,17 +496,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.25rem 0;
+      padding: 1rem 0;
       text-decoration: none;
       color: var(--ink);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: color 0.2s;
     }
 
     .contact-links a:hover { color: var(--accent); }
 
     .contact-links .link-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--ink-faint);
@@ -595,7 +514,7 @@
 
     /* ── FOOTER ── */
     footer {
-      padding: 2.5rem 4rem;
+      padding: 1.5rem 3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -603,9 +522,14 @@
 
     .footer-mark {
       font-family: var(--serif);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--ink-faint);
+      cursor: pointer;
+      transition: color 0.2s;
+      user-select: none;
     }
+
+    .footer-mark:hover { color: var(--accent); }
 
     .footer-copy {
       font-size: 0.72rem;
@@ -613,55 +537,167 @@
       color: var(--ink-faint);
     }
 
+    /* ── BRIEF PANEL ── */
+    .brief-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 600;
+      background: #f0ece4;
+      border-top: 1px solid var(--rule);
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 3rem 4rem 4rem;
+    }
+
+    .brief-panel.open { transform: translateY(0); }
+
+    .brief-panel-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .brief-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2.5rem;
+    }
+
+    .brief-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .brief-title {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 300;
+      line-height: 1.15;
+    }
+
+    .brief-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      margin-top: 0.5rem;
+    }
+
+    .brief-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--ink-faint);
+      transition: color 0.2s;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    .brief-close:hover { color: var(--ink); }
+
+    .brief-rule {
+      height: 1px;
+      background: var(--rule);
+      margin-bottom: 2.5rem;
+    }
+
+    .brief-section {
+      margin-bottom: 2rem;
+    }
+
+    .brief-section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .brief-section p {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+      max-width: 62ch;
+    }
+
+    .brief-section ul {
+      list-style: none;
+      margin-top: 0.25rem;
+    }
+
+    .brief-section ul li {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .brief-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--ink-faint);
+    }
+
+    .brief-note {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--ink-faint);
+      border-left: 2px solid var(--rule);
+      padding-left: 1rem;
+      margin-top: 0.75rem;
+      max-width: 56ch;
+    }
+
+    @media (max-width: 900px) {
+      .brief-panel { padding: 2rem 2rem 3rem; }
+      .brief-header { flex-direction: column; gap: 1rem; }
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: none; }
     }
 
     .hero-left > * {
-      animation: fadeUp 0.8s ease both;
+      animation: fadeUp 0.7s ease both;
     }
 
-    .hero-eyebrow  { animation-delay: 0.1s; }
-    .hero-name     { animation-delay: 0.25s; }
-    .hero-descriptor { animation-delay: 0.4s; }
-    .hero-cta      { animation-delay: 0.55s; }
+    .hero-eyebrow    { animation-delay: 0.05s; }
+    .hero-name       { animation-delay: 0.15s; }
+    .hero-descriptor { animation-delay: 0.28s; }
+    .hero-cv-link    { animation-delay: 0.38s; }
+    .hero-work-link  { animation-delay: 0.45s; }
 
     .hero-right > * {
-      animation: fadeUp 0.8s ease both;
-      animation-delay: 0.6s;
+      animation: fadeUp 0.7s ease both;
+      animation-delay: 0.5s;
     }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      nav { padding: 1.2rem 2rem; }
-      .nav-links { gap: 1.5rem; }
-      #hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 5rem 2rem 3rem; border-right: none; border-bottom: 1px solid var(--rule); }
-      .hero-right { padding: 3rem 2rem 4rem; }
-      section { padding: 4rem 2rem; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--rule); }
+      .hero-right { padding: 2rem 1.5rem; }
+      section { padding: 2rem 1.5rem; }
       .philosophy-body { grid-template-columns: 1fr; }
-      .about-skills { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-skills { grid-template-columns: 1fr; gap: 2rem; }
       .resume-grid { grid-template-columns: 1fr; }
-      .contact-body { grid-template-columns: 1fr; gap: 2.5rem; }
-      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+      .contact-body { grid-template-columns: 1fr; gap: 2rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
     }
   </style>
 </head>
 <body>
-
-  <!-- NAV -->
-  <nav>
-    <a href="#hero" class="nav-mark">Drew Johnson<span> | Content Strategy</span></a>
-    <ul class="nav-links">
-      <li><a href="#philosophy">Approach</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#resume">CV</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 
   <!-- HERO -->
   <section id="hero" style="padding:0; border-bottom: 1px solid var(--rule); opacity:1; transform:none;">
@@ -671,7 +707,8 @@
       <p class="hero-descriptor">
         I design content systems that reduce complexity, improve decision-making, and scale clarity across enterprise products.
       </p>
-      <a href="#work" class="hero-cta">View Selected Work &rarr;</a>
+      <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download CV</a>
+      <a href="#work" class="hero-work-link">View Selected Work →</a>
     </div>
     <div class="hero-right">
       <div class="hero-stat-grid">
@@ -692,7 +729,6 @@
           <p class="stat-value">MA, Professional Writing — Carnegie Mellon</p>
         </div>
       </div>
-      <div class="hero-rule"></div>
     </div>
   </section>
 
@@ -714,9 +750,6 @@
         <p>
           I've spent the past decade working at financial services and healthcare companies where content complexity is high and the cost of confusion is measurable. I'm most useful when an organization needs to move from inconsistent, ad hoc content to a system with structure and rules.
         </p>
-        <p>
-          I'm currently at Charles Schwab, where I lead UX content strategy and AI content governance for a matrixed product organization.
-        </p>
       </div>
     </div>
   </section>
@@ -726,10 +759,6 @@
     <div class="section-header">
       <span class="section-number">02</span>
       <h2 class="section-title">Selected Work</h2>
-    </div>
-
-    <div class="work-filters">
-      <button class="filter-btn active" data-filter="all">Case Studies</button>
     </div>
 
     <div class="work-grid">
@@ -760,7 +789,6 @@
         <p class="card-meta">Content Strategy · SEO · Cross-Functional</p>
         <span class="card-arrow">↗</span>
       </div>
-
 
     </div>
   </section>
@@ -840,7 +868,7 @@
         <div class="resume-item">
           <p class="resume-role">UX Content Strategist</p>
           <p class="resume-org">Wells Fargo</p>
-          <p class="resume-dates">March 2020 — March 2021</p>
+          <p class="resume-dates">2020 — 2021</p>
         </div>
         <div class="resume-item">
           <p class="resume-role">Lead Digital Content Manager</p>
@@ -869,8 +897,7 @@
       <h2 class="section-title">Get in Touch</h2>
     </div>
     <div class="contact-body">
-      <p class="contact-intro">Interested in content architecture, AI governance, or something I haven't considered yet? I'm open to the right conversation.</p>
-      <ul class="contact-links">
+<ul class="contact-links">
         <li>
           <a href="mailto:rdrewj@icloud.com">
             rdrewj@icloud.com
@@ -883,21 +910,66 @@
             <span class="link-label">LinkedIn</span>
           </a>
         </li>
-        <li>
-          <a href="Drew_Johnson-Resume.pdf" download>
-            View Full CV
-            <span class="link-label">Resume</span>
-          </a>
-        </li>
       </ul>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p class="footer-mark">Drew Johnson</p>
+    <p class="footer-mark" id="brief-trigger">Drew Johnson</p>
     <p class="footer-copy">© 2025 · Marin County, CA</p>
   </footer>
+
+  <!-- BEHIND THE BRIEF PANEL -->
+  <div class="brief-panel" id="brief-panel" aria-hidden="true">
+    <div class="brief-panel-inner">
+      <div class="brief-header">
+        <div>
+          <p class="brief-eyebrow">Behind the Brief</p>
+          <h2 class="brief-title">Content Strategy Brief: drewjohnson.io</h2>
+          <p class="brief-meta">Version 1.2 &nbsp;·&nbsp; Personal project &nbsp;·&nbsp; Audience-reviewed draft</p>
+        </div>
+        <button class="brief-close" id="brief-close" aria-label="Close">✕</button>
+      </div>
+      <div class="brief-rule"></div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Audience</p>
+        <p>Primary: Content strategy hiring managers and design leaders at financial services, fintech, and enterprise tech companies. Secondary: Recruiters sourcing for senior IC and people-manager roles.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">The Core Problem</p>
+        <p>Most content strategy portfolios are either (a) too vague to demonstrate real skill, or (b) so focused on deliverables they forget to show thinking. Mine needed to do both — show the work, show the mind behind it.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Voice Direction</p>
+        <p>Precise but not cold. Confident without performing it. The writing should feel like it was made by someone who thinks carefully about words — not because the brief says so, but because you can tell.</p>
+        <p class="brief-note">Working note: First draft leaned too formal. Killed the word "leverage." Killed it twice.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Content Pillars</p>
+        <ul>
+          <li>Systems thinker — not just a writer</li>
+          <li>Operational credibility — I ship things</li>
+          <li>Human at the center — I write poetry. It matters.</li>
+        </ul>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">What I Decided Not to Include</p>
+        <p>A photo. A personal statement that opens with "I'm passionate about." Every project I've ever touched. The awards I'm proud of but that don't prove anything.</p>
+      </div>
+
+      <div class="brief-section">
+        <p class="brief-section-label">Success Metric</p>
+        <p>Someone reads this and thinks: <em>I want to work with that person.</em> Not: <em>impressive résumé.</em> There's a difference.</p>
+        <p class="brief-note">Final note: The site being clean is part of the argument. A content strategist's portfolio should demonstrate content strategy.</p>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ── SCROLL REVEAL ──
@@ -906,22 +978,6 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
     sections.forEach(s => observer.observe(s));
-
-    // ── WORK FILTER ──
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.work-card');
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        cards.forEach(card => {
-          const show = filter === 'all' || card.dataset.category === filter;
-          card.style.display = show ? '' : 'none';
-        });
-      });
-    });
 
     // ── MODAL CONTENT ──
     const modalData = {
@@ -980,6 +1036,7 @@
     const modalTitle = document.getElementById('modal-title');
     const modalBody = document.getElementById('modal-body');
 
+    const cards = document.querySelectorAll('.work-card');
     cards.forEach(card => {
       card.addEventListener('click', () => {
         const key = card.dataset.modal;
@@ -1001,6 +1058,26 @@
       overlay.classList.remove('open');
       document.body.style.overflow = '';
     }
+
+    // ── BEHIND THE BRIEF ──
+    const briefPanel = document.getElementById('brief-panel');
+    const briefTrigger = document.getElementById('brief-trigger');
+    const briefClose = document.getElementById('brief-close');
+
+    briefTrigger.addEventListener('click', () => {
+      briefPanel.classList.add('open');
+      briefPanel.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeBrief() {
+      briefPanel.classList.remove('open');
+      briefPanel.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    briefClose.addEventListener('click', closeBrief);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBrief(); });
   </script>
 </body>
 </html>
