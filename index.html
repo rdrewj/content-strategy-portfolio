@@ -435,9 +435,9 @@
     }
 
     .about-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
     }
 
     .about-bio p {
@@ -452,22 +452,26 @@
       color: var(--ink);
     }
 
-    .about-sidebar h3 {
+    .about-skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .about-skills h3 {
       font-size: 0.7rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-faint);
       margin-bottom: 1rem;
-      margin-top: 2.5rem;
+      margin-top: 0;
     }
 
-    .about-sidebar h3:first-child { margin-top: 0; }
-
-    .about-sidebar ul {
+    .about-skills ul {
       list-style: none;
     }
 
-    .about-sidebar li {
+    .about-skills li {
       font-size: 0.9rem;
       color: var(--ink-light);
       padding: 0.4rem 0;
@@ -638,7 +642,7 @@
       .hero-right { padding: 3rem 2rem 4rem; }
       section { padding: 4rem 2rem; }
       .philosophy-body { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-skills { grid-template-columns: 1fr; gap: 2.5rem; }
       .resume-grid { grid-template-columns: 1fr; }
       .contact-body { grid-template-columns: 1fr; gap: 2.5rem; }
       footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
@@ -790,28 +794,30 @@
           Outside work, I write poetry and fiction.
         </p>
       </div>
-      <div class="about-sidebar">
-        <h3>Expertise</h3>
-        <ul>
-          <li>AI Content Governance</li>
-          <li>Voice & Tone Systems</li>
-          <li>Content Architecture</li>
-          <li>Prompt Engineering</li>
-          <li>UX Writing</li>
-          <li>Talent Development</li>
-        </ul>
-        <h3>Tools & Methods</h3>
-        <ul>
-          <li>RAG & LLM Integration</li>
-          <li>VSCode / Python / APIs</li>
-          <li>Figma / Contentful</li>
-          <li>Content Auditing</li>
-          <li>Agile / Matrixed Orgs</li>
-        </ul>
-        <h3>Location</h3>
-        <ul>
-          <li>Marin County, California</li>
-        </ul>
+      <div class="about-skills">
+        <div>
+          <h3>Expertise</h3>
+          <ul>
+            <li>Content Strategy & IA</li>
+            <li>AI Content Governance</li>
+            <li>Voice & Tone Systems</li>
+            <li>UX Writing</li>
+            <li>SEO & Content Optimization</li>
+            <li>Cross-Functional Leadership</li>
+            <li>Talent Development</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Tools & Methods</h3>
+          <ul>
+            <li>Adobe Analytics</li>
+            <li>Figma / Contentful / Drupal</li>
+            <li>Content Auditing</li>
+            <li>Prompt Engineering</li>
+            <li>Agile / Sprint Delivery</li>
+            <li>User Research</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
