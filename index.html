@@ -213,6 +213,9 @@
     }
 
     .work-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       background: var(--cream);
       border: 1px solid var(--rule);
       padding: 2rem;
@@ -268,89 +271,6 @@
     .work-card:hover .card-arrow {
       color: var(--accent);
       transform: translate(3px, -3px);
-    }
-
-    a.work-card {
-      display: block;
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(26, 24, 20, 0.6);
-      backdrop-filter: blur(6px);
-      z-index: 500;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--cream);
-      max-width: 760px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 3rem;
-      position: relative;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: var(--ink-faint);
-      line-height: 1;
-      transition: color 0.2s;
-    }
-
-    .modal-close:hover { color: var(--ink); }
-
-    .modal-type {
-      font-size: 0.68rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-
-    .modal-title {
-      font-family: var(--serif);
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-      font-weight: 300;
-      line-height: 1.15;
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-rule {
-      height: 1px;
-      background: var(--rule);
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-body {
-      font-size: 0.95rem;
-      color: var(--ink-light);
-      line-height: 1.8;
-    }
-
-    .modal-body p { margin-bottom: 1rem; }
-    .modal-body h3 {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 1.5rem 0 0.5rem;
     }
 
     /* ── ABOUT ── */
@@ -770,22 +690,22 @@
     <div class="work-grid">
 
       <!-- CARD 1 -->
-      <div class="work-card" data-category="case-study" data-modal="modal-1">
+      <a class="work-card" data-category="case-study" href="case-studies/mobile-dashboard.html">
         <p class="card-type">Case Study · Charles Schwab</p>
         <h3 class="card-title">Re-imagining the Mobile Account Summary as a Dashboard</h3>
         <p class="card-desc">Post-migration TDA clients found Schwab's summary experience limiting. Content structure and IA reconciled competing needs — active traders vs. passive investors — within a single shared experience.</p>
         <p class="card-meta">Mobile · UX Content Strategy · IA</p>
         <span class="card-arrow">↗</span>
-      </div>
+      </a>
 
       <!-- CARD 2 -->
-      <div class="work-card" data-category="case-study" data-modal="modal-2">
+      <a class="work-card" data-category="case-study" href="case-studies/answer-widgets.html">
         <p class="card-type">Case Study · Charles Schwab</p>
         <h3 class="card-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</h3>
         <p class="card-desc">When automation failed, I built the content infrastructure from scratch — a 557-widget library across 101 experiences, delivered six weeks ahead of schedule with 605K user interactions by year end.</p>
         <p class="card-meta">Search · Content Operations · Analytics</p>
         <span class="card-arrow">↗</span>
-      </div>
+      </a>
 
       <!-- CARD 3 -->
       <a class="work-card" data-category="case-study" href="/case-studies/talent-architecture.html">
@@ -797,27 +717,16 @@
       </a>
 
       <!-- CARD 4 -->
-      <div class="work-card" data-category="case-study" data-modal="modal-4">
+      <a class="work-card" data-category="case-study" href="case-studies/mckesson.html">
         <p class="card-type">Case Study · McKesson</p>
         <h3 class="card-title">McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift</h3>
         <p class="card-desc">Led a cross-functional content enhancement program across McKesson.com — auditing 1,500 pages, navigating Brand vs. SEO tension, and producing a digital writing guide that held the balance. Form leads improved 82% YoY.</p>
         <p class="card-meta">Content Strategy · SEO · Cross-Functional</p>
         <span class="card-arrow">↗</span>
-      </div>
+      </a>
 
     </div>
   </section>
-
-  <!-- MODALS -->
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" id="modal-content">
-      <button class="modal-close" id="modal-close">✕</button>
-      <p class="modal-type" id="modal-type"></p>
-      <h2 class="modal-title" id="modal-title"></h2>
-      <div class="modal-rule"></div>
-      <div class="modal-body" id="modal-body"></div>
-    </div>
-  </div>
 
   <!-- ABOUT -->
   <section id="about">
@@ -994,105 +903,22 @@
     }, { threshold: 0.08 });
     sections.forEach(s => observer.observe(s));
 
-    // ── MODAL CONTENT ──
-    const modalData = {
-      'modal-1': {
-        type: 'Case Study · Charles Schwab · Mobile',
-        title: 'Re-imagining the Mobile Account Summary as a Dashboard',
-        body: `
-          <p><strong>Problem:</strong> Post-migration TDA clients found Schwab's summary experience limiting. TDA users were accustomed to dashboard-style control; Schwab's summary felt static and inflexible. Active traders felt under-served. The constraint: one shared experience had to serve both groups.</p>
-          <h3>Design Tension</h3>
-          <p>Reassuring simplicity for long-term investors versus speed, control, and choice for active traders. These aren't just different preferences — they're opposing content philosophies. The solution couldn't split the difference; it had to hold both.</p>
-          <h3>Strategy</h3>
-          <p>Introduce a Dashboard mode alongside Accounts. Shift from fixed sections to customizable content blocks. Let structure and language do the work — offer choice without overwhelming.</p>
-          <h3>My Role: Content Structure and IA</h3>
-          <p>I led content blocking to define structure before UI, and drove internal card sorting to validate that "Dashboard" as a label matched mental models across both existing and new customers. We structured modules around known Jobs to be Done: <em>Understand</em> (how am I doing? what changed today?), <em>Trade</em> (act quickly when ready), and <em>Research</em> (what's moving?). Research showed users prioritized Understand → Trade → Research, which drove the final product structure.</p>
-          <h3>Validation</h3>
-          <p>Polished designs tested with active TDA traders and passive investors. Dashboard metaphor was immediately understood. Active traders felt empowered. Passive investors were not overwhelmed.</p>
-          <h3>Outcome</h3>
-          <p>Strong early adoption, increased engagement on summary surfaces, improved App Store sentiment in following months. Content structure reconciled competing needs. Language functioned as a control surface.</p>
-        `
-      },
-      'modal-2': {
-        type: 'Case Study · Charles Schwab · Search',
-        title: 'Schwab Answer Widgets: Scaling Self-Service from 50 to 557',
-        body: `
-          <p><strong>Context:</strong> When I joined Schwab in spring 2021, there were 50 Answer Widgets live on the client site. The plan was to automate expansion to 500 by year end. My role was content steward — ensuring everything pulled in through the automated process adhered to brand guidelines and content strategy standards.</p>
-          <h3>When Automation Fails</h3>
-          <p>The automated process didn't work. My role shifted: instead of reviewing output, I became responsible for building the input. I pulled a full report from the Drupal team of all pages across our sites, filtered for the accordion component type used for FAQs, and culled the results into a master list grouping content by experience — trade, wire, beneficiary, and more.</p>
-          <h3>The Content Infrastructure</h3>
-          <p>The master list was the foundation, but keywords were the hard part. They had to reflect what users actually searched for, not how internal teams named things. I used Adobe Analytics to identify relevant keywords and phrases for every widget, then mapped them back to the master list. From there, we built in batches of 50, added to biweekly sprints, with me reviewing each experience in QA to ensure keyword mapping and content quality.</p>
-          <h3>Results</h3>
-          <p>We published the final batch in mid-November 2021 — six weeks ahead of schedule. The library reached 557 Answer Widgets across 101 experiences. By year end, those widgets had been expanded 605,000 times. Top performers: <em>Where can I find my 1099?</em> (83K expansions), <em>View, add, or update my beneficiaries</em> (53K), <em>Sending a wire to my Schwab account</em> (29K).</p>
-          <h3>What This Work Demonstrated</h3>
-          <p>Content strategy isn't just editorial judgment — it's operational. When a system breaks, the content strategist who understands both the content layer and the technical layer is the one who can build around the failure and still hit the goal.</p>
-        `
-      },
-      'modal-4': {
-        type: 'Case Study · McKesson · Content Strategy',
-        title: 'McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift',
-        body: `
-          <p><strong>Project scope:</strong> Led a project to optimize all solution, wayfinding, and "about us" content on McKesson.com. Goals: make content user-friendly, optimized for public search, and consistent across the site. Targets included a 25% increase in form leads sitewide and improved task completion rates.</p>
-          <h3>The Audit</h3>
-          <p>Audited 1,500 pages across McKesson.com to evaluate content quantitatively and qualitatively, define scope, and identify next steps. Key findings: long blocks of copy harmed scannability; jargon and company-focused language created distance from user needs; many pages lacked visual variety, clear CTAs, or sufficient content depth. Some pages duplicated each other; others were too thin to rank or convert.</p>
-          <h3>Cross-Functional Execution</h3>
-          <p>We segmented work by business unit and staggered phases to prevent scheduling conflicts. Enterprise-wide kickoff for buy-in, then BU-specific kickoffs to start each phase. When one team hit a bottleneck, we pivoted to another — the program stayed in motion throughout.</p>
-          <h3>The Brand vs. SEO Problem</h3>
-          <p>Mid-project, McKesson's Brand team underwent a major voice and tone evolution. Brand wanted improved readability (measured by Flesch-Kincaid) and minimal jargon. SEO needed the freedom to use technical terms users were actively searching for. These weren't compatible requirements out of the box.</p>
-          <p>I led the negotiation and authored a digital writing guide that encoded the compromise: sentence length and scannability to meet FK standards; technical terminology preserved where search intent demanded it. The guide became the governing document for both teams.</p>
-          <h3>Results</h3>
-          <p>Form leads on enhanced product and solution pages improved 82% year-over-year. Organic traffic to business unit product and solution pages nearly doubled.</p>
-        `
-      }
-    };
-
-    const overlay = document.getElementById('modal-overlay');
-    const modalType = document.getElementById('modal-type');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-
+    // ── WORK FILTER ──
+    const filterBtns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.work-card');
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        const key = card.dataset.modal;
-        const data = modalData[key];
-        if (!data) return;
-        modalType.textContent = data.type;
-        modalTitle.textContent = data.title;
-        modalBody.innerHTML = data.body;
-        overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          const show = filter === 'all' || card.dataset.category === filter;
+          card.style.display = show ? '' : 'none';
+        });
       });
     });
 
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
-    function closeModal() {
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    // ── BEHIND THE BRIEF ──
-    const briefPanel = document.getElementById('brief-panel');
-    const briefTrigger = document.getElementById('brief-trigger');
-    const briefClose = document.getElementById('brief-close');
-
-    briefTrigger.addEventListener('click', () => {
-      briefPanel.classList.add('open');
-      briefPanel.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    });
-
-    function closeBrief() {
-      briefPanel.classList.remove('open');
-      briefPanel.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    briefClose.addEventListener('click', closeBrief);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBrief(); });
   </script>
 </body>
 </html>
