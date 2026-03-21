@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talent Architecture Case Study | Drew Johnson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f2ec;
+      --ink: #1a1814;
+      --ink-light: #5a5550;
+      --ink-faint: #b0aba4;
+      --rule: #d8d2c8;
+      --accent: #8b3a2a;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(245, 242, 236, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-mark {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-mark span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── FOOTER ── */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.5rem 4rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .footer-mark {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+    }
+
+    /* ── CASE STUDY PAGE ── */
+    .cs-page {
+      padding-top: 80px;
+    }
+
+    /* Back link bar */
+    .cs-back {
+      padding: 1.25rem 4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .cs-back a {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .cs-back a:hover { color: var(--ink); }
+
+    /* Article container */
+    .cs-article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    /* Eyebrow */
+    .cs-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    /* Title */
+    .cs-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    /* Subtitle / lede */
+    .cs-lede {
+      font-size: 1rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Metadata row */
+    .cs-meta {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .cs-meta-item p:first-child {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 3px;
+    }
+
+    .cs-meta-item p:last-child {
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    /* Divider */
+    .cs-rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 2.5rem 0;
+    }
+
+    /* Section label */
+    .cs-section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    /* Section heading */
+    .cs-h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    /* Body copy */
+    .cs-body {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    /* Pull quote / blockquote */
+    .cs-blockquote {
+      border-left: 2px solid var(--rule);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      background: rgba(26, 24, 20, 0.03);
+    }
+
+    .cs-blockquote p {
+      font-size: 0.92rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+    }
+
+    /* Outcomes grid */
+    .cs-outcomes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      margin: 1.5rem 0;
+      border: 1px solid var(--rule);
+    }
+
+    .cs-outcome {
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--rule);
+      background: var(--cream);
+    }
+
+    .cs-outcome-value {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .cs-outcome-label {
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      line-height: 1.4;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { gap: 1.5rem; }
+      .cs-back { padding: 1rem 2rem; }
+      .cs-article { padding: 3rem 1.5rem 5rem; }
+      .cs-meta { gap: 1.5rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-mark">Drew Johnson<span> | Content Strategy</span></a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">Approach</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#resume">CV</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="cs-page">
+
+    <!-- BACK LINK -->
+    <div class="cs-back">
+      <a href="/#work">&larr; Selected Work</a>
+    </div>
+
+    <!-- ARTICLE -->
+    <article class="cs-article">
+
+      <p class="cs-eyebrow">Case Study</p>
+      <h1 class="cs-title">Scaling talent architecture with AI-assisted content strategy</h1>
+      <p class="cs-lede">How a scrappy, AI-augmented editorial process transformed a fractured, unusable artifact into a governance-ready competency framework — approved at the C-suite and live for the 2026 review cycle.</p>
+
+      <!-- Metadata -->
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <p>Organization</p>
+          <p>Fortune 500 financial services</p>
+        </div>
+        <div class="cs-meta-item">
+          <p>Scope</p>
+          <p>Digital retail, product, design, content, accessibility</p>
+        </div>
+        <div class="cs-meta-item">
+          <p>Timeline</p>
+          <p>October 2025 – present</p>
+        </div>
+        <div class="cs-meta-item">
+          <p>Role</p>
+          <p>Senior manager, UX content strategy</p>
+        </div>
+      </div>
+
+      <hr class="cs-rule">
+
+      <!-- The Problem -->
+      <p class="cs-section-label">The problem</p>
+      <h2 class="cs-h2">An artifact too fragmented to use</h2>
+      <p class="cs-body">In October 2025, I was brought in to lead the revision of an existing digital retail talent architecture — a competency framework spanning core and relational skills as well as functional competencies across product, design, content, and accessibility disciplines.</p>
+      <p class="cs-body">The artifact had been marked up by stakeholders at every level of the organization, from UX directors to managing directors to C-suite executives. The feedback was extensive, often contradictory, and layered on top of source content that was already problematic: run-on sentences, duplicate concepts repeated across levels, overlapping competency definitions, and entire functional areas left incomplete. The document wasn't just hard to edit — it was fundamentally unusable as a tool for talent development or performance evaluation.</p>
+
+      <blockquote class="cs-blockquote">
+        <p>The challenge wasn't just integrating feedback. It was diagnosing why the artifact had failed in the first place, establishing a coherent editorial standard, and rebuilding it at scale — across dozens of competencies and multiple disciplines — without losing the organizational context embedded in years of stakeholder input.</p>
+      </blockquote>
+
+      <hr class="cs-rule">
+
+      <!-- The Strategy -->
+      <p class="cs-section-label">The strategy</p>
+      <h2 class="cs-h2">A north star before a single edit</h2>
+      <p class="cs-body">Before touching the content, I developed a governing content strategy. The principle: every competency statement had to be observable, active, and concise. Observable meaning it described visible behavior, not internal traits. Active meaning it used direct, action-oriented language. Concise meaning each statement carried one idea — no compound constructions, no hedged language, no redundancy.</p>
+      <p class="cs-body">This standard became the filter through which all existing content was evaluated and all new content was written. It also gave me a principled basis for reconciling conflicting stakeholder input — rather than negotiating line-by-line, I could return to the standard and ask whether a proposed edit made the content more or less useful as a performance tool.</p>
+
+      <hr class="cs-rule">
+
+      <!-- The Process -->
+      <p class="cs-section-label">The process</p>
+      <h2 class="cs-h2">Iterative AI-assisted revision at scale</h2>
+      <p class="cs-body">With a clear strategy in place, I designed a repeatable revision workflow using AI. I carved the architecture into manageable sections — one competency cluster at a time — and worked through each iteratively, using AI to apply the editorial standard at volume while I maintained oversight on coherence, tone, and organizational alignment.</p>
+      <p class="cs-body">The process was deliberately hands-on. AI handled the heavy lifting of rewriting and consolidation; I handled the judgment calls — catching where consolidation created new ambiguities, ensuring the competency hierarchy held across levels, and maintaining the connective tissue between disciplines. Neither the AI nor I could have done it alone at the pace and quality the project required.</p>
+      <p class="cs-body">Net-new content — including competencies for areas that had never been formally defined — was developed through the same iterative approach: AI-assisted drafting grounded in the governing strategy, refined through multiple passes until the content met the standard.</p>
+      <p class="cs-body">Throughout, the work was reviewed and validated by an external McKinsey team, which provided an additional quality gate and helped stress-test the framework against industry benchmarks.</p>
+
+      <hr class="cs-rule">
+
+      <!-- Outcomes -->
+      <p class="cs-section-label">Outcomes</p>
+      <h2 class="cs-h2">From draft to live governance tool</h2>
+
+      <div class="cs-outcomes">
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">C-suite</div>
+          <div class="cs-outcome-label">Approved by executive leadership and HR</div>
+        </div>
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">Live</div>
+          <div class="cs-outcome-label">Published to company intranet</div>
+        </div>
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">2026</div>
+          <div class="cs-outcome-label">Embedded in annual review cycle</div>
+        </div>
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">Q1 2026</div>
+          <div class="cs-outcome-label">Gap-filling and refinement underway</div>
+        </div>
+      </div>
+
+      <p class="cs-body">The revised talent architecture has been approved at every level of stakeholder review — from functional directors through managing directors to executive leadership — and is currently live on the company intranet. It is being used as the foundational framework for the 2026 performance review cycle across digital retail, representing its first deployment as an operational governance tool.</p>
+
+      <hr class="cs-rule">
+
+      <!-- What's Next -->
+      <p class="cs-section-label">What's next</p>
+      <h2 class="cs-h2">From workflow to automation</h2>
+      <p class="cs-body">In Q1 2026, I began translating the manual revision workflow into an automated process using Microsoft Copilot. The current implementation focuses on feedback integration — ingesting stakeholder input and applying the governing editorial standard consistently, without requiring manual iteration for each pass.</p>
+      <p class="cs-body">The longer-term vision is a more comprehensive content governance layer: an AI-assisted system that can handle ongoing maintenance, flag drift from the editorial standard, and support the expansion of the framework into new disciplines — reducing the organizational cost of keeping a talent architecture current as roles and capabilities evolve.</p>
+      <p class="cs-body">This project is an example of what AI-augmented content strategy looks like at its best: not AI replacing editorial judgment, but AI amplifying the leverage of a clear strategy — making it possible to operate at a scale and speed that wouldn't otherwise be feasible.</p>
+
+    </article>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-mark">Drew Johnson</p>
+    <p class="footer-copy">© 2025 · Marin County, CA</p>
+  </footer>
+
+</body>
+</html>
