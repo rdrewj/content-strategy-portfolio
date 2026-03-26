@@ -583,6 +583,16 @@
       max-width: 56ch;
     }
 
+    .poem-body p {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--ink-light);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      max-width: 38ch;
+    }
+
     @media (max-width: 900px) {
       .brief-panel { padding: 2rem 2rem 3rem; }
       .brief-header { flex-direction: column; gap: 1rem; }
@@ -853,58 +863,38 @@
     <p class="footer-copy">© 2025 · Marin County, CA</p>
   </footer>
 
-  <!-- BEHIND THE BRIEF PANEL -->
+  <!-- EASTER EGG POEM PANEL -->
   <div class="brief-panel" id="brief-panel" aria-hidden="true">
     <div class="brief-panel-inner">
       <div class="brief-header">
-        <div>
-          <p class="brief-eyebrow">Behind the Brief</p>
-          <h2 class="brief-title">Content Strategy Brief: drewjohnson.io</h2>
-          <p class="brief-meta">Version 1.2 &nbsp;·&nbsp; Personal project &nbsp;·&nbsp; Audience-reviewed draft</p>
-        </div>
+        <p class="brief-eyebrow">A poem</p>
         <button class="brief-close" id="brief-close" aria-label="Close">✕</button>
       </div>
       <div class="brief-rule"></div>
-
-      <div class="brief-section">
-        <p class="brief-section-label">Audience</p>
-        <p>Primary: Content strategy hiring managers and design leaders at financial services, fintech, and enterprise tech companies. Secondary: Recruiters sourcing for senior IC and people-manager roles.</p>
-      </div>
-
-      <div class="brief-section">
-        <p class="brief-section-label">The Core Problem</p>
-        <p>Most content strategy portfolios are either (a) too vague to demonstrate real skill, or (b) so focused on deliverables they forget to show thinking. Mine needed to do both — show the work, show the mind behind it.</p>
-      </div>
-
-      <div class="brief-section">
-        <p class="brief-section-label">Voice Direction</p>
-        <p>Precise but not cold. Confident without performing it. The writing should feel like it was made by someone who thinks carefully about words — not because the brief says so, but because you can tell.</p>
-        <p class="brief-note">Working note: First draft leaned too formal. Killed the word "leverage." Killed it twice.</p>
-      </div>
-
-      <div class="brief-section">
-        <p class="brief-section-label">Content Pillars</p>
-        <ul>
-          <li>Systems thinker — not just a writer</li>
-          <li>Operational credibility — I ship things</li>
-          <li>Human at the center — I write poetry. It matters.</li>
-        </ul>
-      </div>
-
-      <div class="brief-section">
-        <p class="brief-section-label">What I Decided Not to Include</p>
-        <p>A photo. A personal statement that opens with "I'm passionate about." Every project I've ever touched. The awards I'm proud of but that don't prove anything.</p>
-      </div>
-
-      <div class="brief-section">
-        <p class="brief-section-label">Success Metric</p>
-        <p>Someone reads this and thinks: <em>I want to work with that person.</em> Not: <em>impressive résumé.</em> There's a difference.</p>
-        <p class="brief-note">Final note: The site being clean is part of the argument. A content strategist's portfolio should demonstrate content strategy.</p>
+      <div class="poem-body">
+        <h2 class="brief-title">Ducks</h2>
+        <p>We swam together<br>As early as I remember;<br>Harried by crows, children,<br>Small and large dogs.</p>
+        <p>At night we huddled close<br>In a wooden box by the pond—<br>It was our universe.</p>
+        <p>And now,<br>As big as crows,<br>We fly above it all.</p>
       </div>
     </div>
   </div>
 
   <script>
+    // ── EASTER EGG ──
+    const trigger = document.getElementById('brief-trigger');
+    const panel = document.getElementById('brief-panel');
+    const closeBtn = document.getElementById('brief-close');
+
+    trigger.addEventListener('click', () => {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+    });
+    closeBtn.addEventListener('click', () => {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+    });
+
     // ── SCROLL REVEAL ──
     const sections = document.querySelectorAll('section:not(#hero)');
     const observer = new IntersectionObserver((entries) => {
