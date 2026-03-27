@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSX Audit | Drew Johnson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f2ec;
+      --ink: #1a1814;
+      --ink-light: #5a5550;
+      --ink-faint: #b0aba4;
+      --rule: #d8d2c8;
+      --accent: #8b3a2a;
+      --green: #2d6a4f;
+      --amber: #b5650d;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(245, 242, 236, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-mark {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-mark span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--ink); }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      padding-top: 80px;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .tool-header {
+      padding: 3rem 4rem 2.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .tool-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .tool-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .tool-desc {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      max-width: 54ch;
+      line-height: 1.75;
+    }
+
+    /* ── MAIN CONTENT AREA ── */
+    .tool-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 4rem 6rem;
+    }
+
+    /* ── INPUT STATE ── */
+    #state-input { display: block; }
+    #state-progress { display: none; }
+    #state-results { display: none; }
+
+    .form-group {
+      margin-bottom: 1.75rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .form-label span {
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      color: var(--ink-faint);
+      opacity: 0.8;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus { border-color: var(--ink); }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: var(--ink-faint); }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.6;
+    }
+
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      margin-top: 0.4rem;
+      line-height: 1.5;
+    }
+
+    .btn-run {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-run:hover { background: var(--accent); }
+    .btn-run:disabled { background: var(--ink-faint); cursor: not-allowed; }
+
+    .limit-note {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      line-height: 1.5;
+    }
+
+    .error-msg {
+      background: #fdf2f0;
+      border: 1px solid #e8b4aa;
+      color: #8b3a2a;
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* ── PROGRESS STATE ── */
+    .progress-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .progress-title {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 0.4rem;
+    }
+
+    .progress-url {
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      font-family: monospace;
+    }
+
+    .progress-steps {
+      list-style: none;
+      border-top: 1px solid var(--rule);
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.88rem;
+      color: var(--ink-faint);
+      transition: color 0.3s;
+    }
+
+    .progress-step.active { color: var(--ink); }
+    .progress-step.done { color: var(--ink-light); }
+
+    .step-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+    }
+
+    .step-icon.pending { color: var(--ink-faint); }
+    .step-icon.active { color: var(--accent); }
+    .step-icon.done { color: var(--green); }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid var(--rule);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* ── RESULTS STATE ── */
+    .results-header {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .results-meta {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .results-url {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .scores-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 2rem;
+    }
+
+    .score-cell {
+      background: var(--cream);
+      padding: 1rem 1.25rem;
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.4rem;
+    }
+
+    .score-value {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .score-value.high { color: var(--green); }
+    .score-value.mid { color: var(--amber); }
+    .score-value.low { color: var(--accent); }
+
+    .exec-summary {
+      margin-bottom: 2rem;
+    }
+
+    .exec-summary p {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.8;
+      margin-bottom: 0.75rem;
+      max-width: 66ch;
+    }
+
+    /* Quick wins */
+    .quick-wins {
+      background: rgba(45, 106, 79, 0.06);
+      border: 1px solid rgba(45, 106, 79, 0.2);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .quick-wins-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-wins ol {
+      padding-left: 1.25rem;
+    }
+
+    .quick-wins li {
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Top recommendations */
+    .top-recs {
+      margin-bottom: 2.5rem;
+    }
+
+    .top-recs-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .rec-item {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      line-height: 1.55;
+    }
+
+    .rec-num {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--ink-faint);
+      flex-shrink: 0;
+      width: 1.4rem;
+    }
+
+    /* Finding sections */
+    .findings-section {
+      border-top: 1px solid var(--rule);
+      margin-top: 2rem;
+    }
+
+    .findings-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      cursor: pointer;
+      user-select: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .findings-toggle:hover .toggle-title { color: var(--accent); }
+
+    .toggle-left {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .toggle-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 300;
+      transition: color 0.2s;
+    }
+
+    .toggle-count {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+    }
+
+    .toggle-arrow {
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+      transition: transform 0.25s;
+    }
+
+    .findings-toggle[aria-expanded="true"] .toggle-arrow {
+      transform: rotate(180deg);
+    }
+
+    .findings-body {
+      display: none;
+      padding-bottom: 1rem;
+    }
+
+    .findings-body.open { display: block; }
+
+    .finding-card {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .finding-card:last-child { border-bottom: none; }
+
+    .finding-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .severity-badge {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+      font-weight: 400;
+    }
+
+    .severity-badge.high {
+      background: rgba(139, 58, 42, 0.1);
+      color: var(--accent);
+    }
+
+    .severity-badge.medium {
+      background: rgba(181, 101, 13, 0.1);
+      color: var(--amber);
+    }
+
+    .severity-badge.low {
+      background: rgba(90, 85, 80, 0.08);
+      color: var(--ink-light);
+    }
+
+    .finding-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .finding-desc {
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      margin-bottom: 0.6rem;
+      max-width: 68ch;
+    }
+
+    .finding-urls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .finding-url {
+      font-size: 0.7rem;
+      font-family: monospace;
+      color: var(--ink-faint);
+      background: rgba(0,0,0,0.04);
+      padding: 0.15rem 0.4rem;
+      max-width: 40ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .finding-rec {
+      font-size: 0.85rem;
+      color: var(--ink);
+      line-height: 1.6;
+      border-left: 2px solid var(--accent);
+      padding-left: 0.75rem;
+    }
+
+    .no-findings {
+      font-size: 0.88rem;
+      color: var(--ink-faint);
+      font-style: italic;
+      padding: 1rem 0;
+    }
+
+    /* Voice profile pill */
+    .voice-profile-strip {
+      background: rgba(0,0,0,0.03);
+      border: 1px solid var(--rule);
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+      font-size: 0.82rem;
+      color: var(--ink-light);
+    }
+
+    .vp-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.3rem;
+    }
+
+    /* New audit button */
+    .new-audit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      background: none;
+      border: 1px solid var(--rule);
+      padding: 0.6rem 1.25rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      margin-bottom: 2.5rem;
+    }
+
+    .new-audit-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* SPA warning */
+    .spa-warning {
+      background: rgba(181, 101, 13, 0.07);
+      border: 1px solid rgba(181, 101, 13, 0.25);
+      color: var(--amber);
+      padding: 0.85rem 1.1rem;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .footer-mark {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--ink-faint);
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .tool-header { padding: 2rem 1.5rem 1.75rem; }
+      .tool-body { padding: 2rem 1.5rem 4rem; }
+      .scores-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .scores-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-mark">Drew Johnson<span> | Content Strategy</span></a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">Approach</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#resume">CV</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/tools/csx-audit.html" class="active">CSX Audit</a></li>
+    </ul>
+  </nav>
+
+  <div class="page">
+
+    <div class="tool-header">
+      <p class="tool-eyebrow">Interactive Tool</p>
+      <h1 class="tool-title">CSX Audit</h1>
+      <p class="tool-desc">
+        Enter any URL to get a full content strategy readout — information architecture gaps,
+        tone and voice consistency, user flow problems, and content you should be creating
+        but aren't. Powered by Claude.
+      </p>
+    </div>
+
+    <div class="tool-body">
+
+      <!-- ── INPUT STATE ── -->
+      <div id="state-input">
+        <div class="error-msg" id="error-msg" role="alert"></div>
+
+        <form id="audit-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="url-input">
+              Website URL <span>— required</span>
+            </label>
+            <input
+              type="url"
+              id="url-input"
+              class="form-input"
+              placeholder="https://example.com"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="purpose-input">
+              What is this site for? <span>— recommended</span>
+            </label>
+            <textarea
+              id="purpose-input"
+              class="form-textarea"
+              placeholder="e.g. &quot;SaaS marketing site for a B2B CRM tool targeting ops teams&quot; or &quot;personal portfolio for a UX content strategist&quot;"
+            ></textarea>
+            <p class="form-note">Describing the site's purpose and audience significantly improves gap analysis and flow findings.</p>
+          </div>
+
+          <button type="submit" class="btn-run" id="run-btn">
+            Run Audit →
+          </button>
+        </form>
+
+        <p class="limit-note">Crawls up to 10 pages · 3 audits per day per IP · Static sites only in V1<br>This tool makes real AI calls and takes 30–60 seconds to complete.</p>
+      </div>
+
+      <!-- ── PROGRESS STATE ── -->
+      <div id="state-progress">
+        <div class="progress-header">
+          <h2 class="progress-title">Analyzing your site</h2>
+          <p class="progress-url" id="progress-url"></p>
+        </div>
+
+        <ul class="progress-steps" id="progress-steps">
+          <li class="progress-step" data-step="0">
+            <span class="step-icon pending">○</span>
+            Validating URL and checking robots.txt
+          </li>
+          <li class="progress-step" data-step="1">
+            <span class="step-icon pending">○</span>
+            Crawling pages
+          </li>
+          <li class="progress-step" data-step="2">
+            <span class="step-icon pending">○</span>
+            Compressing page content
+          </li>
+          <li class="progress-step" data-step="3">
+            <span class="step-icon pending">○</span>
+            Profiling voice and tone baseline
+          </li>
+          <li class="progress-step" data-step="4">
+            <span class="step-icon pending">○</span>
+            Analyzing information architecture
+          </li>
+          <li class="progress-step" data-step="5">
+            <span class="step-icon pending">○</span>
+            Checking tone consistency
+          </li>
+          <li class="progress-step" data-step="6">
+            <span class="step-icon pending">○</span>
+            Mapping user flows
+          </li>
+          <li class="progress-step" data-step="7">
+            <span class="step-icon pending">○</span>
+            Identifying content gaps
+          </li>
+          <li class="progress-step" data-step="8">
+            <span class="step-icon pending">○</span>
+            Synthesizing findings
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── RESULTS STATE ── -->
+      <div id="state-results">
+
+        <button class="new-audit-btn" id="new-audit-btn">← Run another audit</button>
+
+        <div id="spa-warning-banner" class="spa-warning" style="display:none;"></div>
+
+        <div class="results-header">
+          <p class="results-meta" id="results-meta"></p>
+          <h2 class="results-url" id="results-url"></h2>
+          <div class="scores-grid" id="scores-grid"></div>
+        </div>
+
+        <div class="exec-summary" id="exec-summary"></div>
+
+        <div class="quick-wins" id="quick-wins-block" style="display:none;">
+          <p class="quick-wins-label">Quick wins</p>
+          <ol id="quick-wins-list"></ol>
+        </div>
+
+        <div class="top-recs" id="top-recs-block" style="display:none;">
+          <p class="top-recs-label">Top recommendations</p>
+          <div id="top-recs-list"></div>
+        </div>
+
+        <div class="voice-profile-strip" id="voice-profile-block" style="display:none;">
+          <p class="vp-label">Voice baseline inferred from site</p>
+          <p id="voice-summary-text"></p>
+        </div>
+
+        <!-- IA Findings -->
+        <div class="findings-section" id="ia-section">
+          <button class="findings-toggle" aria-expanded="false" data-target="ia-body">
+            <span class="toggle-left">
+              <span class="toggle-title">IA & Hierarchy</span>
+              <span class="toggle-count" id="ia-count"></span>
+            </span>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="findings-body" id="ia-body"></div>
+        </div>
+
+        <!-- Tone Findings -->
+        <div class="findings-section" id="tone-section">
+          <button class="findings-toggle" aria-expanded="false" data-target="tone-body">
+            <span class="toggle-left">
+              <span class="toggle-title">Tone & Voice</span>
+              <span class="toggle-count" id="tone-count"></span>
+            </span>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="findings-body" id="tone-body"></div>
+        </div>
+
+        <!-- Flow Findings -->
+        <div class="findings-section" id="flow-section">
+          <button class="findings-toggle" aria-expanded="false" data-target="flow-body">
+            <span class="toggle-left">
+              <span class="toggle-title">User Flows</span>
+              <span class="toggle-count" id="flow-count"></span>
+            </span>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="findings-body" id="flow-body"></div>
+        </div>
+
+        <!-- Gap Findings -->
+        <div class="findings-section" id="gaps-section">
+          <button class="findings-toggle" aria-expanded="false" data-target="gaps-body">
+            <span class="toggle-left">
+              <span class="toggle-title">Content Gaps</span>
+              <span class="toggle-count" id="gaps-count"></span>
+            </span>
+            <span class="toggle-arrow">▾</span>
+          </button>
+          <div class="findings-body" id="gaps-body"></div>
+        </div>
+
+      </div><!-- /state-results -->
+
+    </div><!-- /tool-body -->
+
+    <footer>
+      <p class="footer-mark">Drew Johnson</p>
+      <p class="footer-copy">© 2025 · CSX Audit · Powered by Claude</p>
+    </footer>
+
+  </div><!-- /page -->
+
+  <script>
+    // ── State ────────────────────────────────────────────────────────────────
+    const states = {
+      input: document.getElementById('state-input'),
+      progress: document.getElementById('state-progress'),
+      results: document.getElementById('state-results'),
+    };
+
+    function showState(name) {
+      Object.entries(states).forEach(([k, el]) => {
+        el.style.display = k === name ? 'block' : 'none';
+      });
+    }
+
+    // ── Progress steps ───────────────────────────────────────────────────────
+    const stepEls = document.querySelectorAll('.progress-step');
+    let currentStep = -1;
+
+    function setStep(n) {
+      stepEls.forEach((el, i) => {
+        const icon = el.querySelector('.step-icon');
+        if (i < n) {
+          el.classList.remove('active');
+          el.classList.add('done');
+          icon.className = 'step-icon done';
+          icon.innerHTML = '✓';
+        } else if (i === n) {
+          el.classList.add('active');
+          el.classList.remove('done');
+          icon.className = 'step-icon active';
+          icon.innerHTML = '<span class="spinner"></span>';
+        } else {
+          el.classList.remove('active', 'done');
+          icon.className = 'step-icon pending';
+          icon.innerHTML = '○';
+        }
+      });
+      currentStep = n;
+    }
+
+    function completeAllSteps() {
+      stepEls.forEach(el => {
+        el.classList.remove('active');
+        el.classList.add('done');
+        const icon = el.querySelector('.step-icon');
+        icon.className = 'step-icon done';
+        icon.innerHTML = '✓';
+      });
+    }
+
+    // Simulate analysis sub-steps during the analyze API call
+    function startAnalysisTimer() {
+      const timeline = [
+        { step: 2, delay: 1000 },
+        { step: 3, delay: 5000 },
+        { step: 4, delay: 12000 },
+        { step: 5, delay: 19000 },
+        { step: 6, delay: 26000 },
+        { step: 7, delay: 33000 },
+        { step: 8, delay: 42000 },
+      ];
+      const timers = timeline.map(({ step, delay }) =>
+        setTimeout(() => setStep(step), delay)
+      );
+      return () => timers.forEach(clearTimeout);
+    }
+
+    // ── Error display ────────────────────────────────────────────────────────
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+
+    function clearError() {
+      const el = document.getElementById('error-msg');
+      el.textContent = '';
+      el.classList.remove('visible');
+    }
+
+    // ── Score color class ────────────────────────────────────────────────────
+    function scoreClass(n) {
+      if (n >= 80) return 'high';
+      if (n >= 60) return 'mid';
+      return 'low';
+    }
+
+    // ── Render results ───────────────────────────────────────────────────────
+    function renderFindings(findings, bodyId, countId) {
+      const body = document.getElementById(bodyId);
+      const countEl = document.getElementById(countId);
+      if (!findings || findings.length === 0) {
+        body.innerHTML = '<p class="no-findings">No findings in this area — looking good.</p>';
+        countEl.textContent = '0 findings';
+        return;
+      }
+      countEl.textContent = `${findings.length} finding${findings.length === 1 ? '' : 's'}`;
+      body.innerHTML = findings.map(f => `
+        <div class="finding-card">
+          <div class="finding-top">
+            <span class="severity-badge ${f.severity || 'low'}">${f.severity || 'low'}</span>
+            <span class="finding-title">${esc(f.title || 'Untitled finding')}</span>
+          </div>
+          ${f.description ? `<p class="finding-desc">${esc(f.description)}</p>` : ''}
+          ${f.drift_direction ? `<p class="finding-desc" style="font-style:italic;color:var(--ink-faint)">Drift: ${esc(f.drift_direction)}</p>` : ''}
+          ${(f.affected_urls || []).length ? `
+            <div class="finding-urls">
+              ${f.affected_urls.map(u => `<span class="finding-url">${esc(u)}</span>`).join('')}
+            </div>` : ''}
+          ${(f.evidence && bodyId === 'gaps-body') ? `<p class="finding-desc" style="font-style:italic;">Evidence: ${esc(f.evidence)}</p>` : ''}
+          ${f.recommendation ? `<p class="finding-rec">${esc(f.recommendation)}</p>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderResults(report, siteMap) {
+      const { metadata, scores, executive_summary, top_recommendations, quick_wins,
+              voice_profile, ia_findings, tone_findings, flow_findings, gap_findings } = report;
+
+      // SPA warning
+      const spaBanner = document.getElementById('spa-warning-banner');
+      if (siteMap.spa_warning) {
+        spaBanner.textContent = '⚠ ' + siteMap.spa_warning;
+        spaBanner.style.display = 'block';
+      }
+
+      // Meta
+      document.getElementById('results-meta').textContent =
+        `${metadata.pages_analyzed} page${metadata.pages_analyzed === 1 ? '' : 's'} analyzed · ${new Date(metadata.analyzed_at).toLocaleString()}`;
+      document.getElementById('results-url').textContent = metadata.url;
+
+      // Scores
+      const labels = { ia: 'IA & Hierarchy', tone: 'Tone & Voice', flow: 'User Flows', gaps: 'Content Gaps' };
+      document.getElementById('scores-grid').innerHTML = Object.entries(scores)
+        .map(([k, v]) => `
+          <div class="score-cell">
+            <p class="score-label">${labels[k]}</p>
+            <p class="score-value ${scoreClass(v)}">${v}</p>
+          </div>
+        `).join('');
+
+      // Executive summary
+      const summaryEl = document.getElementById('exec-summary');
+      if (executive_summary) {
+        summaryEl.innerHTML = executive_summary
+          .split('\n\n')
+          .filter(p => p.trim())
+          .map(p => `<p>${esc(p.trim())}</p>`)
+          .join('');
+      }
+
+      // Quick wins
+      if (quick_wins && quick_wins.length) {
+        document.getElementById('quick-wins-block').style.display = 'block';
+        document.getElementById('quick-wins-list').innerHTML = quick_wins
+          .map(w => `<li>${esc(w)}</li>`)
+          .join('');
+      }
+
+      // Top recs
+      if (top_recommendations && top_recommendations.length) {
+        document.getElementById('top-recs-block').style.display = 'block';
+        document.getElementById('top-recs-list').innerHTML = top_recommendations
+          .map((r, i) => `
+            <div class="rec-item">
+              <span class="rec-num">${i + 1}.</span>
+              <span>${esc(r)}</span>
+            </div>`)
+          .join('');
+      }
+
+      // Voice profile
+      if (voice_profile && voice_profile.voice_summary) {
+        document.getElementById('voice-profile-block').style.display = 'block';
+        document.getElementById('voice-summary-text').textContent = voice_profile.voice_summary;
+      }
+
+      // Findings sections
+      renderFindings(ia_findings, 'ia-body', 'ia-count');
+      renderFindings(tone_findings, 'tone-body', 'tone-count');
+      renderFindings(flow_findings, 'flow-body', 'flow-count');
+      renderFindings(gap_findings, 'gaps-body', 'gaps-count');
+
+      // Auto-expand first section with high-severity findings
+      const sections = [
+        { findings: ia_findings, btn: document.querySelector('[data-target="ia-body"]'), body: document.getElementById('ia-body') },
+        { findings: flow_findings, btn: document.querySelector('[data-target="flow-body"]'), body: document.getElementById('flow-body') },
+        { findings: gap_findings, btn: document.querySelector('[data-target="gaps-body"]'), body: document.getElementById('gaps-body') },
+        { findings: tone_findings, btn: document.querySelector('[data-target="tone-body"]'), body: document.getElementById('tone-body') },
+      ];
+      const firstHigh = sections.find(s => s.findings && s.findings.some(f => f.severity === 'high'));
+      if (firstHigh) {
+        firstHigh.body.classList.add('open');
+        firstHigh.btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    // ── Toggle sections ──────────────────────────────────────────────────────
+    document.querySelectorAll('.findings-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.target;
+        const body = document.getElementById(targetId);
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        body.classList.toggle('open', !expanded);
+        btn.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+
+    // ── New audit button ─────────────────────────────────────────────────────
+    document.getElementById('new-audit-btn').addEventListener('click', () => {
+      showState('input');
+      document.getElementById('audit-form').reset();
+      clearError();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ── Form submit ──────────────────────────────────────────────────────────
+    document.getElementById('audit-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+
+      const rawUrl = document.getElementById('url-input').value.trim();
+      const purpose = document.getElementById('purpose-input').value.trim();
+
+      if (!rawUrl) {
+        showError('Please enter a URL to audit.');
+        return;
+      }
+
+      // Normalize URL
+      const url = rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`;
+
+      try { new URL(url); } catch {
+        showError('That doesn\'t look like a valid URL. Please include the full address, e.g. https://example.com');
+        return;
+      }
+
+      // Switch to progress state
+      document.getElementById('progress-url').textContent = url;
+      showState('progress');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      setStep(0);
+
+      let siteMap;
+
+      // ── Step 1: Crawl ──
+      try {
+        setStep(1);
+        const crawlRes = await fetch('/api/crawl', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, max_pages: 10 }),
+        });
+
+        const crawlData = await crawlRes.json();
+
+        if (!crawlRes.ok) {
+          throw new Error(crawlData.error || `Crawl failed (${crawlRes.status})`);
+        }
+
+        if (!crawlData.pages || crawlData.pages.length === 0) {
+          throw new Error('No pages could be crawled from that URL. The site may be inaccessible or entirely JavaScript-rendered.');
+        }
+
+        siteMap = crawlData;
+      } catch (err) {
+        showState('input');
+        showError(err.message || 'Crawl failed. Please check the URL and try again.');
+        return;
+      }
+
+      // ── Steps 2–8: Analyze ──
+      const cancelTimer = startAnalysisTimer();
+
+      try {
+        const analyzeRes = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ site_map: siteMap, site_purpose: purpose || null }),
+        });
+
+        cancelTimer();
+
+        const report = await analyzeRes.json();
+
+        if (!analyzeRes.ok) {
+          throw new Error(report.error || `Analysis failed (${analyzeRes.status})`);
+        }
+
+        completeAllSteps();
+        await new Promise(r => setTimeout(r, 400));
+
+        renderResults(report, siteMap);
+        showState('results');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (err) {
+        cancelTimer();
+        showState('input');
+        showError(err.message || 'Analysis failed. Please try again.');
+      }
+    });
+  </script>
+
+</body>
+</html>
