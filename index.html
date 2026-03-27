@@ -897,6 +897,7 @@
     trigger.addEventListener('click', () => {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
+      gtag('event', 'easter_egg_opened', { event_category: 'engagement', event_label: 'poem' });
     });
     closeBtn.addEventListener('click', () => {
       panel.classList.remove('open');
