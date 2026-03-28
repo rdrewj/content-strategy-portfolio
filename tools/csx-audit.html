@@ -589,6 +589,128 @@
       margin-bottom: 0.3rem;
     }
 
+    /* Lead gen card */
+    .lead-gen-card {
+      background: rgba(0,0,0,0.03);
+      border: 1px solid var(--rule);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .lead-gen-card h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .lead-gen-card p {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .lead-gen-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(139, 58, 42, 0.35);
+      padding: 0.5rem 1.1rem;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .lead-gen-cta:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+      background: rgba(0,0,0,0.03);
+    }
+
+    /* Feedback module */
+    .feedback-module {
+      border-top: 1px solid var(--rule);
+      padding: 1.5rem 0 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .feedback-prompt {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .feedback-btns {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feedback-vote {
+      font-size: 1.1rem;
+      background: none;
+      border: 1px solid var(--rule);
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      line-height: 1.4;
+    }
+
+    .feedback-vote:hover { border-color: var(--ink-light); background: rgba(0,0,0,0.03); }
+    .feedback-vote.selected { border-color: var(--ink-light); background: rgba(0,0,0,0.05); }
+
+    .feedback-followup {
+      display: none;
+    }
+
+    .feedback-followup textarea {
+      width: 100%;
+      min-height: 4.5rem;
+      background: rgba(0,0,0,0.02);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.6;
+      padding: 0.6rem 0.8rem;
+      resize: vertical;
+      margin-bottom: 0.6rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .feedback-followup textarea:focus { border-color: var(--ink-light); }
+
+    .feedback-followup textarea::placeholder { color: var(--ink-faint); }
+
+    .feedback-submit {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      background: none;
+      border: 1px solid var(--rule);
+      padding: 0.45rem 1rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .feedback-submit:hover { color: var(--ink); border-color: var(--ink); }
+
+    .feedback-thanks {
+      display: none;
+      font-size: 0.82rem;
+      color: var(--ink-light);
+    }
+
     /* New audit button */
     .new-audit-btn {
       display: inline-flex;
@@ -801,6 +923,13 @@
           <p id="voice-summary-text"></p>
         </div>
 
+        <!-- Lead gen card -->
+        <div class="lead-gen-card">
+          <h3>Want to act on these findings?</h3>
+          <p>I'm Drew Johnson, a content strategist at Charles Schwab. I built this tool because I believe content problems should be nameable. If your audit surfaced something worth fixing, I'd be glad to talk.</p>
+          <a href="mailto:rdrewj@icloud.com" class="lead-gen-cta">Get in touch</a>
+        </div>
+
         <!-- IA Findings -->
         <div class="findings-section" id="ia-section">
           <button class="findings-toggle" aria-expanded="false" data-target="ia-body">
@@ -847,6 +976,20 @@
             <span class="toggle-arrow">▾</span>
           </button>
           <div class="findings-body" id="gaps-body"></div>
+        </div>
+
+        <!-- Feedback module -->
+        <div class="feedback-module" id="feedback-module">
+          <p class="feedback-prompt">Was this audit useful?</p>
+          <div class="feedback-btns" id="feedback-btns">
+            <button class="feedback-vote" id="vote-up" aria-label="Yes" onclick="handleVote('up')">👍</button>
+            <button class="feedback-vote" id="vote-down" aria-label="No" onclick="handleVote('down')">👎</button>
+          </div>
+          <div class="feedback-followup" id="feedback-followup">
+            <textarea id="feedback-text" placeholder="What would make it better?"></textarea>
+            <button class="feedback-submit" onclick="submitFeedback()">Submit</button>
+          </div>
+          <p class="feedback-thanks" id="feedback-thanks">Thanks — that helps.</p>
         </div>
 
       </div><!-- /state-results -->
@@ -981,6 +1124,24 @@
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+    }
+
+    // ── Feedback module ──────────────────────────────────────────────────────
+    let feedbackVote = null;
+
+    function handleVote(direction) {
+      feedbackVote = direction;
+      document.getElementById('vote-up').classList.toggle('selected', direction === 'up');
+      document.getElementById('vote-down').classList.toggle('selected', direction === 'down');
+      document.getElementById('feedback-followup').style.display = 'block';
+    }
+
+    function submitFeedback() {
+      const text = document.getElementById('feedback-text').value.trim();
+      console.log('[CSX Feedback]', { vote: feedbackVote, comment: text || null });
+      document.getElementById('feedback-btns').style.display = 'none';
+      document.getElementById('feedback-followup').style.display = 'none';
+      document.getElementById('feedback-thanks').style.display = 'block';
     }
 
     function renderResults(report, siteMap) {
@@ -1165,6 +1326,14 @@
 
         renderResults(report, siteMap);
         gtag('event', 'audit_completed', { overall_score: report.scores?.overall ?? null, pages_crawled: siteMap.pages?.length ?? 0 });
+        // Reset feedback module
+        feedbackVote = null;
+        document.getElementById('vote-up').classList.remove('selected');
+        document.getElementById('vote-down').classList.remove('selected');
+        document.getElementById('feedback-btns').style.display = 'flex';
+        document.getElementById('feedback-followup').style.display = 'none';
+        document.getElementById('feedback-text').value = '';
+        document.getElementById('feedback-thanks').style.display = 'none';
         showState('results');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
