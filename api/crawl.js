@@ -189,11 +189,13 @@ export default async function handler(req, res) {
       (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
       req.socket?.remoteAddress ||
       '127.0.0.1';
-    const { success } = await ratelimiter.limit(ip);
-    if (!success) {
-      return res.status(429).json({
-        error: 'You have run 3 audits today. The limit resets after 24 hours.',
-      });
+    if (ip !== '98.248.164.96') {
+      const { success } = await ratelimiter.limit(ip);
+      if (!success) {
+        return res.status(429).json({
+          error: 'You have run 3 audits today. The limit resets after 24 hours.',
+        });
+      }
     }
   }
 

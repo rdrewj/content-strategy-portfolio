@@ -7,6 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PV6J6XSZH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PV6J6XSZH');
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -600,6 +608,55 @@
 
     .new-audit-btn:hover { color: var(--ink); border-color: var(--ink); }
 
+    .export-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      background: none;
+      border: 1px solid var(--rule);
+      padding: 0.6rem 1.25rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      margin-left: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .export-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+    .contact-section {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .contact-section-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-send {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      padding: 0.75rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-send:hover { background: var(--accent); }
+
     /* SPA warning */
     .spa-warning {
       background: rgba(181, 101, 13, 0.07);
@@ -767,6 +824,7 @@
       <div id="state-results">
 
         <button class="new-audit-btn" id="new-audit-btn">← Run another audit</button>
+        <button class="export-btn" id="export-btn">Export results →</button>
 
         <div id="spa-warning-banner" class="spa-warning" style="display:none;"></div>
 
@@ -841,18 +899,39 @@
           <div class="findings-body" id="gaps-body"></div>
         </div>
 
+        <!-- Contact form -->
+        <div class="contact-section">
+          <p class="contact-section-title">Get in touch</p>
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Name <span>— optional</span></label>
+            <input type="text" id="contact-name" class="form-input" placeholder="Your name" autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact-email">Email <span>— optional</span></label>
+            <input type="email" id="contact-email" class="form-input" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact-company">Company <span>— optional</span></label>
+            <input type="text" id="contact-company" class="form-input" placeholder="Company or project" autocomplete="organization" />
+          </div>
+          <button class="btn-send" id="contact-send-btn">Send</button>
+        </div>
+
       </div><!-- /state-results -->
 
     </div><!-- /tool-body -->
 
     <footer>
       <p class="footer-mark">Drew Johnson</p>
-      <p class="footer-copy">© 2025 · CSX Audit · Powered by Claude</p>
+      <p class="footer-copy">© 2026 Robert Johnson. All rights reserved.</p>
     </footer>
 
   </div><!-- /page -->
 
   <script>
+    // ── Module state ─────────────────────────────────────────────────────────
+    let lastReport = null;
+
     // ── State ────────────────────────────────────────────────────────────────
     const states = {
       input: document.getElementById('state-input'),
@@ -976,6 +1055,7 @@
     }
 
     function renderResults(report, siteMap) {
+      lastReport = report;
       const { metadata, scores, executive_summary, top_recommendations, quick_wins,
               voice_profile, ia_findings, tone_findings, flow_findings, gap_findings } = report;
 
@@ -1066,6 +1146,66 @@
         body.classList.toggle('open', !expanded);
         btn.setAttribute('aria-expanded', String(!expanded));
       });
+    });
+
+    // ── Export results ───────────────────────────────────────────────────────
+    document.getElementById('export-btn').addEventListener('click', () => {
+      if (!lastReport) return;
+      const r = lastReport;
+      const sev = f => `[${(f.severity || 'low').toUpperCase()}]`;
+      const findingsMd = (label, findings) => {
+        if (!findings || findings.length === 0) return `### ${label}\nNo findings.\n`;
+        return `### ${label}\n` + findings.map(f =>
+          `**${sev(f)} ${f.title}**\n${f.description || ''}\n${f.recommendation ? `→ ${f.recommendation}` : ''}`
+        ).join('\n\n') + '\n';
+      };
+
+      const md = [
+        `# CSX Audit: ${r.metadata.url}`,
+        `${r.metadata.pages_analyzed} pages · ${new Date(r.metadata.analyzed_at).toLocaleString()}`,
+        '',
+        '## Scores',
+        `- IA & Hierarchy: ${r.scores.ia}`,
+        `- Tone & Voice: ${r.scores.tone}`,
+        `- User Flows: ${r.scores.flow}`,
+        `- Content Gaps: ${r.scores.gaps}`,
+        '',
+        '## Executive Summary',
+        r.executive_summary || '',
+        '',
+        '## Quick Wins',
+        (r.quick_wins || []).map((w, i) => `${i + 1}. ${w}`).join('\n'),
+        '',
+        '## Top Recommendations',
+        (r.top_recommendations || []).map((rec, i) => `${i + 1}. ${rec}`).join('\n'),
+        '',
+        findingsMd('IA & Hierarchy', r.ia_findings),
+        findingsMd('Tone & Voice', r.tone_findings),
+        findingsMd('User Flows', r.flow_findings),
+        findingsMd('Content Gaps', r.gap_findings),
+      ].join('\n');
+
+      const blob = new Blob([md], { type: 'text/markdown' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `csx-audit-${r.metadata.url.replace(/https?:\/\//, '').replace(/[^a-z0-9]/gi, '-')}.md`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // ── Contact send ─────────────────────────────────────────────────────────
+    document.getElementById('contact-send-btn').addEventListener('click', () => {
+      const name = document.getElementById('contact-name').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const company = document.getElementById('contact-company').value.trim();
+      const auditUrl = lastReport ? lastReport.metadata.url : '';
+      const body = [
+        name ? `Name: ${name}` : '',
+        email ? `Email: ${email}` : '',
+        company ? `Company: ${company}` : '',
+        auditUrl ? `\nAudit URL: ${auditUrl}` : '',
+      ].filter(Boolean).join('\n');
+      window.location.href = `mailto:rdrewj@icloud.com?subject=CSX Audit inquiry&body=${encodeURIComponent(body)}`;
     });
 
     // ── New audit button ─────────────────────────────────────────────────────
