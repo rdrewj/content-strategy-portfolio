@@ -632,84 +632,6 @@
       background: rgba(0,0,0,0.03);
     }
 
-    /* Feedback module */
-    .feedback-module {
-      border-top: 1px solid var(--rule);
-      padding: 1.5rem 0 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .feedback-prompt {
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.75rem;
-    }
-
-    .feedback-btns {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .feedback-vote {
-      font-size: 1.1rem;
-      background: none;
-      border: 1px solid var(--rule);
-      padding: 0.3rem 0.75rem;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      line-height: 1.4;
-    }
-
-    .feedback-vote:hover { border-color: var(--ink-light); background: rgba(0,0,0,0.03); }
-    .feedback-vote.selected { border-color: var(--ink-light); background: rgba(0,0,0,0.05); }
-
-    .feedback-followup {
-      display: none;
-    }
-
-    .feedback-followup textarea {
-      width: 100%;
-      min-height: 4.5rem;
-      background: rgba(0,0,0,0.02);
-      border: 1px solid var(--rule);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      font-weight: 300;
-      line-height: 1.6;
-      padding: 0.6rem 0.8rem;
-      resize: vertical;
-      margin-bottom: 0.6rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .feedback-followup textarea:focus { border-color: var(--ink-light); }
-
-    .feedback-followup textarea::placeholder { color: var(--ink-faint); }
-
-    .feedback-submit {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      background: none;
-      border: 1px solid var(--rule);
-      padding: 0.45rem 1rem;
-      cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .feedback-submit:hover { color: var(--ink); border-color: var(--ink); }
-
-    .feedback-thanks {
-      display: none;
-      font-size: 0.82rem;
-      color: var(--ink-light);
-    }
 
     /* New audit button */
     .new-audit-btn {
@@ -1183,23 +1105,6 @@
         .replace(/"/g, '&quot;');
     }
 
-    // ── Feedback module ──────────────────────────────────────────────────────
-    let feedbackVote = null;
-
-    function handleVote(direction) {
-      feedbackVote = direction;
-      document.getElementById('vote-up').classList.toggle('selected', direction === 'up');
-      document.getElementById('vote-down').classList.toggle('selected', direction === 'down');
-      document.getElementById('feedback-followup').style.display = 'block';
-    }
-
-    function submitFeedback() {
-      const text = document.getElementById('feedback-text').value.trim();
-      console.log('[CSX Feedback]', { vote: feedbackVote, comment: text || null });
-      document.getElementById('feedback-btns').style.display = 'none';
-      document.getElementById('feedback-followup').style.display = 'none';
-      document.getElementById('feedback-thanks').style.display = 'block';
-    }
 
     function renderResults(report, siteMap) {
       lastReport = report;
@@ -1444,14 +1349,6 @@
 
         renderResults(report, siteMap);
         gtag('event', 'audit_completed', { overall_score: report.scores?.overall ?? null, pages_crawled: siteMap.pages?.length ?? 0 });
-        // Reset feedback module
-        feedbackVote = null;
-        document.getElementById('vote-up').classList.remove('selected');
-        document.getElementById('vote-down').classList.remove('selected');
-        document.getElementById('feedback-btns').style.display = 'flex';
-        document.getElementById('feedback-followup').style.display = 'none';
-        document.getElementById('feedback-text').value = '';
-        document.getElementById('feedback-thanks').style.display = 'none';
         showState('results');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
