@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/tools/csx-audit", "destination": "/tools/csx-audit.html" }
+  ],
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 60
+    }
+  }
+}
