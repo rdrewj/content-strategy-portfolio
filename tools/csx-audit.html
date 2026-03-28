@@ -7,6 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PV6J6XSZH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PV6J6XSZH');
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1101,6 +1109,7 @@
       document.getElementById('progress-url').textContent = url;
       showState('progress');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      gtag('event', 'audit_started', { url_domain: new URL(url).hostname });
 
       setStep(0);
 
@@ -1127,6 +1136,7 @@
 
         siteMap = crawlData;
       } catch (err) {
+        gtag('event', 'audit_error', { error_stage: 'crawl', error_message: err.message });
         showState('input');
         showError(err.message || 'Crawl failed. Please check the URL and try again.');
         return;
@@ -1154,11 +1164,13 @@
         await new Promise(r => setTimeout(r, 400));
 
         renderResults(report, siteMap);
+        gtag('event', 'audit_completed', { overall_score: report.scores?.overall ?? null, pages_crawled: siteMap.pages?.length ?? 0 });
         showState('results');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
       } catch (err) {
         cancelTimer();
+        gtag('event', 'audit_error', { error_stage: 'analysis', error_message: err.message });
         showState('input');
         showError(err.message || 'Analysis failed. Please try again.');
       }
