@@ -57,11 +57,17 @@ function computeIAMetrics(pages, linkGraph) {
   return { orphaned, deepPages, categories, deadEnds, depth };
 }
 
-function scoreFindings(findings, highWeight = 15, medWeight = 7) {
-  if (findings.length === 0) return 95;
+function scoreFindings(findings, highWeight = 18, medWeight = 8, lowWeight = 3) {
+  if (findings.length === 0) return 88; // no findings = good, not perfect
   const high = findings.filter(f => f.severity === 'high').length;
   const med = findings.filter(f => f.severity === 'medium').length;
-  return Math.max(25, Math.min(95, 100 - high * highWeight - med * medWeight));
+  const low = findings.filter(f => f.severity === 'low').length;
+
+  // Diminishing returns after 3+ findings of same severity
+  const highScore = high <= 3 ? high * highWeight : 3 * highWeight + (high - 3) * 8;
+  const medScore = med <= 3 ? med * medWeight : 3 * medWeight + (med - 3) * 4;
+
+  return Math.max(20, Math.min(88, 100 - highScore - medScore - low * lowWeight));
 }
 
 async function callClaude(model, prompt, maxTokens) {
@@ -426,11 +432,11 @@ Return only the JSON object.`,
   );
 
   const scores = {
-    ia: scoreFindings(ia),
-    tone: scoreFindings(tone, 12, 6),
-    flow: scoreFindings(flow),
-    gaps: scoreFindings(gaps, 10, 5),
-  };
+  ia: scoreFindings(ia),           // (18, 8, 3) — full weight, structural failures
+  tone: scoreFindings(tone, 15, 7), // tightened from (12, 6)
+  flow: scoreFindings(flow),        // (18, 8, 3) — full weight, conversion failures  
+  gaps: scoreFindings(gaps, 15, 6), // tightened from (10, 5)
+};
 
   const fallback = {
     executive_summary: `Audit of ${siteUrl} complete. ${ia.length + tone.length + flow.length + gaps.length} findings across ${pages.length} pages.`,

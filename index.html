@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PV6J6XSZH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PV6J6XSZH');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Drew Johnson | Content Strategy</title>
@@ -103,6 +111,18 @@
     }
 
     .hero-work-link:hover { color: var(--ink); }
+
+    .hero-tool-link {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-top: 0.25rem;
+    }
+
+    .hero-tool-link:hover { color: var(--ink); }
 
     .hero-right {
       display: flex;
@@ -601,6 +621,7 @@
       margin-top: 2.5rem;
     }
 
+
     @media (max-width: 900px) {
       .brief-panel { padding: 2rem 2rem 3rem; }
       .brief-header { flex-direction: column; gap: 1rem; }
@@ -621,6 +642,7 @@
     .hero-descriptor { animation-delay: 0.28s; }
     .hero-cv-link    { animation-delay: 0.38s; }
     .hero-work-link  { animation-delay: 0.45s; }
+    .hero-tool-link  { animation-delay: 0.52s; }
 
     .hero-right > * {
       animation: fadeUp 0.7s ease both;
@@ -649,10 +671,11 @@
       <p class="hero-eyebrow">UX Content Strategy &nbsp;·&nbsp; AI Content Architecture</p>
       <h1 class="hero-name">Drew<br><em>Johnson</em></h1>
       <p class="hero-descriptor">
-        I design content systems that reduce complexity, improve decision-making, and scale clarity across enterprise products.
+        I design content systems that reduce complexity, sharpen decision-making, and hold up at enterprise scale.
       </p>
       <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download CV</a>
       <a href="#work" class="hero-work-link">View Selected Work →</a>
+      <a href="tools/csx-audit.html" class="hero-tool-link">Try the CSX Audit →</a>
     </div>
     <div class="hero-right">
       <div class="hero-stat-grid">
@@ -692,7 +715,7 @@
           I build systems that teams can actually use. That means writing standards with enough specificity to guide real decisions, information architecture that reflects how users think, and governance frameworks that hold up inside real organizational constraints.
         </p>
         <p>
-          I've spent the past decade working at financial services and healthcare companies where content complexity is high and the cost of confusion is measurable. I'm most useful when an organization needs to move from inconsistent, ad hoc content to a system with structure and rules.
+          I've spent the past decade at financial services and healthcare companies. The work tends to involve high content complexity, real regulatory constraints, and organizations that need to move from ad hoc to systematic.
         </p>
       </div>
     </div>
@@ -708,42 +731,42 @@
     <div class="work-grid">
 
       <!-- CARD 1 -->
-      <a class="work-card" data-category="case-study" href="case-studies/mobile-dashboard.html">
+      <a class="work-card" data-category="case-study" href="case-studies/talent-architecture.html">
         <p class="card-type">Case Study · Charles Schwab</p>
-        <h3 class="card-title">Re-imagining the Mobile Account Summary as a Dashboard</h3>
-        <p class="card-desc">Post-migration TDA clients found Schwab's summary experience limiting. Content structure and IA reconciled competing needs — active traders vs. passive investors — within a single shared experience.</p>
-        <p class="card-meta">Mobile · UX Content Strategy · IA</p>
-        <span class="card-arrow">↗</span>
-      </a>
-
-      <!-- CARD 2 -->
-      <a class="work-card" data-category="case-study" href="case-studies/answer-widgets.html">
-        <p class="card-type">Case Study · Charles Schwab</p>
-        <h3 class="card-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</h3>
-        <p class="card-desc">When automation failed, I built the content infrastructure from scratch — a 557-widget library across 101 experiences, delivered six weeks ahead of schedule with 605K user interactions by year end.</p>
-        <p class="card-meta">Search · Content Operations · Analytics</p>
-        <span class="card-arrow">↗</span>
-      </a>
-
-      <!-- CARD 3 -->
-      <a class="work-card" data-category="case-study" href="/case-studies/talent-architecture.html">
-        <p class="card-type">Case Study · Fortune 500 Financial Services</p>
         <h3 class="card-title">Scaling Talent Architecture with AI-Assisted Content Strategy</h3>
-        <p class="card-desc">Transformed a fractured, unusable competency framework into a governance-ready talent architecture — approved at the C-suite and live for the 2026 review cycle across digital retail, product, design, content, and accessibility.</p>
+        <p class="card-desc">Transformed a fractured, unusable competency framework into a governance-ready talent architecture. Approved at the C-suite and live for the 2026 review cycle across digital retail, product, design, content, and accessibility.</p>
         <p class="card-meta">AI Content Strategy · Talent Architecture · Governance</p>
         <span class="card-arrow">↗</span>
       </a>
 
-      <!-- CARD 3 -->
+      <!-- CARD 2 -->
       <a class="work-card" data-category="case-study" href="case-studies/ux-writing-guide.html">
         <p class="card-type">Case Study · Charles Schwab</p>
         <h3 class="card-title">From Stranded Artifact to Living Standard: Schwab UX Writing Guide</h3>
-        <p class="card-desc">Migrating a fragmented SharePoint document into the Everest design system drove a 10x increase in monthly visits — and became the foundation for an AI-assisted writing tool.</p>
+        <p class="card-desc">Migrating a fragmented SharePoint document into the Everest design system drove a 10x increase in monthly visits and became the foundation for an AI-assisted writing tool.</p>
         <p class="card-meta">Design System · UX Writing Standards · AI</p>
         <span class="card-arrow">↗</span>
       </a>
 
+      <!-- CARD 3 -->
+      <a class="work-card" data-category="case-study" href="case-studies/mobile-dashboard.html">
+        <p class="card-type">Case Study · Charles Schwab</p>
+        <h3 class="card-title">Re-imagining the Mobile Account Summary as a Dashboard</h3>
+        <p class="card-desc">Post-migration TDA clients found Schwab's summary experience limiting. Content structure and IA reconciled the competing needs of active traders and passive investors within a single shared experience.</p>
+        <p class="card-meta">Mobile · UX Content Strategy · IA</p>
+        <span class="card-arrow">↗</span>
+      </a>
+
       <!-- CARD 4 -->
+      <a class="work-card" data-category="case-study" href="case-studies/answer-widgets.html">
+        <p class="card-type">Case Study · Charles Schwab</p>
+        <h3 class="card-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</h3>
+        <p class="card-desc">When automation failed, I built the content infrastructure from scratch: a 557-widget library across 101 experiences, delivered six weeks ahead of schedule with 605K user interactions by year end.</p>
+        <p class="card-meta">Search · Content Operations · Analytics</p>
+        <span class="card-arrow">↗</span>
+      </a>
+
+      <!-- CARD 5 -->
       <a class="work-card" data-category="case-study" href="case-studies/mckesson.html">
         <p class="card-type">Case Study · McKesson</p>
         <h3 class="card-title">McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift</h3>
@@ -907,6 +930,7 @@
     trigger.addEventListener('click', () => {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
+      gtag('event', 'easter_egg_opened', { event_category: 'engagement', event_label: 'poem' });
     });
     closeBtn.addEventListener('click', () => {
       panel.classList.remove('open');
