@@ -187,29 +187,6 @@
       line-height: 1.1;
     }
 
-    /* ── WORK FILTERS ── */
-    .work-filters {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .filter-btn {
-      font-family: var(--sans);
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      background: none;
-      border: 1px solid var(--rule);
-      padding: 0.35rem 0.75rem;
-      cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .filter-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
-    .filter-btn.active { color: var(--ink); border-color: var(--ink); }
-
     /* ── PHILOSOPHY ── */
     #philosophy {
       max-width: 1100px;
@@ -314,67 +291,6 @@
     .work-card:hover .card-arrow {
       color: var(--accent);
       transform: translate(3px, -3px);
-    }
-
-    /* ── FEATURED TOOL CARD ── */
-    .work-card--featured {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 2rem;
-      align-items: center;
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-top: 3px solid var(--accent);
-    }
-
-    .work-card--featured:hover {
-      background: #fff;
-      transform: translateY(-2px);
-    }
-
-    .work-card--featured .card-arrow { display: none; }
-
-    .tool-cta-block {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.75rem;
-      flex-shrink: 0;
-    }
-
-    .tool-cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--cream);
-      background: var(--ink);
-      padding: 0.65rem 1.25rem;
-      text-decoration: none;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
-
-    .work-card--featured:hover .tool-cta-btn { background: var(--accent); }
-
-    .tool-live-badge {
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 0.2rem 0.5rem;
-    }
-
-    @media (max-width: 900px) {
-      .work-card--featured {
-        grid-template-columns: 1fr;
-      }
-      .tool-cta-block { align-items: flex-start; }
     }
 
     /* ── ABOUT ── */
@@ -803,12 +719,6 @@
       <h2 class="section-title">Selected Work</h2>
     </div>
 
-    <div class="work-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="case-study">Case Studies</button>
-      <button class="filter-btn" data-filter="tool">Tools</button>
-    </div>
-
     <div class="work-grid">
 
       <!-- CARD 1 -->
@@ -856,18 +766,13 @@
         <span class="card-arrow">↗</span>
       </a>
 
-      <!-- TOOL CARD — Featured -->
-      <a class="work-card work-card--featured" data-category="tool" href="tools/csx-audit.html">
-        <div>
-          <p class="card-type">Interactive Tool · Content Strategy</p>
-          <h3 class="card-title">CSX Audit</h3>
-          <p class="card-desc">Enter any URL and get a full content strategy readout: IA gaps, tone and voice consistency, user flow problems, and content you should be creating but aren't. Powered by Claude.</p>
-          <p class="card-meta">Content Strategy · AI · Interactive</p>
-        </div>
-        <div class="tool-cta-block">
-          <span class="tool-live-badge">Live Tool</span>
-          <span class="tool-cta-btn">Try the Audit →</span>
-        </div>
+      <!-- TOOL CARD -->
+      <a class="work-card" data-category="tool" href="tools/csx-audit.html">
+        <p class="card-type" style="color: var(--ink-light);">Interactive Tool</p>
+        <h3 class="card-title">CSX Audit</h3>
+        <p class="card-desc">Enter any URL and get a full content strategy readout: IA gaps, tone and voice consistency, user flow problems, and content you should be creating but aren't. Powered by Claude.</p>
+        <p class="card-meta">Content Strategy · AI · Interactive</p>
+        <span class="card-arrow">↗</span>
       </a>
 
     </div>
