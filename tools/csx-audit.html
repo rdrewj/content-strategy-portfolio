@@ -324,7 +324,7 @@
 
     .scores-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       background: var(--rule);
       border: 1px solid var(--rule);
@@ -770,8 +770,8 @@
       <p class="tool-eyebrow">Interactive Tool</p>
       <h1 class="tool-title">CSX Audit</h1>
       <p class="tool-desc">
-        Enter any URL to get a full content strategy readout — information architecture gaps,
-        tone and voice consistency, user flow problems, and content you should be creating
+        Enter any URL to get a full content strategy readout — information architecture,
+        tone and voice consistency, and content you should be creating
         but aren't. Powered by Claude.
       </p>
     </div>
@@ -851,10 +851,6 @@
           </li>
           <li class="progress-step" data-step="6">
             <span class="step-icon pending">○</span>
-            Mapping user flows
-          </li>
-          <li class="progress-step" data-step="7">
-            <span class="step-icon pending">○</span>
             Identifying content gaps
           </li>
           <li class="progress-step" data-step="8">
@@ -924,18 +920,6 @@
             <span class="toggle-arrow">▾</span>
           </button>
           <div class="findings-body" id="tone-body"></div>
-        </div>
-
-        <!-- Flow Findings -->
-        <div class="findings-section" id="flow-section">
-          <button class="findings-toggle" aria-expanded="false" data-target="flow-body">
-            <span class="toggle-left">
-              <span class="toggle-title">User Flows</span>
-              <span class="toggle-count" id="flow-count"></span>
-            </span>
-            <span class="toggle-arrow">▾</span>
-          </button>
-          <div class="findings-body" id="flow-body"></div>
         </div>
 
         <!-- Gap Findings -->
@@ -1038,10 +1022,9 @@
         { step: 2, delay: 1000 },
         { step: 3, delay: 5000 },
         { step: 4, delay: 12000 },
-        { step: 5, delay: 19000 },
-        { step: 6, delay: 26000 },
-        { step: 7, delay: 33000 },
-        { step: 8, delay: 42000 },
+        { step: 5, delay: 21000 },
+        { step: 6, delay: 32000 },
+        { step: 7, delay: 42000 },
       ];
       const timers = timeline.map(({ step, delay }) =>
         setTimeout(() => setStep(step), delay)
@@ -1109,7 +1092,7 @@
     function renderResults(report, siteMap) {
       lastReport = report;
       const { metadata, scores, executive_summary, top_recommendations, quick_wins,
-              voice_profile, ia_findings, tone_findings, flow_findings, gap_findings } = report;
+              voice_profile, ia_findings, tone_findings, gap_findings } = report;
 
       // SPA warning
       const spaBanner = document.getElementById('spa-warning-banner');
@@ -1124,7 +1107,7 @@
       document.getElementById('results-url').textContent = metadata.url;
 
       // Scores
-      const labels = { ia: 'IA & Hierarchy', tone: 'Tone & Voice', flow: 'User Flows', gaps: 'Content Gaps' };
+      const labels = { ia: 'IA & Hierarchy', gaps: 'Content Gaps', tone: 'Tone & Voice' };
       document.getElementById('scores-grid').innerHTML = Object.entries(scores)
         .map(([k, v]) => `
           <div class="score-cell">
@@ -1172,13 +1155,11 @@
       // Findings sections
       renderFindings(ia_findings, 'ia-body', 'ia-count');
       renderFindings(tone_findings, 'tone-body', 'tone-count');
-      renderFindings(flow_findings, 'flow-body', 'flow-count');
       renderFindings(gap_findings, 'gaps-body', 'gaps-count');
 
       // Auto-expand first section with high-severity findings
       const sections = [
         { findings: ia_findings, btn: document.querySelector('[data-target="ia-body"]'), body: document.getElementById('ia-body') },
-        { findings: flow_findings, btn: document.querySelector('[data-target="flow-body"]'), body: document.getElementById('flow-body') },
         { findings: gap_findings, btn: document.querySelector('[data-target="gaps-body"]'), body: document.getElementById('gaps-body') },
         { findings: tone_findings, btn: document.querySelector('[data-target="tone-body"]'), body: document.getElementById('tone-body') },
       ];
@@ -1218,9 +1199,8 @@
         '',
         '## Scores',
         `- IA & Hierarchy: ${r.scores.ia}`,
-        `- Tone & Voice: ${r.scores.tone}`,
-        `- User Flows: ${r.scores.flow}`,
         `- Content Gaps: ${r.scores.gaps}`,
+        `- Tone & Voice: ${r.scores.tone}`,
         '',
         '## Executive Summary',
         r.executive_summary || '',
@@ -1232,9 +1212,8 @@
         (r.top_recommendations || []).map((rec, i) => `${i + 1}. ${rec}`).join('\n'),
         '',
         findingsMd('IA & Hierarchy', r.ia_findings),
-        findingsMd('Tone & Voice', r.tone_findings),
-        findingsMd('User Flows', r.flow_findings),
         findingsMd('Content Gaps', r.gap_findings),
+        findingsMd('Tone & Voice', r.tone_findings),
       ].join('\n');
 
       const blob = new Blob([md], { type: 'text/markdown' });

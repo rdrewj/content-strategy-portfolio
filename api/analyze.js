@@ -57,7 +57,7 @@ function computeIAMetrics(pages, linkGraph) {
   return { orphaned, deepPages, categories, deadEnds, depth };
 }
 
-function scoreFindings(findings, highWeight = 18, medWeight = 8, lowWeight = 3) {
+function scoreFindings(findings, highWeight = 22, medWeight = 10, lowWeight = 4) {
   if (findings.length === 0) return 88; // no findings = good, not perfect
   const high = findings.filter(f => f.severity === 'high').length;
   const med = findings.filter(f => f.severity === 'medium').length;
@@ -279,71 +279,6 @@ Return only the JSON array.`,
   return Array.isArray(result) ? result : [];
 }
 
-async function analyzeFlow(pages, linkGraph, iaMetrics, sitePurpose) {
-  const deadEndStr =
-    iaMetrics.deadEnds
-      .map(
-        p =>
-          `  ${p.url} (${p.page_type}, ${p.word_count} words, CTAs: ${
-            p.cta_elements.map(c => c.text).join(', ') || 'none'
-          })`
-      )
-      .join('\n') || '  none';
-
-  const noCTAStr =
-    pages
-      .filter(p => p.cta_elements.length === 0 && !['legal', 'support'].includes(p.page_type))
-      .map(p => `  ${p.url} (${p.page_type})`)
-      .join('\n') || '  none';
-
-  const highTrafficStr = [...pages]
-    .sort((a, b) => (b.in_degree || 0) - (a.in_degree || 0))
-    .slice(0, 5)
-    .map(
-      p =>
-        `  ${p.url} — in-links: ${p.in_degree || 0}, CTAs: ${
-          p.cta_elements.map(c => c.text).join(', ') || 'none'
-        }`
-    )
-    .join('\n');
-
-  const pageListStr = pages.map(p => `  ${p.url} (${p.page_type})`).join('\n');
-
-  const result = await callClaude(
-    'claude-sonnet-4-6',
-    `You are auditing user flows and conversion paths on a website.
-
-Site purpose: ${sitePurpose || 'infer from pages below'}
-
-All pages:
-${pageListStr}
-
-Dead-end pages (no outbound links to other site pages):
-${deadEndStr}
-
-Pages with no CTA elements:
-${noCTAStr}
-
-Most-linked pages (highest traffic proxies):
-${highTrafficStr}
-
-For each major user intent this site should serve, consider the likely path from entry to conversion. Identify where it breaks or goes missing.
-
-Return a JSON array of findings:
-[{
-  "title": "concise title",
-  "severity": "high|medium|low",
-  "affected_urls": ["url"],
-  "description": "what the flow problem is and its impact on the user",
-  "recommendation": "specific, actionable fix"
-}]
-
-Return only the JSON array.`,
-    1200
-  );
-
-  return Array.isArray(result) ? result : [];
-}
 
 async function analyzeGaps(pages, compressions, sitePurpose) {
   // Topic frequency from compressions
@@ -401,8 +336,8 @@ Return only the JSON array.`,
   return Array.isArray(result) ? result : [];
 }
 
-async function synthesize(pages, ia, tone, flow, gaps, voiceProfile, sitePurpose, siteUrl) {
-  const highTotal = [...ia, ...tone, ...flow, ...gaps].filter(f => f.severity === 'high').length;
+async function synthesize(pages, ia, tone, gaps, voiceProfile, sitePurpose, siteUrl) {
+  const highTotal = [...ia, ...tone, ...gaps].filter(f => f.severity === 'high').length;
 
   const result = await callClaude(
     'claude-haiku-4-5-20251001',
@@ -416,7 +351,6 @@ Voice baseline: ${voiceProfile.voice_summary || 'not determined'}
 Findings:
 - IA/Hierarchy: ${ia.length} findings. High-severity: ${ia.filter(f=>f.severity==='high').length}. Top: ${ia.slice(0,2).map(f=>f.title).join('; ') || 'none'}
 - Tone/Voice: ${tone.length} findings. High-severity: ${tone.filter(f=>f.severity==='high').length}. Top: ${tone.slice(0,2).map(f=>f.title).join('; ') || 'none'}
-- User Flow: ${flow.length} findings. High-severity: ${flow.filter(f=>f.severity==='high').length}. Top: ${flow.slice(0,2).map(f=>f.title).join('; ') || 'none'}
 - Content Gaps: ${gaps.length} gaps. High-priority: ${gaps.filter(f=>f.severity==='high').length}. Top: ${gaps.slice(0,2).map(f=>f.title).join('; ') || 'none'}
 - Total high-severity: ${highTotal}
 
@@ -432,16 +366,15 @@ Return only the JSON object.`,
   );
 
   const scores = {
-  ia: scoreFindings(ia),           // (18, 8, 3) — full weight, structural failures
-  tone: scoreFindings(tone, 15, 7), // tightened from (12, 6)
-  flow: scoreFindings(flow),        // (18, 8, 3) — full weight, conversion failures  
-  gaps: scoreFindings(gaps, 15, 6), // tightened from (10, 5)
-};
+    ia:   scoreFindings(ia),              // (22, 10, 4) — structural foundation, most penalizing
+    gaps: scoreFindings(gaps, 16, 7, 3),  // mid priority — missing content harms value delivery
+    tone: scoreFindings(tone, 10, 5, 2),  // softest signal — polish, not structure
+  };
 
   const fallback = {
-    executive_summary: `Audit of ${siteUrl} complete. ${ia.length + tone.length + flow.length + gaps.length} findings across ${pages.length} pages.`,
-    top_recommendations: [...ia, ...flow, ...gaps].slice(0, 5).map(f => f.recommendation || f.title),
-    quick_wins: [...flow, ...tone].slice(0, 3).map(f => f.recommendation || f.title),
+    executive_summary: `Audit of ${siteUrl} complete. ${ia.length + tone.length + gaps.length} findings across ${pages.length} pages.`,
+    top_recommendations: [...ia, ...gaps].slice(0, 5).map(f => f.recommendation || f.title),
+    quick_wins: [...gaps, ...tone].slice(0, 3).map(f => f.recommendation || f.title),
   };
 
   return {
@@ -477,10 +410,9 @@ export default async function handler(req, res) {
     const voiceProfile = await buildVoiceProfile(canonicalPages);
     const iaMetrics = computeIAMetrics(pages, linkGraph);
 
-    const [iaFindings, toneFindings, flowFindings, gapFindings] = await Promise.all([
+    const [iaFindings, toneFindings, gapFindings] = await Promise.all([
       analyzeIA(pages, linkGraph, iaMetrics, site_purpose),
       analyzeTone(pages, compressions, voiceProfile),
-      analyzeFlow(pages, linkGraph, iaMetrics, site_purpose),
       analyzeGaps(pages, compressions, site_purpose),
     ]);
 
@@ -488,7 +420,6 @@ export default async function handler(req, res) {
       pages,
       iaFindings,
       toneFindings,
-      flowFindings,
       gapFindings,
       voiceProfile,
       site_purpose,
@@ -510,7 +441,6 @@ export default async function handler(req, res) {
       voice_profile: voiceProfile,
       ia_findings: iaFindings,
       tone_findings: toneFindings,
-      flow_findings: flowFindings,
       gap_findings: gapFindings,
     });
   } catch (err) {
