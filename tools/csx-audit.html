@@ -350,11 +350,8 @@
       font-size: 2.2rem;
       font-weight: 300;
       line-height: 1;
+      color: var(--ink);
     }
-
-    .score-value.high { color: var(--green); }
-    .score-value.mid { color: var(--amber); }
-    .score-value.low { color: var(--accent); }
 
     .exec-summary {
       margin-bottom: 2rem;
@@ -997,13 +994,6 @@
       el.classList.remove('visible');
     }
 
-    // ── Score color class ────────────────────────────────────────────────────
-    function scoreClass(n) {
-      if (n >= 80) return 'high';
-      if (n >= 60) return 'mid';
-      return 'low';
-    }
-
     // ── Render results ───────────────────────────────────────────────────────
     function renderFindings(findings, bodyId, countId) {
       const body = document.getElementById(bodyId);
@@ -1064,7 +1054,7 @@
         .map(([k, v]) => `
           <div class="score-cell">
             <p class="score-label">${labels[k]}</p>
-            <p class="score-value ${scoreClass(v)}">${v}</p>
+            <p class="score-value">${v}</p>
           </div>
         `).join('');
 
