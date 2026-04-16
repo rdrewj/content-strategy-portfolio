@@ -4,17 +4,6 @@ const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-function identifyCanonicalPages(pages) {
-  const priority = ['homepage', 'about', 'product_service', 'landing_page', 'case_study'];
-  return [...pages]
-    .sort((a, b) => {
-      const ai = priority.indexOf(a.page_type);
-      const bi = priority.indexOf(b.page_type);
-      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-    })
-    .slice(0, 3);
-}
-
 function computeIAMetrics(pages, linkGraph) {
   // Orphaned pages: in-degree 0 and not homepage
   const orphaned = pages.filter(p => p.in_degree === 0 && p.page_type !== 'homepage');
@@ -135,36 +124,6 @@ Return only the JSON array.`,
   }));
 }
 
-async function buildVoiceProfile(canonicalPages) {
-  const pagesText = canonicalPages
-    .map(p => `[${p.page_type.toUpperCase()}]\n${p.body_text.slice(0, 900)}`)
-    .join('\n\n---\n\n');
-
-  const result = await callClaude(
-    'claude-haiku-4-5-20251001',
-    `Characterize the brand voice of this website from its most intentional pages.
-
-${pagesText}
-
-Return a JSON object:
-{
-  "formality": 1-5 (1=very casual, 5=very formal),
-  "person": "first_person_plural|first_person_singular|second_person|third_person",
-  "sentence_style": "short_punchy|medium_varied|long_complex",
-  "vocabulary_register": "plain|professional|technical|specialized",
-  "emotional_register": "warm_empathetic|confident_authoritative|neutral_informational|energetic_enthusiastic",
-  "characteristic_patterns": ["up to 3 notable stylistic patterns or quirks"],
-  "voice_summary": "one sentence describing the voice",
-  "what_this_voice_is_not": ["2-3 things this voice clearly avoids"]
-}
-
-Return only the JSON object.`,
-    700
-  );
-
-  return result || { voice_summary: 'Could not determine voice profile', formality: 3 };
-}
-
 async function analyzeIA(pages, linkGraph, iaMetrics, sitePurpose) {
   const navTree = pages
     .filter(p => p.is_in_nav || p.page_type === 'homepage')
@@ -225,61 +184,6 @@ Return only the JSON array.`,
   return Array.isArray(result) ? result : [];
 }
 
-async function analyzeTone(pages, compressions, voiceProfile) {
-  const baseline = `- Formality: ${voiceProfile.formality}/5
-- Person: ${voiceProfile.person}
-- Sentences: ${voiceProfile.sentence_style}
-- Vocabulary: ${voiceProfile.vocabulary_register}
-- Register: ${voiceProfile.emotional_register}
-- Summary: ${voiceProfile.voice_summary}
-- This voice is NOT: ${(voiceProfile.what_this_voice_is_not || []).join(', ')}`;
-
-  const comparisons = pages
-    .slice(1) // skip homepage (it's the baseline source)
-    .map(p => {
-      const comp = compressions.find(c => c.url === p.url) || {};
-      return `URL: ${p.url}
-Type: ${p.page_type}
-Tone markers: ${(comp.tone_markers || []).join(', ')}
-Sample: ${p.body_text.slice(0, 250)}`;
-    })
-    .join('\n\n---\n\n');
-
-  if (!comparisons) return [];
-
-  const result = await callClaude(
-    'claude-sonnet-4-6',
-    `You are auditing voice and tone consistency across a website.
-
-Established voice baseline (from homepage and primary pages):
-${baseline}
-
-Pages to check:
-${comparisons}
-
-IMPORTANT rules:
-- Legal/privacy pages being more formal = NOT a finding
-- Technical docs being more specialized = NOT a finding
-- Only flag significant, unintentional inconsistency that would confuse or alienate the target audience
-
-Return a JSON array (empty array if tone is consistent):
-[{
-  "title": "concise title",
-  "severity": "high|medium|low",
-  "affected_urls": ["url"],
-  "drift_direction": "more formal|more casual|more technical|more corporate|generic/bland",
-  "description": "what the drift is and why it's a problem",
-  "recommendation": "specific fix with example if possible"
-}]
-
-Return only the JSON array.`,
-    1200
-  );
-
-  return Array.isArray(result) ? result : [];
-}
-
-
 async function analyzeGaps(pages, compressions, sitePurpose) {
   // Topic frequency from compressions
   const freq = {};
@@ -336,8 +240,8 @@ Return only the JSON array.`,
   return Array.isArray(result) ? result : [];
 }
 
-async function synthesize(pages, ia, tone, gaps, voiceProfile, sitePurpose, siteUrl) {
-  const highTotal = [...ia, ...tone, ...gaps].filter(f => f.severity === 'high').length;
+async function synthesize(pages, ia, gaps, sitePurpose, siteUrl) {
+  const highTotal = [...ia, ...gaps].filter(f => f.severity === 'high').length;
 
   const result = await callClaude(
     'claude-haiku-4-5-20251001',
@@ -346,11 +250,9 @@ async function synthesize(pages, ia, tone, gaps, voiceProfile, sitePurpose, site
 Site: ${siteUrl}
 Purpose: ${sitePurpose || 'inferred from content'}
 Pages analyzed: ${pages.length}
-Voice baseline: ${voiceProfile.voice_summary || 'not determined'}
 
 Findings:
 - IA/Hierarchy: ${ia.length} findings. High-severity: ${ia.filter(f=>f.severity==='high').length}. Top: ${ia.slice(0,2).map(f=>f.title).join('; ') || 'none'}
-- Tone/Voice: ${tone.length} findings. High-severity: ${tone.filter(f=>f.severity==='high').length}. Top: ${tone.slice(0,2).map(f=>f.title).join('; ') || 'none'}
 - Content Gaps: ${gaps.length} gaps. High-priority: ${gaps.filter(f=>f.severity==='high').length}. Top: ${gaps.slice(0,2).map(f=>f.title).join('; ') || 'none'}
 - Total high-severity: ${highTotal}
 
@@ -368,13 +270,12 @@ Return only the JSON object.`,
   const scores = {
     ia:   scoreFindings(ia),              // (22, 10, 4) — structural foundation, most penalizing
     gaps: scoreFindings(gaps, 16, 7, 3),  // mid priority — missing content harms value delivery
-    tone: scoreFindings(tone, 10, 5, 2),  // softest signal — polish, not structure
   };
 
   const fallback = {
-    executive_summary: `Audit of ${siteUrl} complete. ${ia.length + tone.length + gaps.length} findings across ${pages.length} pages.`,
+    executive_summary: `Audit of ${siteUrl} complete. ${ia.length + gaps.length} findings across ${pages.length} pages.`,
     top_recommendations: [...ia, ...gaps].slice(0, 5).map(f => f.recommendation || f.title),
-    quick_wins: [...gaps, ...tone].slice(0, 3).map(f => f.recommendation || f.title),
+    quick_wins: [...gaps].slice(0, 3).map(f => f.recommendation || f.title),
   };
 
   return {
@@ -406,22 +307,17 @@ export default async function handler(req, res) {
 
   try {
     const compressions = await compressPages(pages);
-    const canonicalPages = identifyCanonicalPages(pages);
-    const voiceProfile = await buildVoiceProfile(canonicalPages);
     const iaMetrics = computeIAMetrics(pages, linkGraph);
 
-    const [iaFindings, toneFindings, gapFindings] = await Promise.all([
+    const [iaFindings, gapFindings] = await Promise.all([
       analyzeIA(pages, linkGraph, iaMetrics, site_purpose),
-      analyzeTone(pages, compressions, voiceProfile),
       analyzeGaps(pages, compressions, site_purpose),
     ]);
 
     const { synthesis, scores } = await synthesize(
       pages,
       iaFindings,
-      toneFindings,
       gapFindings,
-      voiceProfile,
       site_purpose,
       siteUrl
     );
@@ -438,9 +334,7 @@ export default async function handler(req, res) {
       executive_summary: synthesis.executive_summary,
       top_recommendations: synthesis.top_recommendations || [],
       quick_wins: synthesis.quick_wins || [],
-      voice_profile: voiceProfile,
       ia_findings: iaFindings,
-      tone_findings: toneFindings,
       gap_findings: gapFindings,
     });
   } catch (err) {
