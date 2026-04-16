@@ -226,71 +226,60 @@
       margin: 0 auto;
     }
 
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2px;
+    .work-list {
+      list-style: none;
+      border-top: 1px solid var(--rule);
     }
 
-    .work-card {
-      display: block;
+    .work-item {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .work-link {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2.5rem;
+      padding: 1.5rem 0;
       text-decoration: none;
       color: inherit;
-      background: var(--cream);
-      border: 1px solid var(--rule);
-      padding: 2rem;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      position: relative;
+      align-items: baseline;
     }
 
-    .work-card:hover {
-      background: #fff;
-      transform: translateY(-2px);
-      z-index: 2;
-    }
-
-    .card-type {
+    .work-item-label {
       font-size: 0.68rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
+      color: var(--ink-faint);
+      line-height: 1.5;
+      padding-top: 0.2rem;
     }
 
-    .card-title {
+    .work-item-label.tool { color: var(--ink-light); }
+
+    .work-item-title {
       font-family: var(--serif);
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 400;
-      line-height: 1.25;
-      margin-bottom: 0.6rem;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      transition: color 0.2s;
     }
 
-    .card-desc {
+    .work-link:hover .work-item-title { color: var(--accent); }
+
+    .work-item-desc {
       font-size: 0.88rem;
       color: var(--ink-light);
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
+      line-height: 1.65;
+      max-width: 64ch;
     }
 
-    .card-meta {
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-faint);
-    }
-
-    .card-arrow {
-      position: absolute;
-      bottom: 2rem;
-      right: 2rem;
-      font-size: 1rem;
-      color: var(--ink-faint);
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .work-card:hover .card-arrow {
-      color: var(--accent);
-      transform: translate(3px, -3px);
+    @media (max-width: 640px) {
+      .work-link {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
     }
 
     /* ── ABOUT ── */
@@ -729,72 +718,79 @@
       <h2 class="section-title">Selected Work</h2>
     </div>
 
-    <div class="work-grid">
+    <ul class="work-list">
 
-      <!-- CARD 1 -->
-      <a class="work-card" data-category="case-study" href="case-studies/talent-architecture.html">
-        <p class="card-type">Case Study · Charles Schwab</p>
-        <h3 class="card-title">Scaling Talent Architecture with AI-Assisted Content Strategy</h3>
-        <p class="card-desc">Transformed a fractured, unusable competency framework into a governance-ready talent architecture. Approved at the C-suite and live for the 2026 review cycle across digital retail, product, design, content, and accessibility.</p>
-        <p class="card-meta">AI Content Strategy · Talent Architecture · Governance</p>
-        <span class="card-arrow">↗</span>
-      </a>
+      <li class="work-item">
+        <a class="work-link" href="case-studies/talent-architecture.html">
+          <span class="work-item-label">Case Study · Schwab</span>
+          <div>
+            <p class="work-item-title">Scaling Talent Architecture with AI-Assisted Content Strategy</p>
+            <p class="work-item-desc">Transformed a fractured competency framework into a governance-ready talent architecture — approved at the C-suite and live for the 2026 review cycle.</p>
+          </div>
+        </a>
+      </li>
 
-      <!-- CARD 2 -->
-      <a class="work-card" data-category="case-study" href="case-studies/ux-writing-guide.html">
-        <p class="card-type">Case Study · Charles Schwab</p>
-        <h3 class="card-title">From Stranded Artifact to Living Standard: Schwab UX Writing Guide</h3>
-        <p class="card-desc">Migrating a fragmented SharePoint document into the Everest design system drove a 10x increase in monthly visits and became the foundation for an AI-assisted writing tool.</p>
-        <p class="card-meta">Design System · UX Writing Standards · AI</p>
-        <span class="card-arrow">↗</span>
-      </a>
+      <li class="work-item">
+        <a class="work-link" href="case-studies/ux-writing-guide.html">
+          <span class="work-item-label">Case Study · Schwab</span>
+          <div>
+            <p class="work-item-title">From Stranded Artifact to Living Standard: Schwab UX Writing Guide</p>
+            <p class="work-item-desc">Migrating a fragmented SharePoint doc into the Everest design system drove a 10x increase in monthly visits and seeded an AI-assisted writing tool.</p>
+          </div>
+        </a>
+      </li>
 
-      <!-- CARD 3 -->
-      <a class="work-card" data-category="case-study" href="case-studies/mobile-dashboard.html">
-        <p class="card-type">Case Study · Charles Schwab</p>
-        <h3 class="card-title">Re-imagining the Mobile Account Summary as a Dashboard</h3>
-        <p class="card-desc">Post-migration TDA clients found Schwab's summary experience limiting. Content structure and IA reconciled the competing needs of active traders and passive investors within a single shared experience.</p>
-        <p class="card-meta">Mobile · UX Content Strategy · IA</p>
-        <span class="card-arrow">↗</span>
-      </a>
+      <li class="work-item">
+        <a class="work-link" href="case-studies/mobile-dashboard.html">
+          <span class="work-item-label">Case Study · Schwab</span>
+          <div>
+            <p class="work-item-title">Re-imagining the Mobile Account Summary as a Dashboard</p>
+            <p class="work-item-desc">Content structure and IA reconciled the competing needs of active traders and passive investors within a single post-migration experience.</p>
+          </div>
+        </a>
+      </li>
 
-      <!-- CARD 4 -->
-      <a class="work-card" data-category="case-study" href="case-studies/answer-widgets.html">
-        <p class="card-type">Case Study · Charles Schwab</p>
-        <h3 class="card-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</h3>
-        <p class="card-desc">When automation failed, I built the content infrastructure from scratch: a 557-widget library across 101 experiences, delivered six weeks ahead of schedule with 605K user interactions by year end.</p>
-        <p class="card-meta">Search · Content Operations · Analytics</p>
-        <span class="card-arrow">↗</span>
-      </a>
+      <li class="work-item">
+        <a class="work-link" href="case-studies/answer-widgets.html">
+          <span class="work-item-label">Case Study · Schwab</span>
+          <div>
+            <p class="work-item-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</p>
+            <p class="work-item-desc">Built the content infrastructure from scratch — 557 widgets across 101 experiences, delivered six weeks ahead of schedule with 605K user interactions by year end.</p>
+          </div>
+        </a>
+      </li>
 
-      <!-- CARD 5 -->
-      <a class="work-card" data-category="case-study" href="case-studies/mckesson.html">
-        <p class="card-type">Case Study · McKesson</p>
-        <h3 class="card-title">McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift</h3>
-        <p class="card-desc">Led a cross-functional content enhancement program across McKesson.com — auditing 1,500 pages, navigating Brand vs. SEO tension, and producing a digital writing guide that held the balance. Form leads improved 82% YoY.</p>
-        <p class="card-meta">Content Strategy · SEO · Cross-Functional</p>
-        <span class="card-arrow">↗</span>
-      </a>
+      <li class="work-item">
+        <a class="work-link" href="case-studies/mckesson.html">
+          <span class="work-item-label">Case Study · McKesson</span>
+          <div>
+            <p class="work-item-title">McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift</p>
+            <p class="work-item-desc">Audited 1,500 pages, navigated Brand vs. SEO tension, and produced a digital writing guide that held the balance. Form leads improved 82% YoY.</p>
+          </div>
+        </a>
+      </li>
 
-      <!-- TOOL CARD -->
-      <a class="work-card" data-category="tool" href="tools/csx-audit.html">
-        <p class="card-type" style="color: var(--ink-light);">Interactive Tool</p>
-        <h3 class="card-title">CSX Audit</h3>
-        <p class="card-desc">Enter any URL and get a full content strategy readout: IA gaps, tone and voice consistency, user flow problems, and content you should be creating but aren't. Powered by Claude.</p>
-        <p class="card-meta">Content Strategy · AI · Interactive</p>
-        <span class="card-arrow">↗</span>
-      </a>
+      <li class="work-item">
+        <a class="work-link" href="tools/csx-audit.html">
+          <span class="work-item-label tool">Tool</span>
+          <div>
+            <p class="work-item-title">CSX Audit</p>
+            <p class="work-item-desc">Enter any URL and get a full content strategy readout — IA gaps, content you should be creating but aren't. Powered by Claude.</p>
+          </div>
+        </a>
+      </li>
 
-      <!-- COPY CLINIC CARD -->
-      <a class="work-card" data-category="tool" href="tools/copy-clinic.html">
-        <p class="card-type" style="color: var(--ink-light);">Interactive Tool</p>
-        <h3 class="card-title">Copy Clinic</h3>
-        <p class="card-desc">Paste a button label, error message, or any piece of UX writing. Get an honest content strategy read: what's working, what isn't, and a rewrite. Powered by Claude.</p>
-        <p class="card-meta">UX Writing · AI · Interactive</p>
-        <span class="card-arrow">↗</span>
-      </a>
+      <li class="work-item">
+        <a class="work-link" href="tools/copy-clinic.html">
+          <span class="work-item-label tool">Tool</span>
+          <div>
+            <p class="work-item-title">Copy Clinic</p>
+            <p class="work-item-desc">Paste a button label, error message, or any piece of UX writing. Get an honest read: what's working, what isn't, and a rewrite. Powered by Claude.</p>
+          </div>
+        </a>
+      </li>
 
-    </div>
+    </ul>
   </section>
 
   <!-- ABOUT -->
