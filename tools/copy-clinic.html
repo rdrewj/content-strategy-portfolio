@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copy Clinic | Drew Johnson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PV6J6XSZH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PV6J6XSZH');
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f2ec;
+      --ink: #1a1814;
+      --ink-light: #5a5550;
+      --ink-faint: #b0aba4;
+      --rule: #d8d2c8;
+      --accent: #8b3a2a;
+      --green: #2d6a4f;
+      --amber: #b5650d;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(245, 242, 236, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-mark {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-mark span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--ink); }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      padding-top: 80px;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .tool-header {
+      padding: 3rem 4rem 2.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .tool-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .tool-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .tool-desc {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      max-width: 54ch;
+      line-height: 1.75;
+    }
+
+    /* ── MAIN CONTENT AREA ── */
+    .tool-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 4rem 6rem;
+    }
+
+    /* ── STATE VISIBILITY ── */
+    #state-input    { display: block; }
+    #state-loading  { display: none; }
+    #state-results  { display: none; }
+
+    /* ── FORM ── */
+    .form-group { margin-bottom: 1.75rem; }
+
+    .form-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .form-label span {
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      color: var(--ink-faint);
+      opacity: 0.8;
+    }
+
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    .form-textarea:focus,
+    .form-select:focus { border-color: var(--ink); }
+
+    .form-textarea::placeholder { color: var(--ink-faint); }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.65;
+    }
+
+    .form-textarea.copy-field { min-height: 120px; }
+
+    .form-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b0aba4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .char-count {
+      font-size: 0.72rem;
+      color: var(--ink-faint);
+      text-align: right;
+      margin-top: 0.35rem;
+      transition: color 0.2s;
+    }
+
+    .char-count.warn { color: var(--amber); }
+    .char-count.over { color: var(--accent); }
+
+    .btn-run {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-run:hover:not(:disabled) { background: var(--accent); }
+    .btn-run:disabled { background: var(--ink-faint); cursor: not-allowed; }
+
+    .limit-note {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      line-height: 1.5;
+    }
+
+    .error-msg {
+      background: #fdf2f0;
+      border: 1px solid #e8b4aa;
+      color: #8b3a2a;
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* ── LOADING STATE ── */
+    .loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 2rem 0;
+    }
+
+    .loading-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .loading-copy-preview {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.4;
+      border-left: 2px solid var(--rule);
+      padding-left: 1.25rem;
+      max-width: 48ch;
+    }
+
+    .loading-status {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--ink-light);
+      font-size: 0.88rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid var(--rule);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    /* ── RESULTS STATE ── */
+    .results-actions-top {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      background: none;
+      border: 1px solid var(--rule);
+      padding: 0.6rem 1.25rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      font-family: var(--sans);
+    }
+
+    .btn-secondary:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* Original copy block */
+    .original-block {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .block-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .original-text {
+      font-family: var(--serif);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.45;
+      border-left: 2px solid var(--rule);
+      padding-left: 1.25rem;
+    }
+
+    .original-meta {
+      font-size: 0.72rem;
+      color: var(--ink-faint);
+      margin-top: 0.6rem;
+      padding-left: 1.25rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* Feedback grid */
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 2rem;
+    }
+
+    .feedback-col {
+      background: rgba(255,255,255,0.35);
+      border: 1px solid var(--rule);
+      padding: 1.5rem;
+    }
+
+    .feedback-heading {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feedback-heading::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .feedback-heading--green { color: var(--green); }
+    .feedback-heading--green::before { background: var(--green); }
+
+    .feedback-heading--amber { color: var(--amber); }
+    .feedback-heading--amber::before { background: var(--amber); }
+
+    .feedback-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .feedback-list li {
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+      padding-left: 0.85rem;
+      border-left: 1.5px solid var(--rule);
+    }
+
+    /* Rewrite block */
+    .rewrite-block {
+      margin-bottom: 2rem;
+      padding: 1.75rem;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent);
+    }
+
+    .rewrite-text {
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    /* Lens block */
+    .lens-block {
+      margin-bottom: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .lens-text {
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.75;
+      max-width: 58ch;
+    }
+
+    /* CTA section */
+    .results-cta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(139, 58, 42, 0.35);
+      padding: 0.6rem 1.25rem;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .btn-contact:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+      background: rgba(0,0,0,0.03);
+    }
+
+    /* Footer */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .footer-mark {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--ink-faint);
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .tool-header { padding: 2rem 1.5rem 1.75rem; }
+      .tool-body { padding: 2rem 1.5rem 4rem; }
+      .feedback-grid { grid-template-columns: 1fr; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-mark">Drew Johnson<span> | Content Strategy</span></a>
+    <ul class="nav-links">
+      <li><a href="/#philosophy">Approach</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#resume">CV</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/tools/copy-clinic.html" class="active">Copy Clinic</a></li>
+    </ul>
+  </nav>
+
+  <div class="page">
+
+    <div class="tool-header">
+      <p class="tool-eyebrow">Interactive Tool</p>
+      <h1 class="tool-title">Copy Clinic</h1>
+      <p class="tool-desc">
+        Paste a piece of UX copy — a button label, error message, onboarding headline,
+        tooltip, empty state. Get an honest content strategy read on what's working,
+        what isn't, and a rewrite. Powered by Claude.
+      </p>
+    </div>
+
+    <div class="tool-body">
+
+      <!-- ── INPUT STATE ── -->
+      <div id="state-input">
+        <div class="error-msg" id="error-msg" role="alert"></div>
+
+        <form id="clinic-form" novalidate>
+
+          <div class="form-group">
+            <label class="form-label" for="copy-input">
+              Your copy <span>— required</span>
+            </label>
+            <textarea
+              id="copy-input"
+              class="form-textarea copy-field"
+              placeholder="Paste your copy here — button label, error message, onboarding text, empty state, tooltip, headline…"
+              maxlength="1500"
+              aria-describedby="copy-char-count"
+            ></textarea>
+            <p class="char-count" id="copy-char-count">0 / 1,500</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="type-select">
+              Element type <span>— helps focus the analysis</span>
+            </label>
+            <select id="type-select" class="form-select" aria-label="Element type">
+              <option value="">Select a type (optional)</option>
+              <option value="Button label">Button label</option>
+              <option value="Error message">Error message</option>
+              <option value="Onboarding copy">Onboarding copy</option>
+              <option value="Empty state">Empty state</option>
+              <option value="Tooltip or helper text">Tooltip or helper text</option>
+              <option value="Headline or hero copy">Headline or hero copy</option>
+              <option value="Confirmation message">Confirmation message</option>
+              <option value="Navigation label">Navigation label</option>
+              <option value="Notification or alert">Notification or alert</option>
+              <option value="Form label or placeholder">Form label or placeholder</option>
+              <option value="Modal or dialog copy">Modal or dialog copy</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="context-input">
+              Context <span>— optional but useful</span>
+            </label>
+            <textarea
+              id="context-input"
+              class="form-textarea"
+              style="min-height: 72px;"
+              placeholder="What product is this for? Who's the user? What are they trying to do?"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-run" id="run-btn">
+            Analyze copy →
+          </button>
+        </form>
+
+        <p class="limit-note">10 analyses per day · No account required · Results in under 10 seconds</p>
+      </div>
+
+      <!-- ── LOADING STATE ── -->
+      <div id="state-loading">
+        <div class="loading-wrap">
+          <p class="loading-label">Analyzing</p>
+          <p class="loading-copy-preview" id="loading-preview"></p>
+          <div class="loading-status">
+            <span class="spinner"></span>
+            <span id="loading-msg">Reading your copy through a content strategy lens…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RESULTS STATE ── -->
+      <div id="state-results">
+
+        <div class="results-actions-top">
+          <button class="btn-secondary" id="new-btn">← Analyze another</button>
+        </div>
+
+        <!-- Original copy -->
+        <div class="original-block">
+          <p class="block-eyebrow">Your copy</p>
+          <p class="original-text" id="result-original"></p>
+          <p class="original-meta" id="result-meta"></p>
+        </div>
+
+        <!-- Feedback grid -->
+        <div class="feedback-grid">
+          <div class="feedback-col">
+            <h2 class="feedback-heading feedback-heading--green">What's landing</h2>
+            <ul class="feedback-list" id="strengths-list"></ul>
+          </div>
+          <div class="feedback-col">
+            <h2 class="feedback-heading feedback-heading--amber">What to sharpen</h2>
+            <ul class="feedback-list" id="improvements-list"></ul>
+          </div>
+        </div>
+
+        <!-- Rewrite -->
+        <div class="rewrite-block">
+          <p class="block-eyebrow" style="margin-bottom: 0.85rem;">Try this instead</p>
+          <p class="rewrite-text" id="result-rewrite"></p>
+        </div>
+
+        <!-- Drew's lens -->
+        <div class="lens-block">
+          <p class="block-eyebrow" style="margin-bottom: 0.75rem;">Drew's lens</p>
+          <p class="lens-text" id="result-lens"></p>
+        </div>
+
+        <!-- CTAs -->
+        <div class="results-cta">
+          <a href="mailto:rdrewj@icloud.com?subject=Copy Clinic follow-up" class="btn-contact">
+            Work with Drew →
+          </a>
+        </div>
+
+      </div><!-- /state-results -->
+
+    </div><!-- /tool-body -->
+
+    <footer>
+      <p class="footer-mark">Drew Johnson</p>
+      <p class="footer-copy">© 2026 Robert Johnson. All rights reserved.</p>
+    </footer>
+
+  </div><!-- /page -->
+
+  <script>
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function showState(name) {
+      document.getElementById('state-input').style.display   = name === 'input'   ? 'block' : 'none';
+      document.getElementById('state-loading').style.display = name === 'loading' ? 'block' : 'none';
+      document.getElementById('state-results').style.display = name === 'results' ? 'block' : 'none';
+    }
+
+    // ── Character counter ────────────────────────────────────────────────────
+    const copyInput = document.getElementById('copy-input');
+    const charCount = document.getElementById('copy-char-count');
+
+    copyInput.addEventListener('input', () => {
+      const len = copyInput.value.length;
+      charCount.textContent = `${len.toLocaleString()} / 1,500`;
+      charCount.className = 'char-count' + (len > 1400 ? ' over' : len > 1000 ? ' warn' : '');
+    });
+
+    // ── Error display ────────────────────────────────────────────────────────
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+
+    function clearError() {
+      const el = document.getElementById('error-msg');
+      el.textContent = '';
+      el.classList.remove('visible');
+    }
+
+    // ── Render results ───────────────────────────────────────────────────────
+    function renderResults(data, originalCopy, elementType) {
+      // Original copy
+      document.getElementById('result-original').textContent = originalCopy;
+      document.getElementById('result-meta').textContent = elementType || '';
+
+      // Strengths
+      const strengthsList = document.getElementById('strengths-list');
+      strengthsList.innerHTML = (data.strengths || [])
+        .map(s => `<li>${esc(s)}</li>`)
+        .join('');
+
+      // Improvements
+      const improvsList = document.getElementById('improvements-list');
+      improvsList.innerHTML = (data.improvements || [])
+        .map(i => `<li>${esc(i)}</li>`)
+        .join('');
+
+      // Rewrite
+      document.getElementById('result-rewrite').textContent = data.rewrite || '';
+
+      // Lens
+      document.getElementById('result-lens').textContent = data.lens || '';
+    }
+
+    // ── New analysis button ──────────────────────────────────────────────────
+    document.getElementById('new-btn').addEventListener('click', () => {
+      showState('input');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ── Form submit ──────────────────────────────────────────────────────────
+    document.getElementById('clinic-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+
+      const copy = copyInput.value.trim();
+      const elementType = document.getElementById('type-select').value;
+      const context = document.getElementById('context-input').value.trim();
+
+      if (!copy) {
+        showError('Please paste some copy to analyze.');
+        copyInput.focus();
+        return;
+      }
+
+      if (copy.length > 1500) {
+        showError('Copy must be under 1,500 characters. Please trim it down.');
+        copyInput.focus();
+        return;
+      }
+
+      // Show loading state
+      const preview = copy.length > 120 ? copy.slice(0, 120).trimEnd() + '…' : copy;
+      document.getElementById('loading-preview').textContent = preview;
+      showState('loading');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      gtag('event', 'copy_clinic_started', {
+        element_type: elementType || 'unspecified',
+        copy_length: copy.length,
+      });
+
+      try {
+        const res = await fetch('/api/critique', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            copy,
+            element_type: elementType || null,
+            context: context || null,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || `Analysis failed (${res.status})`);
+        }
+
+        renderResults(data, copy, elementType);
+        gtag('event', 'copy_clinic_completed', {
+          element_type: elementType || 'unspecified',
+        });
+        showState('results');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (err) {
+        gtag('event', 'copy_clinic_error', { error_message: err.message });
+        showState('input');
+        showError(err.message || 'Analysis failed. Please try again.');
+      }
+    });
+  </script>
+
+</body>
+</html>
