@@ -1,6 +1,16 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { applyCors, makeRateLimiter, getClientIp, isBypassIp } from '../lib/security.js';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+// Each analysis fans out to several Claude calls, so this endpoint is the most
+// expensive one. It previously had no rate limiting at all.
+const ratelimiter = makeRateLimiter({
+  requests: 5,
+  window: '1 d',
+  windowMs: 24 * 60 * 60 * 1000,
+  prefix: 'csx-analyze',
+});
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -287,15 +297,24 @@ Return only the JSON object.`,
 // ── Main handler ──────────────────────────────────────────────────────────────
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  applyCors(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return res.status(500).json({ error: 'Analysis service not configured.' });
+  }
+
+  // Rate limiting — this endpoint makes multiple paid model calls per request.
+  const ip = getClientIp(req);
+  if (!isBypassIp(ip)) {
+    const ok = await ratelimiter.check(ip);
+    if (!ok) {
+      return res.status(429).json({
+        error: 'You have run 5 analyses today. The limit resets after 24 hours.',
+      });
+    }
   }
 
   const { site_map, site_purpose } = req.body || {};

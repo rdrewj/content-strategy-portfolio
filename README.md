@@ -22,6 +22,8 @@ power two interactive, AI-driven tools.
 │   ├── crawl.js            # Crawls a site and builds a page/link graph
 │   ├── analyze.js          # Computes IA metrics + LLM analysis for the audit
 │   └── critique.js         # LLM-powered copy critique
+├── lib/                    # Shared server-side helpers
+│   └── security.js         # SSRF-safe fetch, CORS, and rate limiting
 ├── Drew_Johnson-Resume.pdf
 ├── CNAME                   # Custom domain (rdrewj.com)
 ├── vercel.json             # Routing + function config
@@ -68,9 +70,11 @@ require the serverless functions (and the environment variables below) to run.
 | `ANTHROPIC_API_KEY` | Anthropic API access for analysis and critique |
 | `UPSTASH_REDIS_REST_URL` | Upstash Redis endpoint for rate limiting |
 | `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis auth token |
+| `RATE_LIMIT_BYPASS_IP` | Optional. A single IP that bypasses rate limits (e.g. your own) |
 
-Rate limiting is skipped automatically when the Upstash variables are not set,
-so the tools still work locally without Redis.
+When the Upstash variables are not set, rate limiting falls back to a per-instance
+in-memory limiter rather than being disabled, so there is always a ceiling on
+usage. Configure Upstash in production for limits that are shared across instances.
 
 ## Deployment
 
