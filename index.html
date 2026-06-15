@@ -11,7 +11,18 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drew Johnson | Content Strategy</title>
+  <title>Drew Johnson — UX Content Strategy &amp; AI Content Architecture</title>
+  <meta name="description" content="Drew Johnson designs content systems that reduce complexity and hold up at enterprise scale — UX content strategy, AI content governance, and voice architecture. Currently Sr. Manager at Charles Schwab. Open to new opportunities." />
+  <meta name="author" content="Drew Johnson" />
+  <link rel="canonical" href="https://rdrewj.com/" />
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Drew Johnson — UX Content Strategy &amp; AI Content Architecture" />
+  <meta property="og:description" content="Content systems that reduce complexity and hold up at enterprise scale. UX content strategy, AI content governance, and the AI tools I've built. Open to new opportunities." />
+  <meta property="og:url" content="https://rdrewj.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Drew Johnson — UX Content Strategy &amp; AI Content Architecture" />
+  <meta name="twitter:description" content="Content systems that reduce complexity and hold up at enterprise scale. Open to new opportunities." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -650,6 +661,181 @@
       .contact-body { grid-template-columns: 1fr; gap: 2rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
     }
+
+    /* ── AVAILABILITY PILL ── */
+    .availability-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(139, 58, 42, 0.07);
+      border: 1px solid rgba(139, 58, 42, 0.22);
+      border-radius: 100px;
+      padding: 0.35rem 0.85rem;
+      width: fit-content;
+      margin-bottom: 1.25rem;
+    }
+
+    .availability-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: availPulse 2.4s ease-out infinite;
+    }
+
+    @keyframes availPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0.45); }
+      70%  { box-shadow: 0 0 0 7px rgba(139, 58, 42, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0); }
+    }
+
+    /* ── HERO TOOLS CLUSTER ── */
+    .hero-tools {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      width: fit-content;
+      animation-delay: 0.5s;
+    }
+
+    .hero-tools-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .hero-tools .hero-tool-link { margin-top: 0; transition: color 0.2s, transform 0.2s; }
+    .hero-tools .hero-tool-link:hover { transform: translateX(3px); }
+
+    /* ── IMPACT BAND ── */
+    #impact {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .impact-eyebrow {
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 1.5rem;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .impact-cell {
+      background: var(--cream);
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    #impact.visible .impact-cell { opacity: 1; transform: none; }
+    #impact.visible .impact-cell:nth-child(1) { transition-delay: 0.05s; }
+    #impact.visible .impact-cell:nth-child(2) { transition-delay: 0.15s; }
+    #impact.visible .impact-cell:nth-child(3) { transition-delay: 0.25s; }
+    #impact.visible .impact-cell:nth-child(4) { transition-delay: 0.35s; }
+
+    .impact-number {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .impact-label {
+      font-size: 0.82rem;
+      color: var(--ink-light);
+      line-height: 1.5;
+    }
+
+    /* ── WORK HOVER POLISH ── */
+    .work-item-title { transition: color 0.2s, transform 0.2s; }
+    .work-link:hover .work-item-title { transform: translateX(4px); }
+
+    /* ── EXPERTISE CHIPS ── */
+    .about-skills ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .about-skills li {
+      border-bottom: none;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--rule);
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.4);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .about-skills li:hover {
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    /* ── CONTACT CTA ── */
+    .contact-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+
+    .contact-cv {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .contact-cv:hover { background: var(--accent); transform: translateY(-2px); }
+
+    /* ── IMPACT RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .impact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .impact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      section, .impact-cell { opacity: 1 !important; transform: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -657,6 +843,7 @@
   <!-- HERO -->
   <section id="hero" style="padding:0; border-bottom: 1px solid var(--rule); opacity:1; transform:none;">
     <div class="hero-left">
+      <p class="availability-pill"><span class="availability-dot"></span>Open to new opportunities</p>
       <p class="hero-eyebrow">UX Content Strategy &nbsp;·&nbsp; AI Content Architecture</p>
       <h1 class="hero-name">Drew<br><em>Johnson</em></h1>
       <p class="hero-descriptor">
@@ -664,8 +851,11 @@
       </p>
       <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download CV</a>
       <a href="#work" class="hero-work-link">View Selected Work →</a>
-      <a href="tools/csx-audit.html" class="hero-tool-link">Try the CSX Audit →</a>
-      <a href="tools/copy-clinic.html" class="hero-tool-link">Try the Copy Clinic →</a>
+      <div class="hero-tools">
+        <span class="hero-tools-label">AI tools I've built</span>
+        <a href="tools/csx-audit.html" class="hero-tool-link">Try the CSX Audit →</a>
+        <a href="tools/copy-clinic.html" class="hero-tool-link">Try the Copy Clinic →</a>
+      </div>
     </div>
     <div class="hero-right">
       <div class="hero-stat-grid">
@@ -685,6 +875,29 @@
           <p class="stat-label">Education</p>
           <p class="stat-value">MA, Professional Writing — Carnegie Mellon</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section id="impact">
+    <p class="impact-eyebrow">Impact at a glance</p>
+    <div class="impact-grid">
+      <div class="impact-cell">
+        <span class="impact-number">10×</span>
+        <span class="impact-label">growth in monthly visits to the Schwab UX writing guide</span>
+      </div>
+      <div class="impact-cell">
+        <span class="impact-number">605K</span>
+        <span class="impact-label">user interactions with answer widgets in year one</span>
+      </div>
+      <div class="impact-cell">
+        <span class="impact-number">557</span>
+        <span class="impact-label">self-service widgets shipped across 101 experiences</span>
+      </div>
+      <div class="impact-cell">
+        <span class="impact-number">C-suite</span>
+        <span class="impact-label">approved talent architecture, live for the 2026 cycle</span>
       </div>
     </div>
   </section>
@@ -750,26 +963,6 @@
         </a>
       </li>
 
-      <li class="work-item">
-        <a class="work-link" href="tools/csx-audit.html">
-          <span class="work-item-label tool">Tool</span>
-          <div>
-            <p class="work-item-title">CSX Audit</p>
-            <p class="work-item-desc">Enter any URL and get a full content strategy readout — IA gaps, content you should be creating but aren't. Powered by Claude.</p>
-          </div>
-        </a>
-      </li>
-
-      <li class="work-item">
-        <a class="work-link" href="tools/copy-clinic.html">
-          <span class="work-item-label tool">Tool</span>
-          <div>
-            <p class="work-item-title">Copy Clinic</p>
-            <p class="work-item-desc">Paste a button label, error message, or any piece of UX writing. Get an honest read: what's working, what isn't, and a rewrite. Powered by Claude.</p>
-          </div>
-        </a>
-      </li>
-
     </ul>
   </section>
 
@@ -815,7 +1008,13 @@
       <h2 class="section-title">Get in Touch</h2>
     </div>
     <div class="contact-body">
-<ul class="contact-links">
+      <div>
+        <p class="contact-intro">Open to senior content strategy and AI content roles. If that's what you're hiring for, let's talk.</p>
+        <div class="contact-cta-row">
+          <a href="Drew_Johnson-Resume.pdf" download class="contact-cv">↓ Download CV</a>
+        </div>
+      </div>
+      <ul class="contact-links">
         <li>
           <a href="mailto:rdrewj@icloud.com">
             rdrewj@icloud.com
