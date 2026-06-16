@@ -1,28 +1,17 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+import { applyCors, makeRateLimiter, getClientIp, isBypassIp } from '../lib/security.js';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-function getRatelimiter() {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return null;
-  }
-  const redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
-  });
-  return new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(10, '1 d'),
-    prefix: 'copy-clinic',
-  });
-}
+const ratelimiter = makeRateLimiter({
+  requests: 10,
+  window: '1 d',
+  windowMs: 24 * 60 * 60 * 1000,
+  prefix: 'copy-clinic',
+});
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  applyCors(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -32,19 +21,13 @@ export default async function handler(req, res) {
   }
 
   // Rate limiting
-  const ratelimiter = getRatelimiter();
-  if (ratelimiter) {
-    const ip =
-      (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
-      req.socket?.remoteAddress ||
-      '127.0.0.1';
-    if (ip !== '98.248.164.96') {
-      const { success } = await ratelimiter.limit(ip);
-      if (!success) {
-        return res.status(429).json({
-          error: 'You have run 10 analyses today. The limit resets after 24 hours.',
-        });
-      }
+  const ip = getClientIp(req);
+  if (!isBypassIp(ip)) {
+    const ok = await ratelimiter.check(ip);
+    if (!ok) {
+      return res.status(429).json({
+        error: 'You have run 10 analyses today. The limit resets after 24 hours.',
+      });
     }
   }
 

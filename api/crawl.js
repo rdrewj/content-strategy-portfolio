@@ -1,37 +1,28 @@
 import * as cheerio from 'cheerio';
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+import {
+  applyCors,
+  makeRateLimiter,
+  getClientIp,
+  isBypassIp,
+  safeFetch,
+  assertHostAllowed,
+  SsrfError,
+} from '../lib/security.js';
 
-function getRatelimiter() {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return null;
-  }
-  const redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
-  });
-  return new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(3, '1 d'),
-    prefix: 'csx-crawl',
-  });
-}
+const ratelimiter = makeRateLimiter({
+  requests: 3,
+  window: '1 d',
+  windowMs: 24 * 60 * 60 * 1000,
+  prefix: 'csx-crawl',
+});
 
-async function fetchWithTimeout(url, timeout = 8000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  try {
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'CSX-Audit-Bot/1.0 (content strategy analysis tool)',
-        'Accept': 'text/html,application/xhtml+xml',
-      },
-    });
-    return response;
-  } finally {
-    clearTimeout(id);
-  }
+const CRAWL_HEADERS = {
+  'User-Agent': 'CSX-Audit-Bot/1.0 (content strategy analysis tool)',
+  'Accept': 'text/html,application/xhtml+xml',
+};
+
+function fetchWithTimeout(url, timeout = 8000) {
+  return safeFetch(url, { timeout, headers: CRAWL_HEADERS });
 }
 
 async function fetchRobotsTxt(baseUrl) {
@@ -175,27 +166,19 @@ function extractPageData(url, html) {
 }
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  applyCors(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   // Rate limiting
-  const ratelimiter = getRatelimiter();
-  if (ratelimiter) {
-    const ip =
-      (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
-      req.socket?.remoteAddress ||
-      '127.0.0.1';
-    if (ip !== '98.248.164.96') {
-      const { success } = await ratelimiter.limit(ip);
-      if (!success) {
-        return res.status(429).json({
-          error: 'You have run 3 audits today. The limit resets after 24 hours.',
-        });
-      }
+  const ip = getClientIp(req);
+  if (!isBypassIp(ip)) {
+    const ok = await ratelimiter.check(ip);
+    if (!ok) {
+      return res.status(429).json({
+        error: 'You have run 3 audits today. The limit resets after 24 hours.',
+      });
     }
   }
 
@@ -207,20 +190,19 @@ export default async function handler(req, res) {
   try {
     parsedUrl = new URL(url.startsWith('http') ? url : `https://${url}`);
     if (!['http:', 'https:'].includes(parsedUrl.protocol)) throw new Error();
-    const h = parsedUrl.hostname;
-    if (
-      h === 'localhost' ||
-      h === '127.0.0.1' ||
-      h === '0.0.0.0' ||
-      h === '::1' ||
-      h.startsWith('192.168.') ||
-      h.startsWith('10.') ||
-      /^172\.(1[6-9]|2\d|3[01])\./.test(h)
-    ) {
-      return res.status(400).json({ error: 'Private or local URLs are not supported' });
-    }
   } catch {
     return res.status(400).json({ error: 'Invalid URL. Please include a valid domain (e.g. https://example.com)' });
+  }
+
+  // SSRF preflight: reject if the host resolves to a private/reserved address.
+  // (safeFetch re-validates every request and redirect hop during the crawl.)
+  try {
+    await assertHostAllowed(parsedUrl.hostname);
+  } catch (err) {
+    if (err instanceof SsrfError) {
+      return res.status(400).json({ error: 'Private, local, or otherwise disallowed URLs are not supported' });
+    }
+    // DNS resolution failures fall through; the crawl will report no pages found.
   }
 
   const baseUrl = `${parsedUrl.protocol}//${parsedUrl.host}`;
