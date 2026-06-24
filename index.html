@@ -715,59 +715,6 @@
     .hero-tools .hero-tool-link { margin-top: 0; transition: color 0.2s, transform 0.2s; }
     .hero-tools .hero-tool-link:hover { transform: translateX(3px); }
 
-    /* ── IMPACT BAND ── */
-    #impact {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .impact-eyebrow {
-      font-size: 0.66rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 1.5rem;
-    }
-
-    .impact-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--rule);
-      border: 1px solid var(--rule);
-    }
-
-    .impact-cell {
-      background: var(--cream);
-      padding: 1.75rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    #impact.visible .impact-cell { opacity: 1; transform: none; }
-    #impact.visible .impact-cell:nth-child(1) { transition-delay: 0.05s; }
-    #impact.visible .impact-cell:nth-child(2) { transition-delay: 0.15s; }
-    #impact.visible .impact-cell:nth-child(3) { transition-delay: 0.25s; }
-    #impact.visible .impact-cell:nth-child(4) { transition-delay: 0.35s; }
-
-    .impact-number {
-      font-family: var(--serif);
-      font-size: clamp(2.4rem, 4vw, 3.4rem);
-      font-weight: 300;
-      line-height: 1;
-      color: var(--accent);
-    }
-
-    .impact-label {
-      font-size: 0.82rem;
-      color: var(--ink-light);
-      line-height: 1.5;
-    }
-
     /* ── WORK HOVER POLISH ── */
     .work-item-title { transition: color 0.2s, transform 0.2s; }
     .work-link:hover .work-item-title { transform: translateX(4px); }
@@ -793,15 +740,6 @@
       color: var(--ink);
     }
 
-    /* ── IMPACT RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .impact-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 480px) {
-      .impact-grid { grid-template-columns: 1fr; }
-    }
-
     /* ── REDUCED MOTION ── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -810,7 +748,7 @@
         transition-duration: 0.001ms !important;
         scroll-behavior: auto !important;
       }
-      section, .impact-cell { opacity: 1 !important; transform: none !important; }
+      section { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
@@ -855,29 +793,6 @@
     </div>
   </section>
 
-  <!-- IMPACT -->
-  <section id="impact">
-    <p class="impact-eyebrow">Impact at a glance</p>
-    <div class="impact-grid">
-      <div class="impact-cell">
-        <span class="impact-number">10×</span>
-        <span class="impact-label">growth in monthly visits to the Schwab UX writing guide</span>
-      </div>
-      <div class="impact-cell">
-        <span class="impact-number">605K</span>
-        <span class="impact-label">user interactions with answer widgets in year one</span>
-      </div>
-      <div class="impact-cell">
-        <span class="impact-number">557</span>
-        <span class="impact-label">self-service widgets shipped across 101 experiences</span>
-      </div>
-      <div class="impact-cell">
-        <span class="impact-number">C-suite</span>
-        <span class="impact-label">approved talent architecture, live for the 2026 cycle</span>
-      </div>
-    </div>
-  </section>
-
   <!-- PHILOSOPHY -->
   <section id="philosophy">
     <div class="section-header">
@@ -904,7 +819,7 @@
   <section id="work">
     <div class="section-header">
       <span class="section-number">02</span>
-      <h2 class="section-title">Recent Work</h2>
+      <h2 class="section-title">Selected Work</h2>
     </div>
 
     <ul class="work-list">
@@ -935,6 +850,16 @@
           <div>
             <p class="work-item-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</p>
             <p class="work-item-desc">Built the content infrastructure from scratch — 557 widgets across 101 experiences, delivered six weeks ahead of schedule with 605K user interactions by year end.</p>
+          </div>
+        </a>
+      </li>
+
+      <li class="work-item">
+        <a class="work-link" href="case-studies/mckesson.html">
+          <span class="work-item-label">Case Study · McKesson</span>
+          <div>
+            <p class="work-item-title">McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift</p>
+            <p class="work-item-desc">Audited 1,500 pages, navigated Brand vs. SEO tension, and produced a digital writing guide that held the balance. Form leads improved 82% YoY.</p>
           </div>
         </a>
       </li>
