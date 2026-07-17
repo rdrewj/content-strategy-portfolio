@@ -4,7 +4,8 @@ Personal portfolio for **Drew Johnson** — UX content strategy and AI content
 architecture. Live at **[rdrewj.com](https://rdrewj.com)**.
 
 The site pairs a static front end with a small set of serverless functions that
-power two interactive, AI-driven tools.
+power two interactive, AI-driven tools. The tools are currently offline and
+unlinked from the site, but their code is kept in this repo.
 
 ## Structure
 
@@ -15,7 +16,7 @@ power two interactive, AI-driven tools.
 │   ├── answer-widgets.html
 │   ├── talent-architecture.html
 │   └── ux-writing-guide.html
-├── tools/                  # Interactive AI tools (front end)
+├── tools/                  # Interactive AI tools (front end, currently offline)
 │   ├── csx-audit.html      # Content/IA site audit
 │   └── copy-clinic.html    # Copy critique
 ├── api/                    # Vercel serverless functions
@@ -31,6 +32,9 @@ power two interactive, AI-driven tools.
 ```
 
 ## Tools
+
+Currently offline (not linked from the site) but the code is kept here for
+future use:
 
 - **CSX Audit** (`/tools/csx-audit`) — Crawls a URL, builds a link graph,
   computes information-architecture metrics (orphaned pages, depth, dead ends,
@@ -78,6 +82,5 @@ usage. Configure Upstash in production for limits that are shared across instanc
 
 ## Deployment
 
-Deployed on Vercel. `vercel.json` rewrites `/tools/csx-audit` to the
-corresponding HTML file and allows the `api/*` functions up to a 60-second
-runtime. The production domain is configured via `CNAME`.
+Deployed on Vercel. `vercel.json` allows the `api/*` functions up to a
+60-second runtime. The production domain is configured via `CNAME`.
