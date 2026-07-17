@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/tools/csx-audit", "destination": "/tools/csx-audit.html" },
     { "source": "/cv", "destination": "/cv.html" }
   ],
   "functions": {

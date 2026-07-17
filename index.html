@@ -123,18 +123,6 @@
 
     .hero-work-link:hover { color: var(--ink); }
 
-    .hero-tool-link {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.2s;
-      margin-top: 0.25rem;
-    }
-
-    .hero-tool-link:hover { color: var(--ink); }
-
     .hero-right {
       display: flex;
       flex-direction: column;
@@ -642,7 +630,6 @@
     .hero-descriptor { animation-delay: 0.28s; }
     .hero-cv-link    { animation-delay: 0.38s; }
     .hero-work-link  { animation-delay: 0.45s; }
-    .hero-tool-link  { animation-delay: 0.52s; }
 
     .hero-right > * {
       animation: fadeUp 0.7s ease both;
@@ -692,28 +679,6 @@
       70%  { box-shadow: 0 0 0 7px rgba(139, 58, 42, 0); }
       100% { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0); }
     }
-
-    /* ── HERO TOOLS CLUSTER ── */
-    .hero-tools {
-      margin-top: 1.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--rule);
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      width: fit-content;
-      animation-delay: 0.5s;
-    }
-
-    .hero-tools-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-
-    .hero-tools .hero-tool-link { margin-top: 0; transition: color 0.2s, transform 0.2s; }
-    .hero-tools .hero-tool-link:hover { transform: translateX(3px); }
 
     /* ── WORK HOVER POLISH ── */
     .work-item-title { transition: color 0.2s, transform 0.2s; }
@@ -765,11 +730,6 @@
       </p>
       <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download resume</a>
       <a href="/cv" class="hero-cv-link">View full CV →</a>
-      <div class="hero-tools">
-        <span class="hero-tools-label">AI tools I've built</span>
-        <a href="tools/csx-audit.html" class="hero-tool-link">Try the CSX Audit →</a>
-        <a href="tools/copy-clinic.html" class="hero-tool-link">Try the Copy Clinic →</a>
-      </div>
     </div>
     <div class="hero-right">
       <div class="hero-stat-grid">
