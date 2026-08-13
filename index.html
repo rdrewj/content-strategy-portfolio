@@ -13,49 +13,26 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Drew Johnson — UX Content Strategy &amp; AI Content Architecture</title>
-  <meta name="description" content="Drew Johnson designs content systems that reduce complexity and hold up at enterprise scale — UX content strategy, AI content governance, and voice architecture. Currently Sr. Manager at Charles Schwab. Open to new opportunities." />
+  <meta name="description" content="Drew Johnson turns institutional chaos into language people can act on — UX content strategy, AI content architecture, and the tools to prove it. Currently Sr. Manager at Charles Schwab. Open to new opportunities." />
   <meta name="author" content="Drew Johnson" />
   <link rel="canonical" href="https://rdrewj.com/" />
   <!-- Open Graph / social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Drew Johnson — UX Content Strategy &amp; AI Content Architecture" />
-  <meta property="og:description" content="Content systems that reduce complexity and hold up at enterprise scale. UX content strategy, AI content governance, and the AI tools I've built. Open to new opportunities." />
+  <meta property="og:description" content="Content systems for organizations with high stakes and real regulators. Case studies, an unreasonable career arc, and one hidden poem." />
   <meta property="og:url" content="https://rdrewj.com/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Drew Johnson — UX Content Strategy &amp; AI Content Architecture" />
-  <meta name="twitter:description" content="Content systems that reduce complexity and hold up at enterprise scale. Open to new opportunities." />
+  <meta name="twitter:description" content="Content systems for organizations with high stakes and real regulators." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/site.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #f0f0f0;
-      --ink: #1a1814;
-      --ink-light: #5a5550;
-      --ink-faint: #b0aba4;
-      --rule: #d8d2c8;
-      --accent: #8b3a2a;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'DM Sans', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
     /* ── HERO ── */
     #hero {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       border-bottom: 1px solid var(--rule);
     }
 
@@ -63,7 +40,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 2.5rem 3rem;
+      padding: 3.5rem 3rem;
       border-right: 1px solid var(--rule);
     }
 
@@ -72,16 +49,16 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
     .hero-name {
       font-family: var(--serif);
-      font-size: clamp(3rem, 5vw, 5rem);
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
       font-weight: 300;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      margin-bottom: 1.5rem;
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+      margin-bottom: 1.75rem;
     }
 
     .hero-name em {
@@ -90,11 +67,11 @@
     }
 
     .hero-descriptor {
-      font-size: 1rem;
+      font-size: 1.02rem;
       color: var(--ink-light);
-      max-width: 40ch;
+      max-width: 44ch;
       line-height: 1.75;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
 
     .hero-cv-link {
@@ -113,28 +90,17 @@
 
     .hero-cv-link:hover { color: var(--accent); border-color: var(--accent); }
 
-    .hero-work-link {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .hero-work-link:hover { color: var(--ink); }
-
     .hero-right {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 2.5rem 3rem;
+      padding: 3.5rem 3rem;
     }
 
     .hero-stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem 2rem;
+      gap: 1.75rem 2rem;
     }
 
     .stat-label {
@@ -152,80 +118,48 @@
       line-height: 1.3;
     }
 
-    /* ── SECTION BASE ── */
-    section {
-      padding: 2.5rem 3rem;
-      border-bottom: 1px solid var(--rule);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
+    /* ── AVAILABILITY PILL ── */
+    .availability-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid rgba(139, 58, 42, 0.22);
+      border-radius: 100px;
+      padding: 0.35rem 0.85rem;
+      width: fit-content;
       margin-bottom: 1.5rem;
     }
 
-    .section-number {
-      font-size: 0.68rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
+    .availability-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: availPulse 2.4s ease-out infinite;
     }
 
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-      font-weight: 300;
-      line-height: 1.1;
+    @keyframes availPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0.45); }
+      70%  { box-shadow: 0 0 0 7px rgba(139, 58, 42, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0); }
     }
 
-    /* ── PHILOSOPHY ── */
-    #philosophy {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .philosophy-body {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2.5rem;
-      align-items: start;
-    }
-
-    .philosophy-pull {
-      font-family: var(--serif);
-      font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.4;
-      color: var(--ink);
-      border-left: 2px solid var(--accent);
-      padding-left: 1.25rem;
-    }
-
+    /* ── HOW I WORK ── */
     .philosophy-text p {
       font-size: 0.95rem;
       color: var(--ink-light);
       margin-bottom: 1rem;
-      max-width: 60ch;
+      max-width: 62ch;
     }
 
     .philosophy-text p:last-child { margin-bottom: 0; }
 
-    /* ── WORK ── */
-    #work {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
+    /* ── THE WORK ── */
     .work-list {
       list-style: none;
       border-top: 1px solid var(--rule);
@@ -254,8 +188,6 @@
       padding-top: 0.2rem;
     }
 
-    .work-item-label.tool { color: var(--ink-light); }
-
     .work-item-title {
       font-family: var(--serif);
       font-size: 1.25rem;
@@ -263,10 +195,10 @@
       line-height: 1.3;
       color: var(--ink);
       margin-bottom: 0.4rem;
-      transition: color 0.2s;
+      transition: color 0.2s, transform 0.2s;
     }
 
-    .work-link:hover .work-item-title { color: var(--accent); }
+    .work-link:hover .work-item-title { color: var(--accent); transform: translateX(4px); }
 
     .work-item-desc {
       font-size: 0.88rem;
@@ -282,30 +214,7 @@
       }
     }
 
-    /* ── ABOUT ── */
-    #about {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .about-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
-    }
-
-    .about-bio p {
-      font-size: 0.95rem;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-      max-width: 58ch;
-    }
-
-    .about-bio p strong {
-      font-weight: 500;
-      color: var(--ink);
-    }
-
+    /* ── WHAT I'M GOOD AT ── */
     .about-skills {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -318,92 +227,31 @@
       text-transform: uppercase;
       color: var(--ink-faint);
       margin-bottom: 0.75rem;
-      margin-top: 0;
     }
 
     .about-skills ul {
       list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     .about-skills li {
       font-size: 0.88rem;
       color: var(--ink-light);
-      padding: 0.3rem 0;
-      border-bottom: 1px solid var(--rule);
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--rule);
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.4);
+      transition: border-color 0.2s, color 0.2s;
     }
 
-    /* ── RESUME ── */
-    #resume {
-      max-width: 1100px;
-      margin: 0 auto;
+    .about-skills li:hover {
+      border-color: var(--accent);
+      color: var(--ink);
     }
 
-    .resume-download {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--cream);
-      background: var(--ink);
-      padding: 0.75rem 1.5rem;
-      text-decoration: none;
-      margin-bottom: 2.5rem;
-      transition: background 0.2s;
-    }
-
-    .resume-download:hover { background: var(--accent); }
-
-    .resume-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem 4rem;
-    }
-
-    .resume-section h3 {
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.25rem;
-    }
-
-    .resume-item {
-      padding-bottom: 1.25rem;
-      margin-bottom: 1.25rem;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .resume-item:last-child {
-      border-bottom: none;
-    }
-
-    .resume-role {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      font-weight: 400;
-      margin-bottom: 0.15rem;
-    }
-
-    .resume-org {
-      font-size: 0.85rem;
-      color: var(--ink-light);
-    }
-
-    .resume-dates {
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-faint);
-      margin-top: 0.2rem;
-    }
-
-    /* ── CONTACT ── */
-    #contact {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
+    /* ── SAY HELLO ── */
     .contact-body {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -447,176 +295,7 @@
       color: var(--ink-faint);
     }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 1.5rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-mark {
-      font-family: var(--serif);
-      font-size: 0.9rem;
-      color: var(--ink-faint);
-      cursor: pointer;
-      transition: color 0.2s;
-      user-select: none;
-    }
-
-    .footer-mark:hover { color: var(--accent); }
-
-    .footer-copy {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-faint);
-    }
-
-    /* ── BRIEF PANEL ── */
-    .brief-panel {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 600;
-      background: #f0ece4;
-      border-top: 1px solid var(--rule);
-      max-height: 85vh;
-      overflow-y: auto;
-      transform: translateY(100%);
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 3rem 4rem 4rem;
-    }
-
-    .brief-panel.open { transform: translateY(0); }
-
-    .brief-panel-inner {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .brief-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 2.5rem;
-    }
-
-    .brief-eyebrow {
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .brief-title {
-      font-family: var(--serif);
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      font-weight: 300;
-      line-height: 1.15;
-    }
-
-    .brief-meta {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-faint);
-      margin-top: 0.5rem;
-    }
-
-    .brief-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      color: var(--ink-faint);
-      transition: color 0.2s;
-      flex-shrink: 0;
-      margin-top: 0.25rem;
-    }
-
-    .brief-close:hover { color: var(--ink); }
-
-    .brief-rule {
-      height: 1px;
-      background: var(--rule);
-      margin-bottom: 2.5rem;
-    }
-
-    .brief-section {
-      margin-bottom: 2rem;
-    }
-
-    .brief-section-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.6rem;
-    }
-
-    .brief-section p {
-      font-size: 0.95rem;
-      color: var(--ink-light);
-      line-height: 1.75;
-      max-width: 62ch;
-    }
-
-    .brief-section ul {
-      list-style: none;
-      margin-top: 0.25rem;
-    }
-
-    .brief-section ul li {
-      font-size: 0.95rem;
-      color: var(--ink-light);
-      line-height: 1.75;
-      padding-left: 1.25rem;
-      position: relative;
-    }
-
-    .brief-section ul li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--ink-faint);
-    }
-
-    .brief-note {
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--ink-faint);
-      border-left: 2px solid var(--rule);
-      padding-left: 1rem;
-      margin-top: 0.75rem;
-      max-width: 56ch;
-    }
-
-    .poem-body p {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      line-height: 1.9;
-      color: var(--ink-light);
-      font-weight: 300;
-      margin-bottom: 1.5rem;
-      max-width: 38ch;
-    }
-
-    .poem-blurb {
-      font-size: 0.92rem;
-      color: var(--ink-light);
-      line-height: 1.8;
-      max-width: 52ch;
-      margin-top: 2.5rem;
-    }
-
-
-    @media (max-width: 900px) {
-      .brief-panel { padding: 2rem 2rem 3rem; }
-      .brief-header { flex-direction: column; gap: 1rem; }
-    }
-
-    /* ── ANIMATIONS ── */
+    /* ── HERO ANIMATION ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: none; }
@@ -626,11 +305,11 @@
       animation: fadeUp 0.7s ease both;
     }
 
-    .hero-eyebrow    { animation-delay: 0.05s; }
-    .hero-name       { animation-delay: 0.15s; }
-    .hero-descriptor { animation-delay: 0.28s; }
-    .hero-cv-link    { animation-delay: 0.38s; }
-    .hero-work-link  { animation-delay: 0.45s; }
+    .availability-pill { animation-delay: 0.02s; }
+    .hero-eyebrow      { animation-delay: 0.08s; }
+    .hero-name         { animation-delay: 0.16s; }
+    .hero-descriptor   { animation-delay: 0.28s; }
+    .hero-cv-link      { animation-delay: 0.38s; }
 
     .hero-right > * {
       animation: fadeUp 0.7s ease both;
@@ -642,79 +321,8 @@
       #hero { grid-template-columns: 1fr; }
       .hero-left { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--rule); }
       .hero-right { padding: 2rem 1.5rem; }
-      section { padding: 2rem 1.5rem; }
-      .philosophy-body { grid-template-columns: 1fr; }
       .about-skills { grid-template-columns: 1fr; gap: 2rem; }
-      .resume-grid { grid-template-columns: 1fr; }
       .contact-body { grid-template-columns: 1fr; gap: 2rem; }
-      footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
-    }
-
-    /* ── AVAILABILITY PILL ── */
-    .availability-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.66rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(139, 58, 42, 0.07);
-      border: 1px solid rgba(139, 58, 42, 0.22);
-      border-radius: 100px;
-      padding: 0.35rem 0.85rem;
-      width: fit-content;
-      margin-bottom: 1.25rem;
-    }
-
-    .availability-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: availPulse 2.4s ease-out infinite;
-    }
-
-    @keyframes availPulse {
-      0%   { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0.45); }
-      70%  { box-shadow: 0 0 0 7px rgba(139, 58, 42, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0); }
-    }
-
-    /* ── WORK HOVER POLISH ── */
-    .work-item-title { transition: color 0.2s, transform 0.2s; }
-    .work-link:hover .work-item-title { transform: translateX(4px); }
-
-    /* ── EXPERTISE CHIPS ── */
-    .about-skills ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .about-skills li {
-      border-bottom: none;
-      padding: 0.4rem 0.85rem;
-      border: 1px solid var(--rule);
-      border-radius: 100px;
-      background: rgba(255, 255, 255, 0.4);
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .about-skills li:hover {
-      border-color: var(--accent);
-      color: var(--ink);
-    }
-
-    /* ── REDUCED MOTION ── */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
-      }
-      section { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
@@ -727,7 +335,7 @@
       <p class="hero-eyebrow">UX Content Strategy &nbsp;·&nbsp; AI Content Architecture</p>
       <h1 class="hero-name">Drew<br><em>Johnson</em></h1>
       <p class="hero-descriptor">
-        I design content systems that reduce complexity and hold up at enterprise scale.
+        I turn institutional chaos into language people can act on. Nineteen years of it — newsrooms, healthcare, and lately the content systems of a very large bank.
       </p>
       <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download resume</a>
       <a href="/cv" class="hero-cv-link">View full CV →</a>
@@ -735,7 +343,7 @@
     <div class="hero-right">
       <div class="hero-stat-grid">
         <div>
-          <p class="stat-label">Current Role</p>
+          <p class="stat-label">Currently</p>
           <p class="stat-value">Sr. Manager, UX Content Strategy</p>
         </div>
         <div>
@@ -743,7 +351,7 @@
           <p class="stat-value">Charles Schwab</p>
         </div>
         <div>
-          <p class="stat-label">Focus Areas</p>
+          <p class="stat-label">Focus</p>
           <p class="stat-value">AI Governance · Content Systems · Voice Architecture</p>
         </div>
         <div>
@@ -754,87 +362,101 @@
     </div>
   </section>
 
-  <!-- PHILOSOPHY -->
+  <!-- HOW I WORK -->
   <section id="philosophy">
-    <div class="section-header">
-      <span class="section-number">01</span>
-      <h2 class="section-title">Approach</h2>
-    </div>
-    <div class="philosophy-text">
-      <p>
-        My work focuses on the content layer of enterprise products: the language, structure, and standards that determine whether information is clear, consistent, and actionable.
-      </p>
-      <p>
-        I build systems that teams can actually use. That means writing standards with enough specificity to guide real decisions, information architecture that reflects how users think, and governance frameworks that hold up inside real organizational constraints.
-      </p>
-      <p>
-        I've spent the past decade at financial services and healthcare companies. The work tends to involve high content complexity, real regulatory constraints, and organizations that need to move from ad hoc to systematic.
-      </p>
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <h2 class="section-title">How I work</h2>
+      </div>
+      <div class="philosophy-text">
+        <p>
+          I work on the content layer of enterprise products — the words, the structure, and the standards that decide whether a person can actually do the thing they came to do.
+        </p>
+        <p>
+          Most content problems turn out to be system problems in disguise. So I build systems: writing standards specific enough to settle real arguments, information architecture that matches how people think rather than how the org chart looks, and governance that survives contact with an actual organization.
+        </p>
+        <p>
+          The past decade has been financial services and healthcare — high stakes, real regulators, no patience for hand-waving. It turns out constraints are good for writing. I started as a journalist, and I still work like one: ask the obvious question early, verify everything, cut the adjectives.
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- WORK -->
+  <!-- THE WORK -->
   <section id="work">
-    <div class="section-header">
-      <span class="section-number">02</span>
-      <h2 class="section-title">Selected Work</h2>
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <h2 class="section-title">The work</h2>
+      </div>
+
+      <ul class="work-list">
+
+        <li class="work-item">
+          <a class="work-link" href="case-studies/talent-architecture.html">
+            <span class="work-item-label">Case Study · Schwab</span>
+            <div>
+              <p class="work-item-title">Scaling Talent Architecture with AI-Assisted Content Strategy</p>
+              <p class="work-item-desc">A competency framework so fractured nobody could use it, rebuilt with an AI-augmented editorial process — approved at the C-suite and live for the 2026 review cycle.</p>
+            </div>
+          </a>
+        </li>
+
+        <li class="work-item">
+          <a class="work-link" href="case-studies/ux-writing-guide.html">
+            <span class="work-item-label">Case Study · Schwab</span>
+            <div>
+              <p class="work-item-title">From Stranded Artifact to Living Standard: Schwab UX Writing Guide</p>
+              <p class="work-item-desc">A writing standard nobody could find, moved to where everybody works. Monthly visits went up 10x, and the guide now powers an AI writing agent.</p>
+            </div>
+          </a>
+        </li>
+
+        <li class="work-item">
+          <a class="work-link" href="case-studies/answer-widgets.html">
+            <span class="work-item-label">Case Study · Schwab</span>
+            <div>
+              <p class="work-item-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</p>
+              <p class="work-item-desc">The automation stalled, so I built the system by hand — 557 widgets across 101 experiences, six weeks early, 605K user interactions by year end.</p>
+            </div>
+          </a>
+        </li>
+
+        <li class="work-item">
+          <a class="work-link" href="case-studies/mckesson.html">
+            <span class="work-item-label">Case Study · McKesson</span>
+            <div>
+              <p class="work-item-title">McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift</p>
+              <p class="work-item-desc">Audited 1,500 pages of a Fortune 10 website, brokered a truce between Brand and SEO, and wrote the guide that held it. Form leads improved 82% year over year.</p>
+            </div>
+          </a>
+        </li>
+
+        <li class="work-item">
+          <a class="work-link" href="case-studies/tools.html">
+            <span class="work-item-label">Case Study · Independent</span>
+            <div>
+              <p class="work-item-title">The Tools I Built: CSX Audit &amp; Copy Clinic</p>
+              <p class="work-item-desc">Two AI-powered tools designed, written, and shipped solo — a crawler that audits information architecture and a copy critique engine — plus the unglamorous plumbing that let strangers use them safely.</p>
+            </div>
+          </a>
+        </li>
+
+      </ul>
     </div>
-
-    <ul class="work-list">
-
-      <li class="work-item">
-        <a class="work-link" href="case-studies/talent-architecture.html">
-          <span class="work-item-label">Case Study · Schwab</span>
-          <div>
-            <p class="work-item-title">Scaling Talent Architecture with AI-Assisted Content Strategy</p>
-            <p class="work-item-desc">Transformed a fractured competency framework into a governance-ready talent architecture — approved at the C-suite and live for the 2026 review cycle.</p>
-          </div>
-        </a>
-      </li>
-
-      <li class="work-item">
-        <a class="work-link" href="case-studies/ux-writing-guide.html">
-          <span class="work-item-label">Case Study · Schwab</span>
-          <div>
-            <p class="work-item-title">From Stranded Artifact to Living Standard: Schwab UX Writing Guide</p>
-            <p class="work-item-desc">Migrating a fragmented SharePoint doc into the Everest design system drove a 10x increase in monthly visits and seeded an AI-assisted writing tool.</p>
-          </div>
-        </a>
-      </li>
-
-      <li class="work-item">
-        <a class="work-link" href="case-studies/answer-widgets.html">
-          <span class="work-item-label">Case Study · Schwab</span>
-          <div>
-            <p class="work-item-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</p>
-            <p class="work-item-desc">Built the content infrastructure from scratch — 557 widgets across 101 experiences, delivered six weeks ahead of schedule with 605K user interactions by year end.</p>
-          </div>
-        </a>
-      </li>
-
-      <li class="work-item">
-        <a class="work-link" href="case-studies/mckesson.html">
-          <span class="work-item-label">Case Study · McKesson</span>
-          <div>
-            <p class="work-item-title">McKesson.com Content Enhancement: 1,500-Page Audit to 82% Lead Lift</p>
-            <p class="work-item-desc">Audited 1,500 pages, navigated Brand vs. SEO tension, and produced a digital writing guide that held the balance. Form leads improved 82% YoY.</p>
-          </div>
-        </a>
-      </li>
-
-    </ul>
   </section>
 
-  <!-- EXPERTISE -->
+  <!-- WHAT I'M GOOD AT -->
   <section id="about">
-    <div class="section-header">
-      <span class="section-number">03</span>
-      <h2 class="section-title">Expertise</h2>
-    </div>
-    <div class="about-grid">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <h2 class="section-title">What I'm good at</h2>
+      </div>
       <div class="about-skills">
         <div>
-          <h3>Expertise</h3>
+          <h3>Disciplines</h3>
           <ul>
             <li>Content Strategy & IA</li>
             <li>AI Content Governance</li>
@@ -846,7 +468,7 @@
           </ul>
         </div>
         <div>
-          <h3>Tools & Methods</h3>
+          <h3>Tools &amp; methods</h3>
           <ul>
             <li>Adobe Analytics</li>
             <li>Figma / Contentful / Drupal</li>
@@ -860,49 +482,54 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- SAY HELLO -->
   <section id="contact">
-    <div class="section-header">
-      <span class="section-number">04</span>
-      <h2 class="section-title">Get in Touch</h2>
-    </div>
-    <div class="contact-body">
-      <div>
-        <p class="contact-intro">Open to senior content strategy and AI content roles. If that's what you're hiring for, let's talk.</p>
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <h2 class="section-title">Say hello</h2>
       </div>
-      <ul class="contact-links">
-        <li>
-          <a href="mailto:rdrewj@icloud.com">
-            rdrewj@icloud.com
-            <span class="link-label">Email</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://linkedin.com/in/rdrewj" target="_blank">
-            linkedin.com/in/rdrewj
-            <span class="link-label">LinkedIn</span>
-          </a>
-        </li>
-      </ul>
+      <div class="contact-body">
+        <div>
+          <p class="contact-intro">I'm looking for senior content strategy and AI content roles. If you're hiring for that — or you just want to argue about the serial comma — say hello.</p>
+        </div>
+        <ul class="contact-links">
+          <li>
+            <a href="mailto:rdrewj@icloud.com">
+              rdrewj@icloud.com
+              <span class="link-label">Email</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/rdrewj" target="_blank" rel="noopener">
+              linkedin.com/in/rdrewj
+              <span class="link-label">LinkedIn</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <p class="footer-mark" id="brief-trigger">Drew Johnson</p>
+    <button class="soul-link" id="soul-trigger">There's a soul in this machine →</button>
     <p class="footer-copy">© 2026 · Marin County, CA</p>
   </footer>
 
-  <!-- EASTER EGG POEM PANEL -->
+  <!-- POEM PANEL -->
   <div class="brief-panel" id="brief-panel" aria-hidden="true">
     <div class="brief-panel-inner">
       <div class="brief-header">
-        <p class="brief-eyebrow">A poem</p>
+        <div>
+          <p class="brief-eyebrow">A poem</p>
+          <h2 class="brief-title">Ducks</h2>
+        </div>
         <button class="brief-close" id="brief-close" aria-label="Close">✕</button>
       </div>
       <div class="brief-rule"></div>
       <div class="poem-body">
-        <h2 class="brief-title">Ducks</h2>
         <p>We swam together<br>As early as I remember;<br>Harried by crows, children,<br>Small and large dogs.</p>
         <p>At night we huddled close<br>In a wooden box by the pond—<br>It was our universe.</p>
         <p>And now,<br>As big as crows,<br>We fly above it all.</p>
@@ -912,19 +539,24 @@
   </div>
 
   <script>
-    // ── EASTER EGG ──
-    const trigger = document.getElementById('brief-trigger');
+    // ── POEM PANEL ──
     const panel = document.getElementById('brief-panel');
     const closeBtn = document.getElementById('brief-close');
 
-    trigger.addEventListener('click', () => {
+    function openPoem(label) {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
-      gtag('event', 'easter_egg_opened', { event_category: 'engagement', event_label: 'poem' });
-    });
+      gtag('event', 'easter_egg_opened', { event_category: 'engagement', event_label: label });
+    }
+
+    document.getElementById('brief-trigger').addEventListener('click', () => openPoem('poem'));
+    document.getElementById('soul-trigger').addEventListener('click', () => openPoem('soul_link'));
     closeBtn.addEventListener('click', () => {
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && panel.classList.contains('open')) closeBtn.click();
     });
 
     // ── SCROLL REVEAL ──
@@ -933,23 +565,6 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
     sections.forEach(s => observer.observe(s));
-
-    // ── WORK FILTER ──
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.work-card');
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        cards.forEach(card => {
-          const show = filter === 'all' || card.dataset.category === filter;
-          card.style.display = show ? '' : 'none';
-        });
-      });
-    });
-
   </script>
 </body>
 </html>

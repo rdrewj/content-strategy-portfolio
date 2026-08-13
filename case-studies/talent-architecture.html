@@ -13,228 +13,11 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Talent Architecture Case Study | Drew Johnson</title>
+  <meta name="description" content="How an AI-augmented editorial process rebuilt a fractured competency framework — approved at the C-suite and live for the 2026 review cycle." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #f0f0f0;
-      --ink: #1a1814;
-      --ink-light: #5a5550;
-      --ink-faint: #b0aba4;
-      --rule: #d8d2c8;
-      --accent: #8b3a2a;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'DM Sans', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2.5rem 4rem;
-      border-top: 1px solid var(--rule);
-    }
-
-    .footer-mark {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--ink);
-    }
-
-    .footer-copy {
-      font-size: 0.78rem;
-      color: var(--ink-faint);
-    }
-
-    /* ── CASE STUDY PAGE ── */
-    .cs-page {
-      padding-top: 80px;
-    }
-
-    /* Back link bar */
-    .cs-back {
-      padding: 1.25rem 4rem;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .cs-back a {
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .cs-back a:hover { color: var(--ink); }
-
-    /* Article container */
-    .cs-article {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 4rem 2rem 6rem;
-    }
-
-    /* Eyebrow */
-    .cs-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.75rem;
-    }
-
-    /* Title */
-    .cs-title {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 2.75rem);
-      font-weight: 300;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-
-    /* Subtitle / lede */
-    .cs-lede {
-      font-size: 1rem;
-      color: var(--ink-light);
-      line-height: 1.75;
-      margin-bottom: 2.5rem;
-    }
-
-    /* Metadata row */
-    .cs-meta {
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
-
-    .cs-meta-item p:first-child {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 3px;
-    }
-
-    .cs-meta-item p:last-child {
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: var(--ink);
-    }
-
-    /* Divider */
-    .cs-rule {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 2.5rem 0;
-    }
-
-    /* Section label */
-    .cs-section-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.75rem;
-    }
-
-    /* Section heading */
-    .cs-h2 {
-      font-family: var(--serif);
-      font-size: 1.5rem;
-      font-weight: 400;
-      line-height: 1.25;
-      margin-bottom: 1rem;
-    }
-
-    /* Body copy */
-    .cs-body {
-      font-size: 0.95rem;
-      color: var(--ink-light);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-    }
-
-    /* Pull quote / blockquote */
-    .cs-blockquote {
-      border-left: 2px solid var(--rule);
-      padding: 1rem 1.5rem;
-      margin: 1.5rem 0;
-      background: rgba(26, 24, 20, 0.03);
-    }
-
-    .cs-blockquote p {
-      font-size: 0.92rem;
-      color: var(--ink-light);
-      line-height: 1.75;
-    }
-
-    /* Outcomes grid */
-    .cs-outcomes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1px;
-      margin: 1.5rem 0;
-      border: 1px solid var(--rule);
-    }
-
-    .cs-outcome {
-      padding: 1.25rem 1.5rem;
-      border: 1px solid var(--rule);
-      background: var(--cream);
-    }
-
-    .cs-outcome-value {
-      font-family: var(--serif);
-      font-size: 1.75rem;
-      font-weight: 400;
-      color: var(--ink);
-      line-height: 1;
-      margin-bottom: 0.4rem;
-    }
-
-    .cs-outcome-label {
-      font-size: 0.75rem;
-      color: var(--ink-light);
-      line-height: 1.4;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .cs-back { padding: 1rem 2rem; }
-      .cs-article { padding: 3rem 1.5rem 5rem; }
-      .cs-meta { gap: 1.5rem; }
-      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/site.css" />
 </head>
 <body>
 
@@ -242,7 +25,7 @@
 
     <!-- BACK LINK -->
     <div class="cs-back">
-      <a href="/#work">&larr; Selected Work</a>
+      <a href="/#work">&larr; The Work</a>
     </div>
 
     <!-- ARTICLE -->
@@ -290,6 +73,24 @@
       <p class="cs-section-label">The strategy</p>
       <h2 class="cs-h2">A north star before a single edit</h2>
       <p class="cs-body">Before touching the content, I developed a governing content strategy. The principle: every competency statement had to be observable, active, and concise. Observable meaning it described visible behavior, not internal traits. Active meaning it used direct, action-oriented language. Concise meaning each statement carried one idea: no compound constructions, no hedged language, no redundancy.</p>
+
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 01</strong> — The editorial standard, applied</figcaption>
+        <div class="cs-pair">
+          <div class="cs-pair-cell">
+            <p class="cs-pair-tag">Before</p>
+            <p class="cs-pair-text">"Demonstrates a strong understanding of and commitment to user-centered design principles and is able to consistently apply them, where appropriate, across a variety of projects and workstreams."</p>
+            <p class="cs-pair-note">Compound, hedged, unobservable — three ideas hiding in one sentence, none of them rateable.</p>
+          </div>
+          <div class="cs-pair-cell is-after">
+            <p class="cs-pair-tag">After</p>
+            <p class="cs-pair-text">"Grounds design decisions in observed user behavior and shows the evidence."</p>
+            <p class="cs-pair-note">One idea. Observable. You could actually evaluate someone against this.</p>
+          </div>
+        </div>
+        <figcaption class="cs-artifact-caption">A representative rewrite (recreated — the real framework stays behind the firewall). Observable, active, concise: the filter every statement had to pass.</figcaption>
+      </figure>
+
       <p class="cs-body">This standard became the filter through which all existing content was evaluated and all new content was written. It also gave me a principled basis for reconciling conflicting stakeholder input — rather than negotiating line-by-line, I could return to the standard and ask whether a proposed edit made the content more or less useful as a performance tool.</p>
 
       <hr class="cs-rule">
@@ -298,6 +99,43 @@
       <p class="cs-section-label">The process</p>
       <h2 class="cs-h2">Iterative AI-assisted revision at scale</h2>
       <p class="cs-body">With a clear strategy in place, I designed a repeatable revision workflow using AI. I carved the architecture into manageable sections, one competency cluster at a time, and worked through each iteratively, using AI to apply the editorial standard at volume while I maintained oversight on coherence, tone, and organizational alignment.</p>
+
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 02</strong> — The revision workflow</figcaption>
+        <div class="cs-flow">
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">1</p>
+            <p class="cs-flow-step-title">Carve</p>
+            <p class="cs-flow-step-desc">Break the architecture into competency clusters small enough to hold in your head.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">2</p>
+            <p class="cs-flow-step-title">AI volume pass</p>
+            <p class="cs-flow-step-desc">Apply the editorial standard at scale — rewrite, consolidate, de-duplicate.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">3</p>
+            <p class="cs-flow-step-title">Judgment pass</p>
+            <p class="cs-flow-step-desc">Human review: catch new ambiguities, hold the hierarchy across levels, keep the connective tissue between disciplines.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">4</p>
+            <p class="cs-flow-step-title">Gates</p>
+            <p class="cs-flow-step-desc">Stakeholder review at every level, stress-tested by an external McKinsey team.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step is-accent">
+            <p class="cs-flow-step-num">5</p>
+            <p class="cs-flow-step-title">Live</p>
+            <p class="cs-flow-step-desc">Published to the intranet; foundation for the 2026 review cycle.</p>
+          </div>
+        </div>
+        <figcaption class="cs-artifact-caption">One cluster at a time, every pass through the same standard. AI carried the volume; the judgment stayed human.</figcaption>
+      </figure>
+
       <p class="cs-body">The process was deliberately hands-on. AI handled the heavy lifting of rewriting and consolidation; I handled the judgment calls — catching where consolidation created new ambiguities, ensuring the competency hierarchy held across levels, and maintaining the connective tissue between disciplines. The pace and quality required AI to handle the volume, while I handled the judgement.</p>
       <p class="cs-body">Net-new content, including competencies for areas that had never been formally defined, was developed through the same iterative approach: AI-assisted drafting grounded in the governing strategy, refined through multiple passes until the content met the standard.</p>
       <p class="cs-body">Throughout, the work was reviewed and validated by an external McKinsey team, which provided an additional quality gate and helped stress-test the framework against industry benchmarks.</p>

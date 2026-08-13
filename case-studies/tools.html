@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PV6J6XSZH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4PV6J6XSZH');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSX Audit &amp; Copy Clinic Case Study | Drew Johnson</title>
+  <meta name="description" content="Two AI-powered content strategy tools designed, written, and shipped solo — a site crawler that audits information architecture and a copy critique engine." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+
+  <div class="cs-page">
+
+    <!-- BACK LINK -->
+    <div class="cs-back">
+      <a href="/#work">&larr; The Work</a>
+    </div>
+
+    <!-- ARTICLE -->
+    <article class="cs-article">
+
+      <p class="cs-eyebrow">Case Study</p>
+      <h1 class="cs-title">The tools I built: CSX Audit &amp; Copy Clinic</h1>
+      <p class="cs-lede">Content strategists talk a lot about AI. I wanted receipts. So I designed, wrote, and shipped two AI-powered tools — a crawler that audits a site's information architecture and a copy critique engine — solo, from the prompt design down to the SSRF protection.</p>
+
+      <!-- Metadata -->
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <p>Organization</p>
+          <p>Independent — rdrewj.com</p>
+        </div>
+        <div class="cs-meta-item">
+          <p>Stack</p>
+          <p>Vercel serverless · Anthropic API · Upstash Redis · Cheerio</p>
+        </div>
+        <div class="cs-meta-item">
+          <p>Role</p>
+          <p>All of them</p>
+        </div>
+        <div class="cs-meta-item">
+          <p>Status</p>
+          <p>Offline, deliberately — code lives in the repo</p>
+        </div>
+      </div>
+
+      <hr class="cs-rule">
+
+      <!-- The Problem -->
+      <p class="cs-section-label">The premise</p>
+      <h2 class="cs-h2">"AI content architecture" should come with proof</h2>
+      <p class="cs-body">My positioning says AI content architecture. It's easy to put those words on a website; it's harder to demonstrate them. The most convincing demonstration I could think of was to take the two things I do professionally — audit content systems and critique copy — and build working AI tools that do them, in public, for anyone who typed in a URL.</p>
+      <p class="cs-body">The other reason: you don't really understand AI-assisted content tooling until you've had to decide what the model should be trusted with, what should stay deterministic, and what to do when a stranger feeds your crawler the address of your cloud provider's metadata service.</p>
+
+      <blockquote class="cs-blockquote">
+        <p>Building the tools taught me the thing I now tell everyone: AI product work is content strategy work. The prompts are editorial standards. The scoring rubric is a voice decision. "Don't fabricate issues" is governance.</p>
+      </blockquote>
+
+      <hr class="cs-rule">
+
+      <!-- The Tools -->
+      <p class="cs-section-label">The tools</p>
+      <h2 class="cs-h2">An IA auditor and a copy clinic</h2>
+      <p class="cs-body"><strong>CSX Audit</strong> takes a URL and returns a content strategy audit. It crawls the site breadth-first (respecting robots.txt, and honest enough to warn you when a JavaScript-rendered app is hiding its content), builds a page-and-link graph, computes information architecture metrics, and then layers AI analysis on top — ending in an executive summary, prioritized recommendations, and quick wins.</p>
+      <p class="cs-body"><strong>Copy Clinic</strong> takes up to 1,500 characters of UX copy and returns a critique through a content strategy lens: what's working, what isn't (with a no-hedging rule), a rewrite, and a one-sentence strategic insight the copy reveals. The persona in the prompt is me on a good day: specific, direct, and required to quote your actual words back to you.</p>
+
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 01</strong> — CSX Audit's pipeline</figcaption>
+        <div class="cs-flow">
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">1</p>
+            <p class="cs-flow-step-title">Crawl</p>
+            <p class="cs-flow-step-desc">Breadth-first from the URL you give it. Extracts titles, headings, CTAs, nav, body text; builds the link graph.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">2</p>
+            <p class="cs-flow-step-title">Compute</p>
+            <p class="cs-flow-step-desc">Deterministic IA metrics — orphaned pages, click depth, dead ends, category groupings. No model involved; math doesn't hallucinate.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">3</p>
+            <p class="cs-flow-step-title">Analyze</p>
+            <p class="cs-flow-step-desc">A fast model compresses every page; a stronger model runs IA and content-gap analyses in parallel, grounded in the computed metrics.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step is-accent">
+            <p class="cs-flow-step-num">4</p>
+            <p class="cs-flow-step-title">Synthesize</p>
+            <p class="cs-flow-step-desc">Executive summary, prioritized recommendations, quick wins — and scores computed from the findings, not from vibes.</p>
+          </div>
+        </div>
+        <figcaption class="cs-artifact-caption">Four model calls per audit, across two model tiers. The division of labor is the design: models read and judge; arithmetic counts and scores.</figcaption>
+      </figure>
+
+      <hr class="cs-rule">
+
+      <!-- The Content Strategy Inside -->
+      <p class="cs-section-label">The interesting part</p>
+      <h2 class="cs-h2">The hard problems were content problems</h2>
+      <p class="cs-body">The serverless plumbing was work, but the decisions that made the tools good were editorial. The audit prompts carry explicit standards: <em>identify real problems; if the IA is solid, return fewer findings with lower severity; don't fabricate issues.</em> The gap analysis has an evidence rule — every claimed gap must trace to a page that raises the question without answering it, or to a clear expectation for that type of site. That's the same discipline I'd demand from a human auditor, written down where the model can't ignore it.</p>
+      <p class="cs-body">Even the scoring is an editorial position. A site with no findings scores 88, not 100 — a ten-page crawl can't prove perfection, and the tool shouldn't pretend otherwise. Repeated findings of the same severity hit diminishing returns, because the fifth missing CTA is the same insight as the second. None of that came from an engineering requirement. It came from having done real audits and knowing where they go wrong.</p>
+
+      <hr class="cs-rule">
+
+      <!-- The Plumbing -->
+      <p class="cs-section-label">The unglamorous parts</p>
+      <h2 class="cs-h2">Letting strangers use your tools without regretting it</h2>
+      <p class="cs-body">A public tool that fetches arbitrary URLs and spends real API money on every request is a liability with a nice interface. Most of the code that isn't content strategy is there to keep the tools safe and solvent:</p>
+
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 02</strong> — The safety layer</figcaption>
+        <div class="cs-flow">
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-title">SSRF protection</p>
+            <p class="cs-flow-step-desc">Every fetch resolves DNS first and refuses private, loopback, link-local, and reserved ranges — including the cloud metadata address — and re-validates every redirect hop.</p>
+          </div>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-title">Rate limiting</p>
+            <p class="cs-flow-step-desc">Per-endpoint daily budgets (3 crawls, 5 analyses, 10 critiques), Redis-backed, with an in-memory fallback so there's always a ceiling.</p>
+          </div>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-title">Crawler manners</p>
+            <p class="cs-flow-step-desc">Respects robots.txt, identifies itself honestly in its user agent, caps at 10 pages, and times out instead of hammering slow sites.</p>
+          </div>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-title">Honest failure</p>
+            <p class="cs-flow-step-desc">Detects JavaScript-rendered apps it can't read and says so, instead of confidently auditing an empty page.</p>
+          </div>
+        </div>
+        <figcaption class="cs-artifact-caption">None of this shows up in a demo. All of it is the difference between a toy and a tool.</figcaption>
+      </figure>
+
+      <hr class="cs-rule">
+
+      <!-- Outcomes -->
+      <p class="cs-section-label">Outcomes</p>
+      <h2 class="cs-h2">Shipped, used, and retired on purpose</h2>
+
+      <div class="cs-outcomes">
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">2</div>
+          <div class="cs-outcome-label">Working AI tools designed, written, and shipped solo</div>
+        </div>
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">4</div>
+          <div class="cs-outcome-label">Model calls orchestrated per audit, across two model tiers</div>
+        </div>
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">0</div>
+          <div class="cs-outcome-label">Frameworks — static front end, serverless functions, no build step</div>
+        </div>
+        <div class="cs-outcome">
+          <div class="cs-outcome-value">100%</div>
+          <div class="cs-outcome-label">Of the editorial judgment written into the prompts and scoring</div>
+        </div>
+      </div>
+
+      <p class="cs-body">Both tools ran live on this site. They're currently offline — every audit spends real API money, and a portfolio doesn't need an unattended bill — but the code stays in the repo, and turning them back on is a config change, not a rebuild.</p>
+      <p class="cs-body">What survives either way is the point they were built to make: the craft I bring to a content system — standards, evidence, honest limits, judgment about what to automate — is exactly the craft AI products need. I didn't read that in a think piece. I shipped it.</p>
+
+    </article>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-mark">Drew Johnson</p>
+    <p class="footer-copy">© 2026 · Marin County, CA</p>
+  </footer>
+
+</body>
+</html>

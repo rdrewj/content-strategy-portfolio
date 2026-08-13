@@ -13,13 +13,13 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CV — Drew Johnson</title>
-  <meta name="description" content="The full professional record for Drew Johnson — 19 years in content, from staff editor to senior UX content strategy leadership." />
+  <meta name="description" content="The full professional record for Drew Johnson — 19 years in content, from debt-consolidation SEO copy to AI content architecture at Charles Schwab." />
   <meta name="author" content="Drew Johnson" />
   <link rel="canonical" href="https://rdrewj.com/cv" />
   <!-- Open Graph / social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="CV — Drew Johnson" />
-  <meta property="og:description" content="19 years in content. The full record — UX content strategy, content design, and editorial leadership." />
+  <meta property="og:description" content="19 years in content. The full record — every era, including the ones that built character." />
   <meta property="og:url" content="https://rdrewj.com/cv" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="CV — Drew Johnson" />
@@ -27,31 +27,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/site.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #f0f0f0;
-      --ink: #1a1814;
-      --ink-light: #5a5550;
-      --ink-faint: #b0aba4;
-      --rule: #d8d2c8;
-      --accent: #8b3a2a;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'DM Sans', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
     /* ── BACK LINK BAR ── */
     .cv-back {
       padding: 1.25rem 3rem;
@@ -67,11 +44,11 @@
       transition: color 0.2s;
     }
 
-    .cv-back a:hover { color: var(--ink); }
+    .cv-back a:hover { color: var(--accent); }
 
     /* ── PAGE HEAD ── */
     #cv-head {
-      padding: 3rem 3rem 2.5rem;
+      padding: 3.5rem 3rem 2.5rem;
       border-bottom: 1px solid var(--rule);
     }
 
@@ -95,7 +72,7 @@
     .cv-intro {
       font-size: 1rem;
       color: var(--ink-light);
-      max-width: 46ch;
+      max-width: 52ch;
       margin-bottom: 2rem;
     }
 
@@ -115,50 +92,82 @@
 
     .hero-cv-link:hover { color: var(--accent); border-color: var(--accent); }
 
-    /* ── SECTION BASE ── */
-    section {
-      padding: 2.5rem 3rem;
+    /* ── ERA TIMELINE ── */
+    .cv-era {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
       border-bottom: 1px solid var(--rule);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    section.visible {
-      opacity: 1;
-      transform: none;
-    }
+    .cv-era:last-child { border-bottom: none; padding-bottom: 0.5rem; }
+    .cv-era:first-of-type { padding-top: 0.5rem; }
 
-    .cv-section-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .cv-era-head { position: sticky; top: 2rem; align-self: start; }
 
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-number {
+    .cv-era-years {
       font-size: 0.68rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--ink-faint);
+      color: var(--accent);
+      margin-bottom: 0.4rem;
     }
 
-    .section-title {
+    .cv-era-name {
       font-family: var(--serif);
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-      font-weight: 300;
-      line-height: 1.1;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
     }
 
-    /* ── RESUME ROLES ── */
+    .cv-era-note {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--ink-faint);
+      line-height: 1.65;
+      max-width: 30ch;
+    }
+
+    /* Spine + dots */
+    .cv-era-roles {
+      border-left: 1px solid var(--rule);
+      padding-left: 2rem;
+    }
+
+    .cv-role-item {
+      position: relative;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .cv-role-item:first-child { padding-top: 0.25rem; }
+    .cv-role-item:last-child { border-bottom: none; padding-bottom: 0.25rem; }
+
+    .cv-role-item::before {
+      content: '';
+      position: absolute;
+      left: calc(-2rem - 3.5px);
+      top: 1.75rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 1px solid var(--ink-faint);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .cv-role-item:first-child::before { top: 0.9rem; }
+
+    .cv-role-item:hover::before {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
     .resume-role {
       font-family: var(--serif);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 400;
       margin-bottom: 0.15rem;
     }
@@ -179,16 +188,9 @@
       font-size: 0.85rem;
       color: var(--ink-light);
       line-height: 1.6;
-      max-width: 70ch;
+      max-width: 64ch;
       margin-top: 0.5rem;
     }
-
-    .cv-role-item {
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .cv-role-item:last-child { border-bottom: none; }
 
     /* ── EDUCATION ── */
     .cv-edu-item {
@@ -198,47 +200,14 @@
 
     .cv-edu-item:last-child { border-bottom: none; }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 1.5rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-mark {
-      font-family: var(--serif);
-      font-size: 0.9rem;
-      color: var(--ink-faint);
-      transition: color 0.2s;
-      text-decoration: none;
-    }
-
-    .footer-mark:hover { color: var(--accent); }
-
-    .footer-copy {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-faint);
-    }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .cv-back { padding: 1.25rem 1.5rem; }
       #cv-head { padding: 2.5rem 1.5rem 2rem; }
-      section { padding: 2rem 1.5rem; }
-      footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
-    }
-
-    /* ── REDUCED MOTION ── */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
-      }
-      section { opacity: 1 !important; transform: none !important; }
+      .cv-era { grid-template-columns: 1fr; gap: 1.25rem; padding: 2rem 0; }
+      .cv-era-head { position: static; }
+      .cv-era-roles { padding-left: 1.5rem; }
+      .cv-role-item::before { left: calc(-1.5rem - 3.5px); }
     }
   </style>
 </head>
@@ -253,114 +222,146 @@
   <header id="cv-head">
     <p class="cv-eyebrow">Curriculum Vitae</p>
     <h1 class="cv-title">CV — Drew Johnson</h1>
-    <p class="cv-intro">19 years in content. The full record.</p>
+    <p class="cv-intro">Nineteen years in content. The full record — every era, including the ones that built character.</p>
     <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download resume</a>
   </header>
 
   <!-- EXPERIENCE -->
   <section id="experience">
-    <div class="cv-section-inner">
+    <div class="section-inner">
       <div class="section-header">
         <span class="section-number">01</span>
         <h2 class="section-title">Experience</h2>
       </div>
 
-      <div class="cv-role-item">
-        <p class="resume-role">Sr. Manager, UX Content Strategy</p>
-        <p class="resume-org">Charles Schwab</p>
-        <p class="resume-dates">March 2021 – Present · San Francisco, CA</p>
-        <p class="resume-desc">Content lead on the digital retail creative direction team, overseeing content guidelines and platform standards for the design system.</p>
+      <!-- ERA: CONTENT SYSTEMS & AI -->
+      <div class="cv-era">
+        <div class="cv-era-head">
+          <p class="cv-era-years">2021 — Present</p>
+          <h3 class="cv-era-name">Content systems &amp; AI</h3>
+          <p class="cv-era-note">The current chapter: writing standards, talent architecture, AI governance — teaching a very large bank to write.</p>
+        </div>
+        <div class="cv-era-roles">
+          <div class="cv-role-item">
+            <p class="resume-role">Sr. Manager, UX Content Strategy</p>
+            <p class="resume-org">Charles Schwab</p>
+            <p class="resume-dates">March 2021 – Present · San Francisco, CA</p>
+            <p class="resume-desc">Content lead on the digital retail creative direction team, overseeing content guidelines and platform standards for the design system.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="cv-role-item">
-        <p class="resume-role">UX Content Designer</p>
-        <p class="resume-org">Wells Fargo</p>
-        <p class="resume-dates">March 2020 – March 2021 · San Francisco, CA</p>
-        <p class="resume-desc">UX content design for retail experiences including Covid relief and small business products.</p>
+      <!-- ERA: UX CONTENT -->
+      <div class="cv-era">
+        <div class="cv-era-head">
+          <p class="cv-era-years">2015 — 2021</p>
+          <h3 class="cv-era-name">UX content</h3>
+          <p class="cv-era-note">Product and content work in healthcare and banking — where I learned that most writing problems are system problems.</p>
+        </div>
+        <div class="cv-era-roles">
+          <div class="cv-role-item">
+            <p class="resume-role">UX Content Designer</p>
+            <p class="resume-org">Wells Fargo</p>
+            <p class="resume-dates">March 2020 – March 2021 · San Francisco, CA</p>
+            <p class="resume-desc">UX content design for retail experiences including Covid relief and small business products.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Content Designer</p>
+            <p class="resume-org">Uber</p>
+            <p class="resume-dates">January 2020 – March 2020 · San Francisco, CA</p>
+            <p class="resume-desc">Content designer and editor for customer support content.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Digital Content Manager</p>
+            <p class="resume-org">McKesson</p>
+            <p class="resume-dates">December 2015 – December 2019 · San Francisco, CA</p>
+            <p class="resume-desc">Content lead for the digital center of excellence, overseeing all pre-sale product content on the digital front door.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Product Manager</p>
+            <p class="resume-org">Wells Fargo</p>
+            <p class="resume-dates">February 2015 – December 2015 · San Francisco, CA</p>
+            <p class="resume-desc">Oversaw product development for the financial education section of WellsFargo.com.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="cv-role-item">
-        <p class="resume-role">Content Designer</p>
-        <p class="resume-org">Uber</p>
-        <p class="resume-dates">January 2020 – March 2020 · San Francisco, CA</p>
-        <p class="resume-desc">Content designer and editor for customer support content.</p>
+      <!-- ERA: EDITORIAL -->
+      <div class="cv-era">
+        <div class="cv-era-head">
+          <p class="cv-era-years">2010 — 2015</p>
+          <h3 class="cv-era-name">Editorial</h3>
+          <p class="cv-era-note">Trade magazines, a health publisher, three staff editors, one brief detour into PR. Deadlines taught me everything.</p>
+        </div>
+        <div class="cv-era-roles">
+          <div class="cv-role-item">
+            <p class="resume-role">Video Transcriber</p>
+            <p class="resume-org">Academy of Art University</p>
+            <p class="resume-dates">June 2014 – January 2015 · San Francisco, CA</p>
+            <p class="resume-desc">Transcribed training videos.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Content Strategist</p>
+            <p class="resume-org">Launchsquad</p>
+            <p class="resume-dates">February 2014 – April 2014 · Boston, MA</p>
+            <p class="resume-desc">Brief stint in public relations before returning to San Francisco.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Managing Editor</p>
+            <p class="resume-org">Healthline.com</p>
+            <p class="resume-dates">December 2011 – November 2013 · San Francisco, CA</p>
+            <p class="resume-desc">Managed content partnerships with Yahoo! Health, Microsoft, and General Electric; oversaw a team of 3 staff editors.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Staff Editor</p>
+            <p class="resume-org">Praetorian Group</p>
+            <p class="resume-dates">August 2010 – December 2011 · San Francisco, CA</p>
+            <p class="resume-desc">Managed digital trade magazines for the first responder community; ran social media and newsletters for EMS1.com.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="cv-role-item">
-        <p class="resume-role">Digital Content Manager</p>
-        <p class="resume-org">McKesson</p>
-        <p class="resume-dates">December 2015 – December 2019 · San Francisco, CA</p>
-        <p class="resume-desc">Content lead for the digital center of excellence, overseeing all pre-sale product content on the digital front door.</p>
+      <!-- ERA: THE APPRENTICESHIP -->
+      <div class="cv-era">
+        <div class="cv-era-head">
+          <p class="cv-era-years">2007 — 2010</p>
+          <h3 class="cv-era-name">The apprenticeship</h3>
+          <p class="cv-era-note">Debt-consolidation SEO copy, opera coverage, databases of government information. Everyone starts somewhere.</p>
+        </div>
+        <div class="cv-era-roles">
+          <div class="cv-role-item">
+            <p class="resume-role">Staff Editor</p>
+            <p class="resume-org">Columbia Books and Information Services</p>
+            <p class="resume-dates">March 2010 – August 2010 · Washington, DC</p>
+            <p class="resume-desc">Edited large databases of government information packaged into resource materials for federal government workers.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Staff Writer</p>
+            <p class="resume-org">Chautauqua Daily</p>
+            <p class="resume-dates">June 2009 – August 2009 · Chautauqua, NY</p>
+            <p class="resume-desc">Covered the local opera company, education programs, and feature stories.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Staff Editor</p>
+            <p class="resume-org">Realty Times</p>
+            <p class="resume-dates">January 2008 – July 2008 · Dallas, TX</p>
+            <p class="resume-desc">Edited newsletters and a news site for realty professionals.</p>
+          </div>
+          <div class="cv-role-item">
+            <p class="resume-role">Staff Writer</p>
+            <p class="resume-org">Credit Solutions</p>
+            <p class="resume-dates">March 2007 – November 2007 · Dallas, TX</p>
+            <p class="resume-desc">Wrote SEO copy about debt consolidation.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="cv-role-item">
-        <p class="resume-role">Product Manager</p>
-        <p class="resume-org">Wells Fargo</p>
-        <p class="resume-dates">February 2015 – December 2015 · San Francisco, CA</p>
-        <p class="resume-desc">Oversaw product development for the financial education section of WellsFargo.com.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Video Transcriber</p>
-        <p class="resume-org">Academy of Art University</p>
-        <p class="resume-dates">June 2014 – January 2015 · San Francisco, CA</p>
-        <p class="resume-desc">Transcribed training videos.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Content Strategist</p>
-        <p class="resume-org">Launchsquad</p>
-        <p class="resume-dates">February 2014 – April 2014 · Boston, MA</p>
-        <p class="resume-desc">Brief stint in public relations before returning to San Francisco.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Managing Editor</p>
-        <p class="resume-org">Healthline.com</p>
-        <p class="resume-dates">December 2011 – November 2013 · San Francisco, CA</p>
-        <p class="resume-desc">Managed content partnerships with Yahoo! Health, Microsoft, and General Electric; oversaw a team of 3 staff editors.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Staff Editor</p>
-        <p class="resume-org">Praetorian Group</p>
-        <p class="resume-dates">August 2010 – December 2011 · San Francisco, CA</p>
-        <p class="resume-desc">Managed digital trade magazines for the first responder community; ran social media and newsletters for EMS1.com.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Staff Editor</p>
-        <p class="resume-org">Columbia Books and Information Services</p>
-        <p class="resume-dates">March 2010 – August 2010 · Washington, DC</p>
-        <p class="resume-desc">Edited large databases of government information packaged into resource materials for federal government workers.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Staff Writer</p>
-        <p class="resume-org">Chautauqua Daily</p>
-        <p class="resume-dates">June 2009 – August 2009 · Chautauqua, NY</p>
-        <p class="resume-desc">Covered the local opera company, education programs, and feature stories.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Staff Editor</p>
-        <p class="resume-org">Realty Times</p>
-        <p class="resume-dates">January 2008 – July 2008 · Dallas, TX</p>
-        <p class="resume-desc">Edited newsletters and a news site for realty professionals.</p>
-      </div>
-
-      <div class="cv-role-item">
-        <p class="resume-role">Staff Writer</p>
-        <p class="resume-org">Credit Solutions</p>
-        <p class="resume-dates">March 2007 – November 2007 · Dallas, TX</p>
-        <p class="resume-desc">Wrote SEO copy about debt consolidation.</p>
-      </div>
     </div>
   </section>
 
   <!-- EDUCATION -->
   <section id="education">
-    <div class="cv-section-inner">
+    <div class="section-inner">
       <div class="section-header">
         <span class="section-number">02</span>
         <h2 class="section-title">Education</h2>

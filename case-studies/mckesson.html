@@ -12,229 +12,12 @@
   <meta charset="UTF-8" />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>McKesson Case Study | Drew Johnson</title>
+  <title>McKesson.com Case Study | Drew Johnson</title>
+  <meta name="description" content="How a 1,500-page audit and a systematic enhancement framework drove an 82% year-over-year increase in form leads on McKesson.com." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #f0f0f0;
-      --ink: #1a1814;
-      --ink-light: #5a5550;
-      --ink-faint: #b0aba4;
-      --rule: #d8d2c8;
-      --accent: #8b3a2a;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'DM Sans', sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2.5rem 4rem;
-      border-top: 1px solid var(--rule);
-    }
-
-    .footer-mark {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--ink);
-    }
-
-    .footer-copy {
-      font-size: 0.78rem;
-      color: var(--ink-faint);
-    }
-
-    /* ── CASE STUDY PAGE ── */
-    .cs-page {
-      padding-top: 80px;
-    }
-
-    /* Back link bar */
-    .cs-back {
-      padding: 1.25rem 4rem;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .cs-back a {
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .cs-back a:hover { color: var(--ink); }
-
-    /* Article container */
-    .cs-article {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 4rem 2rem 6rem;
-    }
-
-    /* Eyebrow */
-    .cs-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.75rem;
-    }
-
-    /* Title */
-    .cs-title {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 2.75rem);
-      font-weight: 300;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-
-    /* Subtitle / lede */
-    .cs-lede {
-      font-size: 1rem;
-      color: var(--ink-light);
-      line-height: 1.75;
-      margin-bottom: 2.5rem;
-    }
-
-    /* Metadata row */
-    .cs-meta {
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
-
-    .cs-meta-item p:first-child {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 3px;
-    }
-
-    .cs-meta-item p:last-child {
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: var(--ink);
-    }
-
-    /* Divider */
-    .cs-rule {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 2.5rem 0;
-    }
-
-    /* Section label */
-    .cs-section-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.75rem;
-    }
-
-    /* Section heading */
-    .cs-h2 {
-      font-family: var(--serif);
-      font-size: 1.5rem;
-      font-weight: 400;
-      line-height: 1.25;
-      margin-bottom: 1rem;
-    }
-
-    /* Body copy */
-    .cs-body {
-      font-size: 0.95rem;
-      color: var(--ink-light);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-    }
-
-    /* Pull quote / blockquote */
-    .cs-blockquote {
-      border-left: 2px solid var(--rule);
-      padding: 1rem 1.5rem;
-      margin: 1.5rem 0;
-      background: rgba(26, 24, 20, 0.03);
-    }
-
-    .cs-blockquote p {
-      font-size: 0.92rem;
-      color: var(--ink-light);
-      line-height: 1.75;
-    }
-
-    /* Outcomes grid */
-    .cs-outcomes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1px;
-      margin: 1.5rem 0;
-      border: 1px solid var(--rule);
-    }
-
-    .cs-outcome {
-      padding: 1.25rem 1.5rem;
-      border: 1px solid var(--rule);
-      background: var(--cream);
-    }
-
-    .cs-outcome-value {
-      font-family: var(--serif);
-      font-size: 1.75rem;
-      font-weight: 400;
-      color: var(--ink);
-      line-height: 1;
-      margin-bottom: 0.4rem;
-    }
-
-    .cs-outcome-label {
-      font-size: 0.75rem;
-      color: var(--ink-light);
-      line-height: 1.4;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .cs-back { padding: 1rem 2rem; }
-      .cs-article { padding: 3rem 1.5rem 5rem; }
-      .cs-meta { gap: 1.5rem; }
-      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/site.css" />
 </head>
 <body>
 
@@ -242,7 +25,7 @@
 
     <!-- BACK LINK -->
     <div class="cs-back">
-      <a href="/#work">&larr; Selected Work</a>
+      <a href="/#work">&larr; The Work</a>
     </div>
 
     <!-- ARTICLE -->
@@ -290,7 +73,90 @@
       <p class="cs-section-label">The strategy</p>
       <h2 class="cs-h2">Audit first. Build the standard second. Then scale.</h2>
       <p class="cs-body">I led a full content audit of McKesson.com, evaluating all solution, wayfinding, and about us content both quantitatively and qualitatively. The audit identified recurring failure patterns that became the basis for an enhancement framework: long copy blocks that needed breaking up for scannability, insider language that needed translating for external audiences, pages that were text-light or redundant and needed consolidation, missing CTAs, and accessibility gaps throughout.</p>
+
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 01</strong> — From audit to system</figcaption>
+        <div class="cs-flow">
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">1</p>
+            <p class="cs-flow-step-title">1,500 pages audited</p>
+            <p class="cs-flow-step-desc">Every solution, wayfinding, and about us page — quantitative and qualitative.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">2</p>
+            <p class="cs-flow-step-title">Failure patterns</p>
+            <p class="cs-flow-step-desc">Walls of copy, insider jargon, redundant pages, missing CTAs, accessibility gaps.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step is-accent">
+            <p class="cs-flow-step-num">3</p>
+            <p class="cs-flow-step-title">Enhancement framework</p>
+            <p class="cs-flow-step-desc">What "enhanced" means in practice — the shared standard for every contributor.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-num">4</p>
+            <p class="cs-flow-step-title">BU-by-BU rollout</p>
+            <p class="cs-flow-step-desc">Phased by business unit, designed to stay unblocked.</p>
+          </div>
+        </div>
+        <figcaption class="cs-artifact-caption">The audit found the patterns; the framework made the fix repeatable. Systems beat heroics at 1,500 pages.</figcaption>
+      </figure>
+
       <p class="cs-body">The framework defined what "enhanced" looked like in practice: a search-optimized H1, audience-focused tone, clear product features and benefits, scannable structure, inline links to related content, and clear next steps on every page. This gave every contributor and every business unit a shared standard to work toward.</p>
+
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 02</strong> — Anatomy of an enhanced page</figcaption>
+        <div class="cs-pair">
+          <div class="cs-pair-cell">
+            <p class="cs-pair-tag">Before</p>
+            <svg viewBox="0 0 220 170" role="img" aria-label="Wireframe of a dense page: a small heading followed by an unbroken wall of text lines, with no links or call to action">
+              <rect x="10" y="12" width="90" height="8" rx="2" fill="var(--ink-faint)" />
+              <g fill="var(--rule)">
+                <rect x="10" y="32" width="200" height="5" rx="2" />
+                <rect x="10" y="42" width="200" height="5" rx="2" />
+                <rect x="10" y="52" width="200" height="5" rx="2" />
+                <rect x="10" y="62" width="200" height="5" rx="2" />
+                <rect x="10" y="72" width="200" height="5" rx="2" />
+                <rect x="10" y="82" width="200" height="5" rx="2" />
+                <rect x="10" y="92" width="200" height="5" rx="2" />
+                <rect x="10" y="102" width="200" height="5" rx="2" />
+                <rect x="10" y="112" width="200" height="5" rx="2" />
+                <rect x="10" y="122" width="200" height="5" rx="2" />
+                <rect x="10" y="132" width="200" height="5" rx="2" />
+                <rect x="10" y="142" width="200" height="5" rx="2" />
+                <rect x="10" y="152" width="140" height="5" rx="2" />
+              </g>
+            </svg>
+            <p class="cs-pair-note">Company-focused heading, one unbroken block, no links, no next step.</p>
+          </div>
+          <div class="cs-pair-cell is-after">
+            <p class="cs-pair-tag">After</p>
+            <svg viewBox="0 0 220 170" role="img" aria-label="Wireframe of an enhanced page: a large heading, short scannable paragraphs, subheads, inline links, and a clear call-to-action button">
+              <rect x="10" y="10" width="150" height="12" rx="2" fill="var(--ink)" />
+              <g fill="var(--rule)">
+                <rect x="10" y="34" width="200" height="5" rx="2" />
+                <rect x="10" y="44" width="170" height="5" rx="2" />
+              </g>
+              <rect x="10" y="62" width="80" height="7" rx="2" fill="var(--ink-faint)" />
+              <g fill="var(--rule)">
+                <rect x="10" y="78" width="200" height="5" rx="2" />
+                <rect x="10" y="88" width="185" height="5" rx="2" />
+              </g>
+              <rect x="10" y="98" width="90" height="5" rx="2" fill="var(--accent-mid)" />
+              <rect x="10" y="116" width="80" height="7" rx="2" fill="var(--ink-faint)" />
+              <g fill="var(--rule)">
+                <rect x="10" y="132" width="200" height="5" rx="2" />
+                <rect x="10" y="142" width="150" height="5" rx="2" />
+              </g>
+              <rect x="10" y="154" width="64" height="14" rx="3" fill="var(--accent)" />
+            </svg>
+            <p class="cs-pair-note">Search-optimized H1, scannable sections, inline links, and a clear next step.</p>
+          </div>
+        </div>
+        <figcaption class="cs-artifact-caption">The framework, sketched. Every enhanced page got this skeleton: findable, scannable, actionable.</figcaption>
+      </figure>
 
       <hr class="cs-rule">
 
@@ -298,6 +164,28 @@
       <p class="cs-section-label">Navigating complexity</p>
       <h2 class="cs-h2">Brokering the brand vs. SEO tension</h2>
       <p class="cs-body">Midway through the project, McKesson's brand team undertook a major overhaul of their voice and tone guidelines — a change that would have affected every piece of content in scope. The conflict was real: brand wanted simplified language and improved Flesch-Kincaid readability scores, minimizing jargon wherever possible. SEO needed the freedom to use technical terms that matched what customers were actually searching for.</p>
+
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 03</strong> — Two legitimate demands, one document</figcaption>
+        <div class="cs-flow">
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-title">Brand wanted</p>
+            <p class="cs-flow-step-desc">Simplified language, better Flesch-Kincaid readability scores, minimal jargon.</p>
+          </div>
+          <span class="cs-flow-arrow">→</span>
+          <div class="cs-flow-step is-accent">
+            <p class="cs-flow-step-title">The digital writing guide</p>
+            <p class="cs-flow-step-desc">Readability through shorter sentences and scannable structure; technical terms preserved where search demanded them.</p>
+          </div>
+          <span class="cs-flow-arrow">←</span>
+          <div class="cs-flow-step">
+            <p class="cs-flow-step-title">SEO needed</p>
+            <p class="cs-flow-step-desc">The technical terms customers were actually typing into search boxes.</p>
+          </div>
+        </div>
+        <figcaption class="cs-artifact-caption">Both sides were right. The guide gave each one what it actually needed instead of what it initially asked for.</figcaption>
+      </figure>
+
       <p class="cs-body">Rather than let the two standards stall the work, I brokered a practical compromise and led the creation of a digital writing guide that honored both. The digital team would hit brand's readability targets through shorter sentences and scannable structure, while SEO retained the flexibility to preserve high-value technical terms. The writing guide became the governing document for all content work going forward.</p>
 
       <hr class="cs-rule">

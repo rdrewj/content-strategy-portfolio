@@ -11,10 +11,15 @@ unlinked from the site, but their code is kept in this repo.
 
 ```
 .
-├── index.html              # Landing page (hero, approach, work, expertise, contact)
-├── case-studies/           # Long-form case studies
+├── index.html              # Landing page (hero, how I work, the work, skills, contact)
+├── cv.html                 # Full CV — era-grouped career timeline
+├── assets/
+│   └── site.css            # Shared design system (tokens, type, case-study components)
+├── case-studies/           # Long-form case studies with inline figures
 │   ├── answer-widgets.html
+│   ├── mckesson.html
 │   ├── talent-architecture.html
+│   ├── tools.html          # Case study on the AI tools below
 │   └── ux-writing-guide.html
 ├── tools/                  # Interactive AI tools (front end, currently offline)
 │   ├── csx-audit.html      # Content/IA site audit
@@ -33,8 +38,8 @@ unlinked from the site, but their code is kept in this repo.
 
 ## Tools
 
-Currently offline (not linked from the site) but the code is kept here for
-future use:
+Currently offline (written up in `case-studies/tools.html`, but not running)
+with the code kept here for future use:
 
 - **CSX Audit** (`/tools/csx-audit`) — Crawls a URL, builds a link graph,
   computes information-architecture metrics (orphaned pages, depth, dead ends,
