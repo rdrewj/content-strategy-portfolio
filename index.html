@@ -252,23 +252,9 @@
     }
 
     /* ── SAY HELLO ── */
-    .contact-body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3.5rem;
-      align-items: start;
-    }
-
-    .contact-intro {
-      font-family: var(--serif);
-      font-size: clamp(1.3rem, 2vw, 1.8rem);
-      font-weight: 300;
-      line-height: 1.35;
-      color: var(--ink);
-    }
-
     .contact-links {
       list-style: none;
+      max-width: 480px;
     }
 
     .contact-links li {
@@ -322,7 +308,6 @@
       .hero-left { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--rule); }
       .hero-right { padding: 2rem 1.5rem; }
       .about-skills { grid-template-columns: 1fr; gap: 2rem; }
-      .contact-body { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
@@ -335,7 +320,7 @@
       <p class="hero-eyebrow">UX Content Strategy &nbsp;·&nbsp; AI Content Architecture</p>
       <h1 class="hero-name">Drew<br><em>Johnson</em></h1>
       <p class="hero-descriptor">
-        I turn institutional chaos into language people can act on. Nineteen years of it — newsrooms, healthcare, and lately the content systems of a very large bank.
+        I turn institutional chaos into language people can act on.
       </p>
       <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download resume</a>
       <a href="/cv" class="hero-cv-link">View full CV →</a>
@@ -489,32 +474,26 @@
         <span class="section-number">04</span>
         <h2 class="section-title">Say hello</h2>
       </div>
-      <div class="contact-body">
-        <div>
-          <p class="contact-intro">I'm looking for senior content strategy and AI content roles. If you're hiring for that — or you just want to argue about the serial comma — say hello.</p>
-        </div>
-        <ul class="contact-links">
-          <li>
-            <a href="mailto:rdrewj@icloud.com">
-              rdrewj@icloud.com
-              <span class="link-label">Email</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://linkedin.com/in/rdrewj" target="_blank" rel="noopener">
-              linkedin.com/in/rdrewj
-              <span class="link-label">LinkedIn</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul class="contact-links">
+        <li>
+          <a href="mailto:rdrewj@icloud.com">
+            rdrewj@icloud.com
+            <span class="link-label">Email</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://linkedin.com/in/rdrewj" target="_blank" rel="noopener">
+            linkedin.com/in/rdrewj
+            <span class="link-label">LinkedIn</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <p class="footer-mark" id="brief-trigger">Drew Johnson</p>
-    <button class="soul-link" id="soul-trigger">There's a soul in this machine →</button>
     <p class="footer-copy">© 2026 · Marin County, CA</p>
   </footer>
 
@@ -550,7 +529,6 @@
     }
 
     document.getElementById('brief-trigger').addEventListener('click', () => openPoem('poem'));
-    document.getElementById('soul-trigger').addEventListener('click', () => openPoem('soul_link'));
     closeBtn.addEventListener('click', () => {
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
