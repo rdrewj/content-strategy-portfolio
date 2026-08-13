@@ -1,0 +1,613 @@
+/* ─────────────────────────────────────────────────────────
+   rdrewj.com — shared design system
+   Warm editorial: paper ground, ink type, one rust accent.
+   Cormorant Garamond for display, DM Sans for everything else.
+   ───────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --paper: #f4f1ea;
+  --paper-deep: #ece8dd;
+  --ink: #1a1814;
+  --ink-light: #57524b;
+  --ink-faint: #a49d92;
+  --rule: #d9d2c4;
+  --accent: #8b3a2a;
+  --accent-mid: #b1705a;
+  --accent-soft: rgba(139, 58, 42, 0.08);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Paper grain, sitewide and barely there */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.35;
+}
+
+/* ── SECTION BASE ── */
+section {
+  padding: 3rem;
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+section.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.section-number {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+/* ── UNDERLINE-SLIDE LINK ── */
+.u-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--ink);
+  transition: color 0.25s;
+}
+
+.u-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.u-link:hover { color: var(--accent); }
+.u-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ── EYEBROWS & LABELS ── */
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 1.75rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-mark {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+  text-decoration: none;
+}
+
+.footer-mark:hover { color: var(--accent); }
+
+.footer-copy {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+
+/* Visible poem trigger */
+.soul-link {
+  background: none;
+  border: none;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color 0.25s;
+  padding: 0;
+}
+
+.soul-link:hover { color: var(--accent); }
+
+/* ── POEM PANEL ── */
+.brief-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  background: var(--paper-deep);
+  border-top: 1px solid var(--rule);
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 3rem 4rem 4rem;
+  box-shadow: 0 -20px 60px rgba(26, 24, 20, 0.08);
+}
+
+.brief-panel.open { transform: translateY(0); }
+
+.brief-panel-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.brief-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.brief-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.brief-title {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 300;
+  line-height: 1.15;
+}
+
+.brief-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--ink-faint);
+  transition: color 0.2s;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.brief-close:hover { color: var(--ink); }
+
+.brief-rule {
+  height: 1px;
+  background: var(--rule);
+  margin-bottom: 2.5rem;
+}
+
+.poem-body p {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--ink-light);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  max-width: 38ch;
+}
+
+.poem-blurb {
+  font-size: 0.92rem;
+  color: var(--ink-light);
+  line-height: 1.8;
+  max-width: 52ch;
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .brief-panel { padding: 2rem 2rem 3rem; }
+  .brief-header { flex-direction: column; gap: 1rem; }
+}
+
+/* ── CASE STUDY PAGES ── */
+.cs-back {
+  padding: 1.25rem 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.cs-back a {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.cs-back a:hover { color: var(--accent); }
+
+.cs-article {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+.cs-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.cs-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.cs-lede {
+  font-size: 1rem;
+  color: var(--ink-light);
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+
+.cs-meta {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.cs-meta-item p:first-child {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 3px;
+}
+
+.cs-meta-item p:last-child {
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.cs-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2.5rem 0;
+}
+
+.cs-section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.cs-h2 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+
+.cs-body {
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.cs-blockquote {
+  border-left: 2px solid var(--accent);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  background: var(--accent-soft);
+}
+
+.cs-blockquote p {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* Outcomes grid */
+.cs-outcomes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.cs-outcome {
+  padding: 1.25rem 1.5rem;
+  background: var(--paper);
+}
+
+.cs-outcome-value {
+  font-family: var(--serif);
+  font-size: 1.85rem;
+  font-weight: 400;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.cs-outcome-label {
+  font-size: 0.75rem;
+  color: var(--ink-light);
+  line-height: 1.4;
+}
+
+/* ── ARTIFACTS (figures inside case studies) ── */
+.cs-artifact {
+  border: 1px solid var(--rule);
+  background: var(--paper-deep);
+  padding: 1.75rem;
+  margin: 2rem 0;
+}
+
+.cs-artifact-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.25rem;
+}
+
+.cs-artifact-label strong {
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.cs-artifact-caption {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 1.25rem;
+  line-height: 1.6;
+}
+
+.cs-artifact svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Before / after pair */
+.cs-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+.cs-pair-cell {
+  background: var(--paper);
+  padding: 1.25rem 1.5rem;
+}
+
+.cs-pair-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  color: var(--ink-faint);
+}
+
+.cs-pair-cell.is-after .cs-pair-tag { color: var(--accent); }
+
+.cs-pair-text {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--ink-light);
+}
+
+.cs-pair-cell.is-after .cs-pair-text { color: var(--ink); }
+
+.cs-pair-text ul {
+  list-style: none;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+.cs-pair-text ul li {
+  padding-left: 1.1rem;
+  position: relative;
+  margin-bottom: 0.35rem;
+}
+
+.cs-pair-text ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--ink-faint);
+}
+
+.cs-pair-note {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .cs-pair { grid-template-columns: 1fr; }
+}
+
+/* Flow diagram (steps + connectors) */
+.cs-flow {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cs-flow-step {
+  flex: 1 1 130px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 0.9rem 1rem;
+  position: relative;
+}
+
+.cs-flow-step.is-accent {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.cs-flow-step-num {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.cs-flow-step-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 0.25rem;
+}
+
+.cs-flow-step-desc {
+  font-size: 0.72rem;
+  color: var(--ink-light);
+  line-height: 1.5;
+}
+
+.cs-flow-arrow {
+  align-self: center;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+  flex: 0 0 auto;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .cs-flow { flex-direction: column; }
+  .cs-flow-arrow { transform: rotate(90deg); align-self: flex-start; margin-left: 1.25rem; }
+}
+
+/* Editorial bar comparison */
+.cs-bars { display: grid; gap: 1rem; }
+
+.cs-bar-row { display: grid; gap: 0.35rem; }
+
+.cs-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.75rem;
+  color: var(--ink-light);
+}
+
+.cs-bar-label .cs-bar-value {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.cs-bar-track {
+  height: 8px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+
+.cs-bar-fill {
+  height: 100%;
+  background: var(--accent-mid);
+}
+
+.cs-bar-fill.is-accent { background: var(--accent); }
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  section { opacity: 1 !important; transform: none !important; }
+}
+
+/* ── RESPONSIVE BASE ── */
+@media (max-width: 900px) {
+  section { padding: 2rem 1.5rem; }
+  .cs-back { padding: 1rem 1.5rem; }
+  .cs-article { padding: 3rem 1.5rem 5rem; }
+  .cs-meta { gap: 1.5rem; }
+  footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; text-align: center; }
+}
