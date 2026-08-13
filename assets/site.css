@@ -160,21 +160,6 @@ footer {
   color: var(--ink-faint);
 }
 
-/* Visible poem trigger */
-.soul-link {
-  background: none;
-  border: none;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--ink-faint);
-  cursor: pointer;
-  transition: color 0.25s;
-  padding: 0;
-}
-
-.soul-link:hover { color: var(--accent); }
-
 /* ── POEM PANEL ── */
 .brief-panel {
   position: fixed;
