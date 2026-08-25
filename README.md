@@ -11,7 +11,7 @@ unlinked from the site, but their code is kept in this repo.
 
 ```
 .
-├── index.html              # Landing page (hero, how I work, the work, skills, contact)
+├── index.html              # Landing page (hero, the work, skills, contact)
 ├── assets/
 │   └── site.css            # Shared design system (tokens, type, case-study components)
 ├── case-studies/           # Long-form case studies with inline figures
