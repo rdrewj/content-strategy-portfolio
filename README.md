@@ -12,7 +12,6 @@ unlinked from the site, but their code is kept in this repo.
 ```
 .
 ├── index.html              # Landing page (hero, how I work, the work, skills, contact)
-├── cv.html                 # Full CV — era-grouped career timeline
 ├── assets/
 │   └── site.css            # Shared design system (tokens, type, case-study components)
 ├── case-studies/           # Long-form case studies with inline figures
@@ -32,7 +31,7 @@ unlinked from the site, but their code is kept in this repo.
 │   └── security.js         # SSRF-safe fetch, CORS, and rate limiting
 ├── Drew_Johnson-Resume.pdf
 ├── CNAME                   # Custom domain (rdrewj.com)
-├── vercel.json             # Routing + function config
+├── vercel.json             # Function config
 └── package.json
 ```
 
