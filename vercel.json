@@ -1,7 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/cv", "destination": "/cv.html" }
-  ],
   "functions": {
     "api/*.js": {
       "maxDuration": 60
