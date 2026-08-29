@@ -4,8 +4,7 @@ Personal portfolio for **Drew Johnson** — UX content strategy and AI content
 architecture. Live at **[rdrewj.com](https://rdrewj.com)**.
 
 The site pairs a static front end with a small set of serverless functions that
-power two interactive, AI-driven tools. The tools are currently offline and
-unlinked from the site, but their code is kept in this repo.
+power two interactive, AI-driven tools. The tools are retired prototypes. Their public AI endpoints return HTTP 410 by default, while the interfaces and code remain as portfolio artifacts.
 
 ## Structure
 
@@ -37,8 +36,7 @@ unlinked from the site, but their code is kept in this repo.
 
 ## Tools
 
-Currently offline (written up in `case-studies/tools.html`, but not running)
-with the code kept here for future use:
+Retired prototypes (documented in `case-studies/tools.html`) with their interfaces and code preserved for review:
 
 - **CSX Audit** (`/tools/csx-audit`) — Crawls a URL, builds a link graph,
   computes information-architecture metrics (orphaned pages, depth, dead ends,
@@ -88,3 +86,15 @@ usage. Configure Upstash in production for limits that are shared across instanc
 
 Deployed on Vercel. `vercel.json` allows the `api/*` functions up to a
 60-second runtime. The production domain is configured via `CNAME`.
+
+
+## Privacy and indexing
+
+The portfolio intentionally remains excluded from search indexing through page-level
+`noindex, nofollow` directives and `robots.txt`. Google Analytics is disclosed on
+`privacy.html`.
+
+## Verification
+
+Run `pnpm check` to validate internal links, required page metadata, heading structure,
+and the retired API guard. GitHub Actions runs the same checks on pull requests.

@@ -301,6 +301,9 @@ export default async function handler(req, res) {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (process.env.ENABLE_RETIRED_TOOLS !== 'true') {
+    return res.status(410).json({ error: 'This prototype has been retired.' });
+  }
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return res.status(500).json({ error: 'Analysis service not configured.' });
@@ -320,6 +323,9 @@ export default async function handler(req, res) {
   const { site_map, site_purpose } = req.body || {};
   if (!site_map?.pages?.length) {
     return res.status(400).json({ error: 'site_map with pages is required' });
+  }
+  if (site_map.pages.length > 10 || JSON.stringify(site_map).length > 500_000) {
+    return res.status(400).json({ error: 'Site map exceeds the prototype limits.' });
   }
 
   const { pages, link_graph: linkGraph = [], root_url: siteUrl } = site_map;
@@ -359,7 +365,7 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error('Analysis error:', err);
     return res.status(500).json({
-      error: 'Analysis failed: ' + (err.message || 'Unknown error'),
+      error: 'Analysis failed. Please try again later.',
     });
   }
 }
