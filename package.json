@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "check": "node scripts/check-site.mjs"
+  },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "@upstash/ratelimit": "^2.0.5",

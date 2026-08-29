@@ -15,6 +15,9 @@ export default async function handler(req, res) {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (process.env.ENABLE_RETIRED_TOOLS !== 'true') {
+    return res.status(410).json({ error: 'This prototype has been retired.' });
+  }
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return res.status(500).json({ error: 'Analysis service not configured.' });
@@ -35,6 +38,10 @@ export default async function handler(req, res) {
 
   if (!copy || typeof copy !== 'string' || copy.trim().length === 0) {
     return res.status(400).json({ error: 'Copy text is required.' });
+  }
+
+  if ((context && String(context).length > 1000) || (element_type && String(element_type).length > 100)) {
+    return res.status(400).json({ error: 'Context or element type is too long.' });
   }
 
   if (copy.trim().length > 1500) {
@@ -96,7 +103,7 @@ Return only the JSON object.`;
   } catch (err) {
     console.error('Critique error:', err);
     return res.status(500).json({
-      error: 'Analysis failed: ' + (err.message || 'Unknown error'),
+      error: 'Analysis failed. Please try again later.',
     });
   }
 }
