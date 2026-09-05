@@ -41,7 +41,7 @@
 
       <p class="cs-eyebrow">Case Study</p>
       <h1 class="cs-title">The tools I built—and deliberately retired</h1>
-      <p class="cs-lede">Content strategists talk a lot about AI. I wanted receipts. So I designed and shipped two working prototypes—a crawler that audits information architecture and a copy critique engine—then retired their public endpoints once the learning objective was complete.</p>
+      <p class="cs-lede">I designed and shipped two working prototypes to explore how content strategy translates into AI tools—a crawler that audits information architecture and a copy critique engine—then retired their public endpoints once the learning objective was complete.</p>
 
       <!-- Metadata -->
       <div class="cs-meta">
@@ -74,9 +74,9 @@
 
       <!-- The Problem -->
       <p class="cs-section-label">The premise</p>
-      <h2 class="cs-h2">"AI content architecture" should come with proof</h2>
-      <p class="cs-body">My positioning says AI content architecture. It's easy to put those words on a website; it's harder to demonstrate them. The most convincing demonstration I could think of was to take the two things I do professionally — audit content systems and critique copy — and build working AI tools that do them, in public, for anyone who typed in a URL.</p>
-      <p class="cs-body">The other reason: you don't really understand AI-assisted content tooling until you've had to decide what the model should be trusted with, what should stay deterministic, and what to do when a stranger feeds your crawler the address of your cloud provider's metadata service.</p>
+      <h2 class="cs-h2">Applying content strategy to AI tools</h2>
+      <p class="cs-body">I started with two tasks from my content strategy practice: auditing content systems and critiquing copy. Building public tools for those tasks let me translate my editorial approach into prompts, scoring rules, and interactions.</p>
+      <p class="cs-body">The work required decisions about what to delegate to a model, what to calculate deterministically, and how to handle untrusted URLs, including requests targeting a cloud provider's metadata service.</p>
 
       <blockquote class="cs-blockquote">
         <p>Building the tools taught me the thing I now tell everyone: AI product work is content strategy work. The prompts are editorial standards. The scoring rubric is a voice decision. "Don't fabricate issues" is governance.</p>
@@ -126,14 +126,14 @@
       <p class="cs-section-label">The interesting part</p>
       <h2 class="cs-h2">The hard problems were content problems</h2>
       <p class="cs-body">The serverless plumbing was work, but the decisions that made the tools good were editorial. The audit prompts carry explicit standards: <em>identify real problems; if the IA is solid, return fewer findings with lower severity; don't fabricate issues.</em> The gap analysis has an evidence rule — every claimed gap must trace to a page that raises the question without answering it, or to a clear expectation for that type of site. That's the same discipline I'd demand from a human auditor, written down where the model can't ignore it.</p>
-      <p class="cs-body">Even the scoring is an editorial position. A site with no findings scores 88, not 100 — a ten-page crawl can't prove perfection, and the tool shouldn't pretend otherwise. Repeated findings of the same severity hit diminishing returns, because the fifth missing CTA is the same insight as the second. None of that came from an engineering requirement. It came from having done real audits and knowing where they go wrong.</p>
+      <p class="cs-body">Even the scoring is an editorial position. A site with no findings scores 88, not 100 — a ten-page crawl can't prove perfection, and the tool shouldn't pretend otherwise. Repeated findings of the same severity hit diminishing returns, because the fifth missing CTA is the same insight as the second. Those choices drew on my experience conducting audits and interpreting repeated findings.</p>
 
       <hr class="cs-rule">
 
       <!-- The Plumbing -->
       <p class="cs-section-label">The unglamorous parts</p>
-      <h2 class="cs-h2">Letting strangers use your tools without regretting it</h2>
-      <p class="cs-body">A public tool that fetches arbitrary URLs and spends real API money on every request is a liability with a nice interface. Most of the code that isn't content strategy is there to keep the tools safe and solvent:</p>
+      <h2 class="cs-h2">Designing for public use</h2>
+      <p class="cs-body">Public access introduced security and cost requirements alongside the editorial work. I added safeguards to manage URL fetching and API usage:</p>
 
       <figure class="cs-artifact">
         <figcaption class="cs-artifact-label"><strong>Fig. 02</strong> — The safety layer</figcaption>
@@ -155,7 +155,7 @@
             <p class="cs-flow-step-desc">Detects JavaScript-rendered apps it can't read and says so, instead of confidently auditing an empty page.</p>
           </div>
         </div>
-        <figcaption class="cs-artifact-caption">None of this shows up in a demo. All of it is the difference between a toy and a tool.</figcaption>
+        <figcaption class="cs-artifact-caption">These safeguards supported public access while limiting operational risk and cost.</figcaption>
       </figure>
 
       <hr class="cs-rule">
@@ -184,7 +184,7 @@
       </div>
 
       <p class="cs-body">Both tools ran live on this site. They're currently offline — every audit spends real API money, and a portfolio doesn't need an unattended bill — but the code stays in the repo, and turning them back on is a config change, not a rebuild.</p>
-      <p class="cs-body">What survives either way is the point they were built to make: the craft I bring to a content system — standards, evidence, honest limits, judgment about what to automate — is exactly the craft AI products need. I didn't read that in a think piece. I shipped it.</p>
+      <p class="cs-body">Building these prototypes gave me practical experience translating editorial standards into AI behavior, defining evidence requirements, and deciding where automation needed limits.</p>
 
     </article>
   </div>
