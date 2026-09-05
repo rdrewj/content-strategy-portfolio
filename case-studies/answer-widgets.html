@@ -13,11 +13,11 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Answer Widgets Case Study | Drew Johnson</title>
-  <meta name="description" content="How a content-led, data-driven system scaled Schwab's Answer Widgets from 50 to 557 — six weeks early, with 605K user interactions in the first year." />
+  <meta name="description" content="How content selection, search-term mapping, and QA helped scale Schwab's Answer Widgets beyond a 500-widget target." />
   <link rel="canonical" href="https://www.rdrewj.com/case-studies/answer-widgets.html" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Answer Widgets Case Study | Drew Johnson" />
-  <meta property="og:description" content="How a content-led system scaled Schwab’s Answer Widgets from 50 to 557, six weeks early." />
+  <meta property="og:description" content="Making existing answers discoverable through content selection, search-term mapping, and QA." />
   <meta property="og:url" content="https://www.rdrewj.com/case-studies/answer-widgets.html" />
   <meta property="og:image" content="https://www.rdrewj.com/assets/social-card.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -41,7 +41,7 @@
 
       <p class="cs-eyebrow">Case Study</p>
       <h1 class="cs-title">Scaling self-service at Schwab: Answer Widgets</h1>
-      <p class="cs-lede">How a content-led, data-driven approach scaled a pilot program from 50 to 557 Answer Widgets — delivered six weeks ahead of schedule and expanded 605,000 times in its first year.</p>
+      <p class="cs-lede">I built the content inventory, search-term mapping, and QA process that helped scale an existing search feature from a 50-widget pilot to more than 500 answers.</p>
 
       <!-- Metadata -->
       <div class="cs-meta">
@@ -55,7 +55,7 @@
         </div>
         <div class="cs-meta-item">
           <p>Timeline</p>
-          <p>Spring – end of year 2021</p>
+          <p>2021 launch; reporting through February 2022</p>
         </div>
         <div class="cs-meta-item">
           <p>Role</p>
@@ -65,9 +65,9 @@
 
       <aside class="cs-provenance" aria-label="Contribution and evidence note">
         <p class="cs-provenance-label">Contribution &amp; evidence</p>
-        <p><strong>What I owned:</strong> Content inventory, inclusion criteria, taxonomy, search-term mapping, sprint structure, and final content QA.</p>
-        <p><strong>How outcomes were measured:</strong> Widget inventory and interaction counts came from internal implementation records and Adobe Analytics reporting during the launch period.</p>
-        <p><strong>About the visuals:</strong> The diagrams are portfolio reconstructions of the operating model—not screenshots of Schwab interfaces or internal documents.</p>
+        <p><strong>What I owned:</strong> Content inventory, FAQ selection, organization by experience, search-term mapping, sprint structure, and content QA. The widget interface was already in place when I joined; my work focused on scaling its content.</p>
+        <p><strong>How outcomes were measured:</strong> The original project presentation records delivery milestones and Adobe Analytics reporting through February 2022. Interaction counts indicate use, not confirmed task completion or avoided support calls.</p>
+        <p><strong>About the visuals:</strong> The interface screenshot comes from the original project presentation. The delivery diagram is a portfolio reconstruction. Historical interface copy is shown as project evidence, not current trading guidance.</p>
       </aside>
 
       <hr class="cs-rule">
@@ -76,7 +76,7 @@
       <p class="cs-section-label">The problem</p>
       <h2 class="cs-h2">Automation stalled. The library needed a human system.</h2>
       <p class="cs-body">When I joined Schwab in spring of 2021, Answer Widgets, contextual FAQ surfaces embedded in the site's search results page, had been live for less than a year. The pilot had produced 50 widgets. The goal was to scale to 500 by year's end through an automated ingestion process that would pull FAQs from across the ecosystem.</p>
-      <p class="cs-body">The automation didn't work. The process couldn't reliably identify, filter, or format content at the quality level the experience required. Someone needed to build the library by hand — and build the system that would make it maintainable going forward.</p>
+      <p class="cs-body">When the planned automation did not materialize, my role shifted from stewarding imported content to assembling the FAQ inventory and preparing it for manual delivery.</p>
 
       <blockquote class="cs-blockquote">
         <p>The challenge wasn't just volume. It was creating a scalable taxonomy and keyword architecture that would allow the right answer to surface for the right search query, at a moment when users were trying to act, not browse.</p>
@@ -87,45 +87,30 @@
       <!-- The Strategy -->
       <p class="cs-section-label">The strategy</p>
       <h2 class="cs-h2">Build the master list. Get the keywords right.</h2>
-      <p class="cs-body">I started by pulling a full content report from the Drupal team: every page across both the client and prospect experiences. Filtering by accordion component type (the CMS pattern used for FAQs) gave me a rough inventory. From there, I culled the list to content that could realistically function as an Answer Widget: clear prompt, actionable answer, discrete topic.</p>
+      <p class="cs-body">I started by pulling a full content report from the Drupal team: every page across both the client and prospect experiences. Filtering by accordion component type (the CMS pattern used for FAQs) gave me a rough inventory. That component filter identified candidate FAQs; I then reviewed the inventory and selected relevant content for Answer Widgets. The source component was a starting point for selection, rather than a reason to include every item.</p>
       <p class="cs-body">The result was a master list organized by experience area — trade, wire, beneficiary, taxes, and more — that gave the team a single source of truth for the library. Keywords were the next critical layer. Using Adobe Analytics search data, I identified the actual terms users were entering for each topic, then mapped those phrases to the corresponding widgets. Getting this right was the difference between a widget that surfaces and one that doesn't.</p>
 
-      <figure class="cs-artifact">
-        <figcaption class="cs-artifact-label"><strong>Fig. 01</strong> — Why the keyword layer matters</figcaption>
-        <div class="cs-flow">
-          <div class="cs-flow-step">
-            <p class="cs-flow-step-num">1</p>
-            <p class="cs-flow-step-title">A user types</p>
-            <p class="cs-flow-step-desc">"where is my 1099" — mid-task, tax deadline looming, not in a browsing mood.</p>
-          </div>
-          <span class="cs-flow-arrow">→</span>
-          <div class="cs-flow-step">
-            <p class="cs-flow-step-num">2</p>
-            <p class="cs-flow-step-title">The keyword map</p>
-            <p class="cs-flow-step-desc">Real search phrases from Adobe Analytics, mapped to each widget's topic.</p>
-          </div>
-          <span class="cs-flow-arrow">→</span>
-          <div class="cs-flow-step">
-            <p class="cs-flow-step-num">3</p>
-            <p class="cs-flow-step-title">The widget surfaces</p>
-            <p class="cs-flow-step-desc">The right answer appears in the results page, above the link list.</p>
-          </div>
-          <span class="cs-flow-arrow">→</span>
-          <div class="cs-flow-step is-accent">
-            <p class="cs-flow-step-num">4</p>
-            <p class="cs-flow-step-title">The user acts</p>
-            <p class="cs-flow-step-desc">Task done in place. No support call, no rabbit hole.</p>
-          </div>
-        </div>
-        <figcaption class="cs-artifact-caption">The core mechanism. Users search in their words, not the org's — the keyword layer translates.</figcaption>
+      <figure class="cs-artifact aw-example">
+        <figcaption class="cs-artifact-label"><strong>Fig. 01</strong> — Existing answers, surfaced in search</figcaption>
+        <a href="/assets/answer-widgets-interface.webp" aria-label="Open the historical Answer Widgets screenshot at full size">
+          <img src="/assets/answer-widgets-interface.webp" width="1450" height="1194" loading="lazy" style="display:block;width:100%;height:auto" alt="Historical Schwab search interface with two expanded answers: when transferred funds are available for trading, and whether clients can trade when the market is closed. The second answer links to Extended Hours Trading." />
+        </a>
+        <p class="cs-body" style="margin-top:1rem"><a href="/assets/answer-widgets-interface.webp">View screenshot at full size</a></p>
+        <ol class="cs-body" style="padding-left:1.25rem">
+          <li><strong>A specific question.</strong> Each heading names a client need, such as trading outside market hours.</li>
+          <li><strong>An answer in context.</strong> Expanding the widget reveals relevant conditions within the search results.</li>
+          <li><strong>A next step.</strong> The Extended Hours Trading link connects the answer to more detailed information.</li>
+        </ol>
+        <figcaption class="cs-artifact-caption" style="color:var(--ink-light)">Source: original Answer Widgets presentation, page 3. These annotations explain the existing experience; they do not claim authorship of its interface or original copy.</figcaption>
       </figure>
+      <p class="cs-body">My contribution was the content layer behind this experience: selecting FAQs, grouping them by experience, adding keywords based on Adobe Analytics search data, and checking those mappings in QA. The saved presentation documents that method, but does not preserve the individual query-to-widget mappings.</p>
 
       <hr class="cs-rule">
 
       <!-- The Process -->
       <p class="cs-section-label">The process</p>
       <h2 class="cs-h2">Batched sprints. Rigorous QA. Consistent velocity.</h2>
-      <p class="cs-body">With the master list complete, I designed a delivery workflow: batches of 50 widgets per biweekly sprint, moving from content build to development handoff to QA. My role shifted from creator to quality control at the back end of each sprint, reviewing each new experience to confirm keywords mapped correctly and that no formatting or grammatical errors had been introduced in development.</p>
+      <p class="cs-body">With the master list complete, I designed a delivery workflow: batches of 50 widgets per biweekly sprint, moving from content build to development handoff to QA. My role shifted from inventory and mapping work to quality control at the back end of each sprint, reviewing each new experience to confirm keywords mapped correctly and that no formatting or grammatical errors had been introduced in development.</p>
 
       <figure class="cs-artifact">
         <figcaption class="cs-artifact-label"><strong>Fig. 02</strong> — The delivery pipeline, every two weeks</figcaption>
@@ -163,44 +148,25 @@
 
       <!-- Outcomes -->
       <p class="cs-section-label">Outcomes</p>
-      <h2 class="cs-h2">557 widgets. 605K expansions. Six weeks early.</h2>
-
-      <figure class="cs-artifact">
-        <figcaption class="cs-artifact-label"><strong>Fig. 03</strong> — The library, pilot to launch</figcaption>
-        <div class="cs-bars">
-          <div class="cs-bar-row">
-            <div class="cs-bar-label"><span>Pilot library, spring 2021</span><span class="cs-bar-value">50</span></div>
-            <div class="cs-bar-track"><div class="cs-bar-fill" style="width: 9%;"></div></div>
-          </div>
-          <div class="cs-bar-row">
-            <div class="cs-bar-label"><span>Full library, November 2021</span><span class="cs-bar-value">557</span></div>
-            <div class="cs-bar-track"><div class="cs-bar-fill is-accent" style="width: 100%;"></div></div>
-          </div>
-        </div>
-        <figcaption class="cs-artifact-caption">The target was 500 by December 31. The library hit 557 in mid-November — six weeks ahead of the deadline.</figcaption>
-      </figure>
-
+      <h2 class="cs-h2">Beyond the delivery target, with sustained use</h2>
       <div class="cs-outcomes">
-        <div class="cs-outcome">
-          <div class="cs-outcome-value">557</div>
-          <div class="cs-outcome-label">Answer Widgets live across 101 experiences</div>
-        </div>
-        <div class="cs-outcome">
-          <div class="cs-outcome-value">605K</div>
-          <div class="cs-outcome-label">Widget expansions by end of 2021</div>
-        </div>
-        <div class="cs-outcome">
-          <div class="cs-outcome-value">6 wks</div>
-          <div class="cs-outcome-label">Ahead of schedule</div>
-        </div>
-        <div class="cs-outcome">
-          <div class="cs-outcome-value">83K</div>
-          <div class="cs-outcome-label">Expansions for top widget (1099 tax docs)</div>
-        </div>
+        <div class="cs-outcome"><div class="cs-outcome-value">500+</div><div class="cs-outcome-label">Widgets by November 2021, exceeding the year-end target</div></div>
+        <div class="cs-outcome"><div class="cs-outcome-value">6 wks</div><div class="cs-outcome-label">Ahead of schedule, according to the project summary</div></div>
+        <div class="cs-outcome"><div class="cs-outcome-value">101,419</div><div class="cs-outcome-label">Recorded widget views in February 2022</div></div>
       </div>
-
-      <p class="cs-body">The final batch published in mid-November 2021, six weeks ahead of the end-of-year deadline. Users accessed 557 widgets across 101 distinct topic areas, with steady month-over-month growth in widget views as the library scaled. By February 2022, monthly widget views had reached over 100,000, more than triple the volume from earlier in the year.</p>
-
+      <p class="cs-body">The project summary records the final batch publishing in mid-November, ahead of the December deadline. The reporting chart shows 555 widgets in November 2021 and 557 in February 2022. Both support exceeding the 500-widget target.</p>
+      <figure class="cs-artifact">
+        <figcaption class="cs-artifact-label"><strong>Fig. 03</strong> — Demand for tax-document answers</figcaption>
+        <p class="cs-body"><strong>28,745 interactions</strong> with the “find 1099” widget represented <strong>28.3%</strong> of all recorded widget views in February 2022.</p>
+        <p class="cs-body">The “download 1099” widget recorded a further 6,695 interactions (6.6%). These were distinct answer-card identifiers in the report, not the search phrases clients typed.</p>
+        <figcaption class="cs-artifact-caption" style="color:var(--ink-light)">Source: original presentation, page 10. The counts show demand for these answers; they do not establish that clients completed the underlying tasks.</figcaption>
+      </figure>
+      <details class="cs-provenance">
+        <summary style="cursor:pointer">Measurement notes and source limits</summary>
+        <p>The presentation's narrative reports 557 widgets, while its chart shows 555 from November through January and 557 in February. A chart note also refers to 550 completed by November. I use “500+” for the launch milestone because the exact November count is inconsistent.</p>
+        <p>The project summary reports 605K expansions by the end of 2021. The analytics slide uses the label “views” and flags Adobe tracking issues in June and July. These records support reporting engagement, but not a precise causal estimate of the expansion program's impact.</p>
+        <p>The presentation notes seasonal search spikes in February and March. Reduced support-call volume was an intended benefit; no measured reduction or task-completion result is included.</p>
+      </details>
       <hr class="cs-rule">
 
       <!-- What Came Next -->
