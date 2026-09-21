@@ -1,0 +1,52 @@
+/* McKesson evidence-led case study. Scoped to preserve other case pages. */
+.mck-case { max-width: 960px; }
+.mck-case .cs-body, .mck-case .cs-lede { max-width: 72ch; }
+.mck-case .cs-title { max-width: 20ch; font-size: clamp(2.5rem, 5vw, 3.8rem); }
+.mck-case .cs-meta-item p:first-child { color: var(--ink-light); }
+.mck-case strong { font-weight: 500; }
+.mck-case a { color: var(--accent); text-underline-offset: 3px; }
+.mck-case .cs-h2 { font-size: clamp(1.6rem, 3vw, 2rem); scroll-margin-top: 2rem; }
+.mck-highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 1.5rem 0; border-block: 1px solid var(--rule); }
+.mck-highlights strong { display: block; font-family: var(--serif); font-size: 3rem; line-height: 1.1; color: var(--accent); }
+.mck-highlights span { display: block; margin-top: .5rem; font-size: .84rem; line-height: 1.6; color: var(--ink-light); }
+.mck-source, .mck-evidence figcaption, .mck-guide-excerpt figcaption { font-size: .78rem; line-height: 1.65; color: var(--ink-light); margin: .8rem 0 1.5rem; }
+.mck-evidence { margin: 1.75rem 0; }
+.mck-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.mck-comparison h3, .mck-full-pages h3 { font-size: .9rem; font-weight: 500; margin-bottom: .65rem; }
+.mck-comparison h3 span { display: block; font-weight: 300; color: var(--ink-light); font-size: .75rem; }
+.mck-page-crop { aspect-ratio: 1 / 1; overflow: hidden; background: white; border: 1px solid var(--rule); }
+.mck-page-crop img { display: block; width: 135%; max-width: none; height: auto; margin-left: -17.5%; }
+.mck-before img { margin-top: -9%; }
+.mck-after img { margin-top: 0; }
+.mck-decisions { padding-left: 1.35rem; color: var(--ink-light); font-size: .93rem; }
+.mck-decisions li { padding-left: .4rem; margin-bottom: 1rem; }
+.mck-decisions li::marker { color: var(--accent); font-weight: 500; }
+.mck-decisions strong { color: var(--ink); }
+.mck-details { border-block: 1px solid var(--rule); margin: 1.5rem 0; padding: .9rem 0; }
+.mck-details summary { cursor: pointer; color: var(--accent); font-weight: 400; font-size: .9rem; padding: .2rem .15rem; }
+.mck-details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.mck-details[open] summary { margin-bottom: 1rem; }
+.mck-details p { margin: 1rem 0; font-size: .86rem; color: var(--ink-light); }
+.mck-full-pages { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: start; }
+.mck-full-pages img, .mck-guide-image { width: 100%; height: auto; display: block; border: 1px solid var(--rule); }
+.mck-subhead { font-size: 1.05rem; font-weight: 500; margin: 1.8rem 0 .65rem; }
+.mck-guide-excerpt { padding: 1.25rem 1.5rem .1rem; border-left: 2px solid var(--accent); background: var(--accent-soft); margin: 1.5rem 0; }
+.mck-guide-excerpt blockquote { font-family: var(--serif); font-size: 1.4rem; line-height: 1.5; }
+.mck-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 .75rem; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.mck-table caption { text-align: left; font-size: .8rem; color: var(--ink-light); margin-bottom: .6rem; }
+.mck-table th, .mck-table td { border-bottom: 1px solid var(--rule); padding: .85rem .5rem; text-align: right; }
+.mck-table th:first-child { text-align: left; width: 65%; }
+.mck-table th { font-weight: 400; }
+.mck-table thead { color: var(--accent); }
+@media (max-width: 640px) {
+  .mck-highlights { gap: 1rem; }
+  .mck-highlights strong { font-size: 2.3rem; }
+  .mck-highlights span { font-size: .75rem; }
+  .mck-comparison, .mck-full-pages { grid-template-columns: 1fr; }
+  .mck-page-crop { aspect-ratio: 1.1 / 1; }
+  .mck-table { font-size: .8rem; }
+  .mck-table th:first-child { width: 55%; }
+}
+@media (max-width: 360px) {
+  .mck-highlights { grid-template-columns: 1fr; gap: 1.25rem; }
+}
