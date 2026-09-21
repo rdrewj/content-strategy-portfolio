@@ -24,10 +24,12 @@
   <meta name="twitter:image" content="https://www.rdrewj.com/assets/social-card.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/site.css" />
+  <link rel="stylesheet" href="/assets/editorial.css" />
 </head>
 <body>
+<header class="site-header"><a class="site-name" href="/">Drew Johnson<span class="name-period">.</span></a><nav class="site-nav" aria-label="Main navigation"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav></header>
 
   <div class="cs-page">
 
@@ -63,12 +65,7 @@
         </div>
       </div>
 
-      <aside class="cs-provenance" aria-label="Contribution and evidence note">
-        <p class="cs-provenance-label">Contribution &amp; evidence</p>
-        <p><strong>What I owned:</strong> Product concept, interaction and content design, prompt architecture, deterministic scoring logic, front-end implementation, and server-side safeguards.</p>
-        <p><strong>How outcomes were measured:</strong> The evidence here is the shipped prototype architecture and source code. The public tools have been retired to prevent ongoing cost and abuse.</p>
-        <p><strong>About the visuals:</strong> The diagrams summarize the real prototype architecture; they are explanatory reconstructions rather than live product screens.</p>
-      </aside>
+      <p class="cs-body cs-ownership"><strong>What I owned:</strong> Product concept, interaction and content design, prompt architecture, deterministic scoring logic, front-end implementation, and server-side safeguards.</p>
 
       <hr class="cs-rule">
 
@@ -186,14 +183,14 @@
       <p class="cs-body">Both tools ran live on this site. They're currently offline — every audit spends real API money, and a portfolio doesn't need an unattended bill — but the code stays in the repo, and turning them back on is a config change, not a rebuild.</p>
       <p class="cs-body">Building these prototypes gave me practical experience translating editorial standards into AI behavior, defining evidence requirements, and deciding where automation needed limits.</p>
 
-    </article>
+
+<details class="source-notes"><summary>Sources and measurement</summary><p><strong>How outcomes were measured:</strong> The evidence here is the shipped prototype architecture and source code. The public tools have been retired to prevent ongoing cost and abuse.</p><p><strong>About the visuals:</strong> The diagrams summarize the real prototype architecture; they are explanatory reconstructions rather than live product screens.</p></details>
+<a class="next-project" href="/case-studies/answer-widgets.html"><span>Next case study</span><strong>Answer Widgets →</strong></a>
+</article>
   </div>
 
   <!-- FOOTER -->
-  <footer>
-    <p class="footer-mark">Drew Johnson</p>
-    <p class="footer-copy">© 2026 · Marin County, CA</p>
-  </footer>
+  <footer class="site-footer"><a class="footer-mark" href="/">Drew Johnson.</a><a href="mailto:rdrewj@icloud.com">Say hello</a><p class="footer-copy">Marin County, CA · © 2026 · <a href="/privacy.html">Privacy</a></p></footer>
 
 </body>
 </html>

@@ -28,449 +28,53 @@
   <meta name="twitter:image" content="https://www.rdrewj.com/assets/social-card.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/site.css" />
-  <style>
-    /* ── HERO ── */
-    #hero {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 3.5rem 3rem;
-      border-right: 1px solid var(--rule);
-    }
-
-    .hero-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-name {
-      font-family: var(--serif);
-      font-size: clamp(3.5rem, 7vw, 6.5rem);
-      font-weight: 300;
-      line-height: 0.98;
-      letter-spacing: -0.015em;
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      color: var(--ink-light);
-    }
-
-    .hero-descriptor {
-      font-size: 1.02rem;
-      color: var(--ink-light);
-      max-width: 44ch;
-      line-height: 1.75;
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-cv-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.82rem;
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid var(--ink);
-      padding-bottom: 0.15rem;
-      width: fit-content;
-      transition: color 0.2s, border-color 0.2s;
-      margin-bottom: 1rem;
-    }
-
-    .hero-cv-link:hover { color: var(--accent); border-color: var(--accent); }
-
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 3.5rem 3rem;
-    }
-
-    .hero-stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.75rem 2rem;
-    }
-
-    .stat-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.3rem;
-    }
-
-    .stat-value {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 400;
-      line-height: 1.3;
-    }
-
-    /* ── AVAILABILITY PILL ── */
-    .availability-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.66rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-soft);
-      border: 1px solid rgba(139, 58, 42, 0.22);
-      border-radius: 100px;
-      padding: 0.35rem 0.85rem;
-      width: fit-content;
-      margin-bottom: 1.5rem;
-    }
-
-    .availability-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: availPulse 2.4s ease-out infinite;
-    }
-
-    @keyframes availPulse {
-      0%   { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0.45); }
-      70%  { box-shadow: 0 0 0 7px rgba(139, 58, 42, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(139, 58, 42, 0); }
-    }
-
-    /* ── THE WORK ── */
-    .work-list {
-      list-style: none;
-      border-top: 1px solid var(--rule);
-    }
-
-    .work-item {
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .work-link {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 2.5rem;
-      padding: 1.5rem 0;
-      text-decoration: none;
-      color: inherit;
-      align-items: baseline;
-    }
-
-    .work-item-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      line-height: 1.5;
-      padding-top: 0.2rem;
-    }
-
-    .work-item-title {
-      font-family: var(--serif);
-      font-size: 1.25rem;
-      font-weight: 400;
-      line-height: 1.3;
-      color: var(--ink);
-      margin-bottom: 0.4rem;
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .work-link:hover .work-item-title { color: var(--accent); transform: translateX(4px); }
-
-    .work-item-desc {
-      font-size: 0.88rem;
-      color: var(--ink-light);
-      line-height: 1.65;
-      max-width: 64ch;
-    }
-
-    @media (max-width: 640px) {
-      .work-link {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-      }
-    }
-
-    /* ── WHAT I'M GOOD AT ── */
-    .about-skills {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-
-    .about-skills h3 {
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.75rem;
-    }
-
-    .about-skills ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .about-skills li {
-      font-size: 0.88rem;
-      color: var(--ink-light);
-      padding: 0.4rem 0.85rem;
-      border: 1px solid var(--rule);
-      border-radius: 100px;
-      background: rgba(255, 255, 255, 0.4);
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .about-skills li:hover {
-      border-color: var(--accent);
-      color: var(--ink);
-    }
-
-    /* ── SAY HELLO ── */
-    .contact-links {
-      list-style: none;
-      max-width: 480px;
-    }
-
-    .contact-links li {
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .contact-links a {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      text-decoration: none;
-      color: var(--ink);
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-
-    .contact-links a:hover { color: var(--accent); }
-
-    .contact-links .link-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-
-    /* ── HERO ANIMATION ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: none; }
-    }
-
-    .hero-left > * {
-      animation: fadeUp 0.7s ease both;
-    }
-
-    .availability-pill { animation-delay: 0.02s; }
-    .hero-eyebrow      { animation-delay: 0.08s; }
-    .hero-name         { animation-delay: 0.16s; }
-    .hero-descriptor   { animation-delay: 0.28s; }
-    .hero-cv-link      { animation-delay: 0.38s; }
-
-    .hero-right > * {
-      animation: fadeUp 0.7s ease both;
-      animation-delay: 0.5s;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      #hero { grid-template-columns: 1fr; }
-      .hero-left { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--rule); }
-      .hero-right { padding: 2rem 1.5rem; }
-      .about-skills { grid-template-columns: 1fr; gap: 2rem; }
-    }
-  .footer-mark-button { appearance: none; border: 0; padding: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
-    .footer-copy a { color: inherit; }
-    body.dialog-open { overflow: hidden; }
-  </style>
+  <link rel="stylesheet" href="/assets/home.css" />
+  <link rel="stylesheet" href="/assets/editorial.css" />
 </head>
 <body>
 
-  <!-- HERO -->
-  <section id="hero" style="padding:0; border-bottom: 1px solid var(--rule); opacity:1; transform:none;">
-    <div class="hero-left">
-      <p class="availability-pill"><span class="availability-dot"></span>Open to new opportunities</p>
-      <p class="hero-eyebrow">UX Content Strategy &nbsp;·&nbsp; AI Content Architecture</p>
-      <h1 class="hero-name">Drew<br><em>Johnson</em></h1>
-      <p class="hero-descriptor">
-I fix content systems for a living — standards, structure, and governance that teams can put into practice. Financial services and healthcare, mostly. Journalist by training.      </p>
-      <a href="Drew_Johnson-Resume.pdf" download class="hero-cv-link">↓ Download resume</a>
-    </div>
-    <div class="hero-right">
-      <div class="hero-stat-grid">
-        <div>
-          <p class="stat-label">Currently</p>
-          <p class="stat-value">Sr. Manager, UX Content Strategy</p>
-        </div>
-        <div>
-          <p class="stat-label">Organization</p>
-          <p class="stat-value">Charles Schwab</p>
-        </div>
-        <div>
-          <p class="stat-label">Focus</p>
-          <p class="stat-value">AI Governance · Content Systems · Voice Architecture</p>
-        </div>
-        <div>
-          <p class="stat-label">Education</p>
-          <p class="stat-value">MA, Professional Writing — Carnegie Mellon</p>
-        </div>
-      </div>
+<header class="site-header"><a class="site-name" href="/">Drew Johnson<span class="name-period">.</span></a><nav class="site-nav" aria-label="Main navigation"><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Contact</a></nav></header>
+<main id="main-content">
+  <section id="hero" class="home-intro">
+    <div class="section-inner">
+      <p class="intro-label">Content strategy / Systems / AI</p>
+      <h1>I fix content systems<br>for a living<span class="name-period">.</span></h1>
+      <div class="intro-bottom"><p>Standards, structure, and governance that teams can put into practice. Financial services and healthcare, mostly. Journalist by training.</p><a class="text-link" href="/Drew_Johnson-Resume.pdf" download>Download résumé ↓</a></div>
+      <p class="current-line">Drew Johnson · Sr. Manager, UX Content Strategy at Charles Schwab · Marin County, CA</p>
     </div>
   </section>
-
-  <!-- THE WORK -->
   <section id="work">
     <div class="section-inner">
-      <div class="section-header">
-        <span class="section-number">01</span>
-        <h2 class="section-title">The work</h2>
-      </div>
-
+      <div class="section-header"><span class="section-number">01 /</span><h2 class="section-title">Selected work</h2></div>
+      <article class="featured-work">
+        <a class="feature-visual widget-preview" href="/case-studies/answer-widgets.html" aria-label="Read the Answer Widgets case study"><img src="/assets/answer-widgets-interface.webp" alt="Schwab search answers about transferred funds and extended-hours trading." width="1200" height="900"></a>
+        <div class="feature-copy"><p class="project-label">Schwab · Search &amp; self-service</p><h3><a href="/case-studies/answer-widgets.html">Getting the right answer<br>into the right search.</a></h3><p>I built the inventory, search-term mapping, and QA process that helped a 50-widget pilot grow beyond 500 answers.</p><p class="editor-note"><span>My part</span> The content system behind the interface.</p><a class="text-link" href="/case-studies/answer-widgets.html">Read the case study →</a></div>
+      </article>
+      <article class="featured-work feature-reverse">
+        <a class="feature-visual mck-preview" href="/case-studies/mckesson.html" aria-label="Read the McKesson case study"><img src="/assets/mckesson/writing-guide-41.png" width="1400" height="788" alt="An original McKesson writing-guide page with annotations explaining the purpose of each content element." loading="lazy"></a>
+        <div class="feature-copy"><p class="project-label">McKesson · Enterprise content strategy</p><h3><a href="/case-studies/mckesson.html">Five business units.<br>A shared standard.</a></h3><p>A writing guide and page-enhancement program that connected brand, search, and the decisions healthcare professionals needed to make.</p><p class="editor-note"><span>In the work</span> Original pages, editorial decisions, and measured results.</p><a class="text-link" href="/case-studies/mckesson.html">Read the case study →</a></div>
+      </article>
+      <h3 class="more-work-heading">More from the practice</h3>
       <ul class="work-list">
-
-        <li class="work-item">
-          <a class="work-link" href="case-studies/answer-widgets.html">
-            <span class="work-item-label">Case Study · Schwab</span>
-            <div>
-              <p class="work-item-title">Schwab Answer Widgets: Scaling Self-Service from 50 to 557</p>
-              <p class="work-item-desc">I built the content inventory, search-term mapping, and QA process to scale a 50-widget pilot beyond its 500-widget target. The case includes the original interface and usage evidence.</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="work-item">
-          <a class="work-link" href="case-studies/ux-writing-guide.html">
-            <span class="work-item-label">Case Study · Schwab</span>
-            <div>
-              <p class="work-item-title">From Stranded Artifact to Living Standard: Schwab UX Writing Guide</p>
-              <p class="work-item-desc">A writing standard nobody could find, moved to where everybody works. Monthly visits went up 10x, and the guide now powers an AI writing agent.</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="work-item">
-          <a class="work-link" href="case-studies/tools.html">
-            <span class="work-item-label">Case Study · Independent</span>
-            <div>
-              <p class="work-item-title">Retired Prototypes: CSX Audit &amp; Copy Clinic</p>
-              <p class="work-item-desc">Two AI-powered content-strategy prototypes, designed and shipped solo, then deliberately retired — with the governance and safety lessons preserved.</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="work-item">
-          <a class="work-link" href="case-studies/talent-architecture.html">
-            <span class="work-item-label">Case Study · Schwab</span>
-            <div>
-              <p class="work-item-title">Scaling Talent Architecture with AI-Assisted Content Strategy</p>
-              <p class="work-item-desc">A competency framework so fractured nobody could use it, rebuilt with an AI-augmented editorial process — approved at the C-suite and live for the 2026 review cycle.</p>
-            </div>
-          </a>
-        </li>
-
-        <li class="work-item">
-          <a class="work-link" href="case-studies/mckesson.html">
-            <span class="work-item-label">Case Study · McKesson</span>
-            <div>
-              <p class="work-item-title">McKesson: A Shared Content Standard for Five Business Units</p>
-              <p class="work-item-desc">Aligned brand and search requirements in a digital writing guide and enhanced 84 solution pages. The final report recorded 82% growth in form leads on enhanced pages.</p>
-            </div>
-          </a>
-        </li>
-
+        <li><a class="work-link" href="/case-studies/ux-writing-guide.html"><span class="project-label">Schwab / Standards</span><div><h3>A writing guide people could actually find</h3><p>Moving UX guidance into the design system, where designers and writers already worked.</p></div><span aria-hidden="true">↗</span></a></li>
+        <li><a class="work-link" href="/case-studies/talent-architecture.html"><span class="project-label">Schwab / AI &amp; editorial</span><div><h3>Making a competency framework usable</h3><p>A shared editorial standard, AI-assisted revision, and human judgment across disciplines.</p></div><span aria-hidden="true">↗</span></a></li>
+        <li><a class="work-link" href="/case-studies/tools.html"><span class="project-label">Independent / Experiments</span><div><h3>The tools I built, and deliberately retired</h3><p>What an IA auditor and a copy clinic taught me about putting content strategy into software.</p></div><span aria-hidden="true">↗</span></a></li>
       </ul>
     </div>
   </section>
-
-  <!-- WHAT I'M GOOD AT -->
-  <section id="about">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-number">02</span>
-        <h2 class="section-title">What I'm good at</h2>
-      </div>
-      <div class="about-skills">
-        <div>
-          <h3>Disciplines</h3>
-          <ul>
-            <li>Content Strategy & IA</li>
-            <li>AI Content Governance</li>
-            <li>Voice & Tone Systems</li>
-            <li>UX Writing</li>
-            <li>SEO & Content Optimization</li>
-            <li>Cross-Functional Leadership</li>
-            <li>Talent Development</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Tools &amp; methods</h3>
-          <ul>
-            <li>Adobe Analytics</li>
-            <li>Figma / Contentful / Drupal</li>
-            <li>Content Auditing</li>
-            <li>Prompt Engineering</li>
-            <li>Agile / Sprint Delivery</li>
-            <li>User Research</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SAY HELLO -->
-  <section id="contact">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-number">03</span>
-        <h2 class="section-title">Say hello</h2>
-      </div>
-      <ul class="contact-links">
-        <li>
-          <a href="mailto:rdrewj@icloud.com">
-            rdrewj@icloud.com
-            <span class="link-label">Email</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://linkedin.com/in/rdrewj" target="_blank" rel="noopener">
-            linkedin.com/in/rdrewj
-            <span class="link-label">LinkedIn</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
+  <section id="about"><div class="section-inner about-layout"><div><div class="section-header"><span class="section-number">02 /</span><h2 class="section-title">A bit about me</h2></div><p class="about-lead">Journalist by training.<br>Content strategist by practice.</p><button class="poem-link" type="button" id="poem-link" aria-haspopup="dialog" aria-controls="brief-panel">Also, a poem ↗</button></div><div class="about-copy"><p>I work on the structures behind the words: how information is organized, how standards get used, and how teams keep content useful as it grows.</p><p>My work has taken me through healthcare and financial services, from McKesson to Charles Schwab. These days, that includes figuring out where AI helps with content work and where it needs a human editor.</p><p>I have an MA in Professional Writing from Carnegie Mellon. I also write poetry. There’s room for both.</p><dl class="practice-list"><div><dt>Core practice</dt><dd>Content strategy, information architecture, UX writing, voice and tone, content governance.</dd></div><div><dt>Tools of the trade</dt><dd>Research, content audits, Adobe Analytics, Figma, Contentful, Drupal, and AI-assisted editorial workflows.</dd></div></dl></div></div></section>
+  <section id="contact"><div class="section-inner contact-layout"><div><div class="section-header"><span class="section-number">03 /</span><h2 class="section-title">Let’s talk.</h2></div><p>Open to new opportunities.</p></div><div class="contact-links"><a href="mailto:rdrewj@icloud.com">rdrewj@icloud.com ↗</a><a href="https://linkedin.com/in/rdrewj" target="_blank" rel="noopener">Find me on LinkedIn ↗</a></div></div></section>
+</main>
   <!-- FOOTER -->
-  <footer>
+  <footer class="site-footer">
     <button type="button" class="footer-mark footer-mark-button" id="brief-trigger" aria-haspopup="dialog" aria-controls="brief-panel">Drew Johnson</button>
     <p class="footer-copy">© 2026 · Marin County, CA · <a href="/privacy.html">Privacy</a></p>
   </footer>
 
   <!-- POEM PANEL -->
-  <div class="brief-panel" id="brief-panel" role="dialog" aria-modal="true" aria-labelledby="poem-title" aria-hidden="true">
+  <div class="brief-panel" id="brief-panel" inert role="dialog" aria-modal="true" aria-labelledby="poem-title" aria-hidden="true">
     <div class="brief-panel-inner">
       <div class="brief-header">
         <div>
@@ -497,6 +101,7 @@ I fix content systems for a living — standards, structure, and governance that
     let poemTrigger = null;
     function openPoem(label) {
       poemTrigger = document.activeElement;
+      panel.inert = false;
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
       document.body.classList.add('dialog-open');
@@ -505,7 +110,9 @@ I fix content systems for a living — standards, structure, and governance that
     }
 
     document.getElementById('brief-trigger').addEventListener('click', () => openPoem('poem'));
+    document.getElementById('poem-link').addEventListener('click', () => openPoem('about'));
     closeBtn.addEventListener('click', () => {
+      panel.inert = true;
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('dialog-open');
@@ -523,12 +130,7 @@ I fix content systems for a living — standards, structure, and governance that
       }
     });
 
-    // ── SCROLL REVEAL ──
-    const sections = document.querySelectorAll('section:not(#hero)');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    sections.forEach(s => observer.observe(s));
+
   </script>
 </body>
 </html>
