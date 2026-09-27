@@ -64,7 +64,7 @@
       </ul>
     </div>
   </section>
-  <section id="about"><div class="section-inner about-layout"><div><div class="section-header"><span class="section-number">02 /</span><h2 class="section-title">A bit about me</h2></div><p class="about-lead">Journalist by training.<br>Content strategist by practice.</p><button class="poem-link" type="button" id="poem-link" aria-haspopup="dialog" aria-controls="brief-panel">Also, a poem ↗</button></div><div class="about-copy"><p>I work on the structures behind the words: how information is organized, how standards get used, and how teams keep content useful as it grows.</p><p>My work has taken me through healthcare and financial services, from McKesson to Charles Schwab. These days, that includes figuring out where AI helps with content work and where it needs a human editor.</p><p>I have an MA in Professional Writing from Carnegie Mellon. I also write poetry. There’s room for both.</p><dl class="practice-list"><div><dt>Core practice</dt><dd>Content strategy, information architecture, UX writing, voice and tone, content governance.</dd></div><div><dt>Tools of the trade</dt><dd>Research, content audits, Adobe Analytics, Figma, Contentful, Drupal, and AI-assisted editorial workflows.</dd></div></dl></div></div></section>
+  <section id="about"><div class="section-inner about-layout"><div><div class="section-header"><span class="section-number">02 /</span><h2 class="section-title">A bit about me</h2></div><p class="about-lead">Journalist by training.<br>Content strategist by practice.</p></div><div class="about-copy"><p>I work on the structures behind the words: how information is organized, how standards get used, and how teams keep content useful as it grows.</p><p>My work has taken me through healthcare and financial services, from McKesson to Charles Schwab. These days, that includes figuring out where AI helps with content work and where it needs a human editor.</p><p>I have an MA in Professional Writing from Carnegie Mellon. I also write poetry.</p><dl class="practice-list"><div><dt>Core practice</dt><dd>Content strategy, information architecture, UX writing, voice and tone, content governance.</dd></div><div><dt>Tools of the trade</dt><dd>Research, content audits, Adobe Analytics, Figma, Contentful, Drupal, and AI-assisted editorial workflows.</dd></div></dl></div></div></section>
   <section id="contact"><div class="section-inner contact-layout"><div><div class="section-header"><span class="section-number">03 /</span><h2 class="section-title">Let’s talk.</h2></div><p>Open to new opportunities.</p></div><div class="contact-links"><a href="mailto:rdrewj@icloud.com">rdrewj@icloud.com ↗</a><a href="https://linkedin.com/in/rdrewj" target="_blank" rel="noopener">Find me on LinkedIn ↗</a></div></div></section>
 </main>
   <!-- FOOTER -->
@@ -110,7 +110,6 @@
     }
 
     document.getElementById('brief-trigger').addEventListener('click', () => openPoem('poem'));
-    document.getElementById('poem-link').addEventListener('click', () => openPoem('about'));
     closeBtn.addEventListener('click', () => {
       panel.inert = true;
       panel.classList.remove('open');
