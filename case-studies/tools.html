@@ -13,7 +13,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CSX Audit &amp; Copy Clinic Case Study | Drew Johnson</title>
-  <meta name="description" content="Two AI-powered content strategy tools designed, written, and shipped solo — a site crawler that audits information architecture and a copy critique engine." />
+  <meta name="description" content="Two retired AI prototypes: a site auditor and a UX copy critique tool. How I designed their prompts, scoring rules, evidence requirements, and safeguards." />
   <link rel="canonical" href="https://www.rdrewj.com/case-studies/tools.html" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Retired AI Tool Prototypes | Drew Johnson" />
@@ -42,8 +42,8 @@
     <article class="cs-article">
 
       <p class="cs-eyebrow">Case Study</p>
-      <h1 class="cs-title">The tools I built—and deliberately retired</h1>
-      <p class="cs-lede">I designed and shipped two working prototypes to explore how content strategy translates into AI tools—a crawler that audits information architecture and a copy critique engine—then retired their public endpoints once the learning objective was complete.</p>
+      <h1 class="cs-title">Building editorial judgment into AI tools</h1>
+      <p class="cs-lede">I designed and built two AI prototypes: an information-architecture auditor and a copy critique tool. They tested how editorial standards could shape automated feedback. Both ran publicly before I retired them to limit cost and abuse.</p>
 
       <!-- Metadata -->
       <div class="cs-meta">
@@ -57,11 +57,11 @@
         </div>
         <div class="cs-meta-item">
           <p>Role</p>
-          <p>All of them</p>
+          <p>Solo designer and developer</p>
         </div>
         <div class="cs-meta-item">
           <p>Status</p>
-          <p>Retired prototype — public endpoints disabled</p>
+          <p>Retired — public AI services disabled</p>
         </div>
       </div>
 
@@ -72,11 +72,11 @@
       <!-- The Problem -->
       <p class="cs-section-label">The premise</p>
       <h2 class="cs-h2">Applying content strategy to AI tools</h2>
-      <p class="cs-body">I started with two tasks from my content strategy practice: auditing content systems and critiquing copy. Building public tools for those tasks let me translate my editorial approach into prompts, scoring rules, and interactions.</p>
-      <p class="cs-body">The work required decisions about what to delegate to a model, what to calculate deterministically, and how to handle untrusted URLs, including requests targeting a cloud provider's metadata service.</p>
+      <p class="cs-body">I wanted to test whether tools could apply the same standards I use when auditing sites and editing copy.</p>
+      <p class="cs-body">That meant deciding what the model should judge, what code should calculate, and what evidence each recommendation needed.</p>
 
       <blockquote class="cs-blockquote">
-        <p>Building the tools taught me the thing I now tell everyone: AI product work is content strategy work. The prompts are editorial standards. The scoring rubric is a voice decision. "Don't fabricate issues" is governance.</p>
+        <p>The central design question was how to make automated criticism specific, proportionate, and grounded in the content.</p>
       </blockquote>
 
       <hr class="cs-rule">
@@ -84,8 +84,8 @@
       <!-- The Tools -->
       <p class="cs-section-label">The tools</p>
       <h2 class="cs-h2">An IA auditor and a copy clinic</h2>
-      <p class="cs-body"><strong>CSX Audit</strong> takes a URL and returns a content strategy audit. It crawls the site breadth-first (respecting robots.txt, and honest enough to warn you when a JavaScript-rendered app is hiding its content), builds a page-and-link graph, computes information architecture metrics, and then layers AI analysis on top — ending in an executive summary, prioritized recommendations, and quick wins.</p>
-      <p class="cs-body"><strong>Copy Clinic</strong> takes up to 1,500 characters of UX copy and returns a critique through a content strategy lens: what's working, what isn't (with a no-hedging rule), a rewrite, and a one-sentence strategic insight the copy reveals. The persona in the prompt is me on a good day: specific, direct, and required to quote your actual words back to you.</p>
+      <p class="cs-body"><strong>CSX Audit</strong> crawled up to 10 pages, calculated information-architecture metrics, and used AI to identify content problems and recommend fixes.</p>
+      <p class="cs-body"><strong>Copy Clinic</strong> reviewed up to 1,500 characters of UX copy. It identified strengths and weaknesses, proposed a rewrite, and explained a broader content issue. I required the prompt to quote the submitted copy so the critique stayed specific.</p>
 
       <figure class="cs-artifact">
         <figcaption class="cs-artifact-label"><strong>Fig. 01</strong> — CSX Audit's pipeline</figcaption>
@@ -99,7 +99,7 @@
           <div class="cs-flow-step">
             <p class="cs-flow-step-num">2</p>
             <p class="cs-flow-step-title">Compute</p>
-            <p class="cs-flow-step-desc">Deterministic IA metrics — orphaned pages, click depth, dead ends, category groupings. No model involved; math doesn't hallucinate.</p>
+            <p class="cs-flow-step-desc">Calculate orphaned pages, click depth, dead ends, and category groupings from the crawl.</p>
           </div>
           <span class="cs-flow-arrow">→</span>
           <div class="cs-flow-step">
@@ -111,26 +111,26 @@
           <div class="cs-flow-step is-accent">
             <p class="cs-flow-step-num">4</p>
             <p class="cs-flow-step-title">Synthesize</p>
-            <p class="cs-flow-step-desc">Executive summary, prioritized recommendations, quick wins — and scores computed from the findings, not from vibes.</p>
+            <p class="cs-flow-step-desc">Summarize findings, prioritize recommendations, and calculate scores.</p>
           </div>
         </div>
-        <figcaption class="cs-artifact-caption">Four model calls per audit, across two model tiers. The division of labor is the design: models read and judge; arithmetic counts and scores.</figcaption>
+        <figcaption class="cs-artifact-caption">The audit used four model calls across two model tiers, with code calculating the metrics and scores.</figcaption>
       </figure>
 
       <hr class="cs-rule">
 
       <!-- The Content Strategy Inside -->
-      <p class="cs-section-label">The interesting part</p>
-      <h2 class="cs-h2">The hard problems were content problems</h2>
-      <p class="cs-body">The serverless plumbing was work, but the decisions that made the tools good were editorial. The audit prompts carry explicit standards: <em>identify real problems; if the IA is solid, return fewer findings with lower severity; don't fabricate issues.</em> The gap analysis has an evidence rule — every claimed gap must trace to a page that raises the question without answering it, or to a clear expectation for that type of site. That's the same discipline I'd demand from a human auditor, written down where the model can't ignore it.</p>
-      <p class="cs-body">Even the scoring is an editorial position. A site with no findings scores 88, not 100 — a ten-page crawl can't prove perfection, and the tool shouldn't pretend otherwise. Repeated findings of the same severity hit diminishing returns, because the fifth missing CTA is the same insight as the second. Those choices drew on my experience conducting audits and interpreting repeated findings.</p>
+      <p class="cs-section-label">Editorial decisions</p>
+      <h2 class="cs-h2">Require evidence and calibrate severity</h2>
+      <p class="cs-body">I instructed the audit to report fewer, lower-severity findings when the information architecture was sound. Each claimed content gap needed to trace to an unanswered question on a page or a clear expectation for that type of site. These were prompt requirements, not guarantees of model behavior.</p>
+      <p class="cs-body">I capped a site with no findings at 88: a ten-page crawl could not justify a perfect score. Repeated findings at the same severity had diminishing weight, so a recurring issue would not overwhelm the result. Both rules reflected editorial judgments about the limits of the audit.</p>
 
       <hr class="cs-rule">
 
       <!-- The Plumbing -->
-      <p class="cs-section-label">The unglamorous parts</p>
+      <p class="cs-section-label">Operational safeguards</p>
       <h2 class="cs-h2">Designing for public use</h2>
-      <p class="cs-body">Public access introduced security and cost requirements alongside the editorial work. I added safeguards to manage URL fetching and API usage:</p>
+      <p class="cs-body">Public access also required limits on what the crawler could fetch and how much API usage it could generate.</p>
 
       <figure class="cs-artifact">
         <figcaption class="cs-artifact-label"><strong>Fig. 02</strong> — The safety layer</figcaption>
@@ -141,15 +141,15 @@
           </div>
           <div class="cs-flow-step">
             <p class="cs-flow-step-title">Rate limiting</p>
-            <p class="cs-flow-step-desc">Per-endpoint daily budgets (3 crawls, 5 analyses, 10 critiques), Redis-backed, with an in-memory fallback so there's always a ceiling.</p>
+            <p class="cs-flow-step-desc">Daily limits of 3 crawls, 5 analyses, and 10 critiques, backed by Redis with an in-memory fallback.</p>
           </div>
           <div class="cs-flow-step">
-            <p class="cs-flow-step-title">Crawler manners</p>
-            <p class="cs-flow-step-desc">Respects robots.txt, identifies itself honestly in its user agent, caps at 10 pages, and times out instead of hammering slow sites.</p>
+            <p class="cs-flow-step-title">Crawl limits</p>
+            <p class="cs-flow-step-desc">Respects robots.txt, identifies the crawler, limits audits to 10 pages, and times out slow requests.</p>
           </div>
           <div class="cs-flow-step">
-            <p class="cs-flow-step-title">Honest failure</p>
-            <p class="cs-flow-step-desc">Detects JavaScript-rendered apps it can't read and says so, instead of confidently auditing an empty page.</p>
+            <p class="cs-flow-step-title">Content detection</p>
+            <p class="cs-flow-step-desc">Reports when JavaScript-rendered content is unavailable to the crawler.</p>
           </div>
         </div>
         <figcaption class="cs-artifact-caption">These safeguards supported public access while limiting operational risk and cost.</figcaption>
@@ -176,15 +176,15 @@
         </div>
         <div class="cs-outcome">
           <div class="cs-outcome-value">4</div>
-          <div class="cs-outcome-label">Safeguard layers: SSRF protection, rate limits, crawl rules, and honest failure</div>
+          <div class="cs-outcome-label">Safeguards for URL fetching, usage, crawling, and unreadable content</div>
         </div>
       </div>
 
-      <p class="cs-body">Both tools ran live on this site. They're currently offline — every audit spends real API money, and a portfolio doesn't need an unattended bill — but the code stays in the repo, and turning them back on is a config change, not a rebuild.</p>
-      <p class="cs-body">Building these prototypes gave me practical experience translating editorial standards into AI behavior, defining evidence requirements, and deciding where automation needed limits.</p>
+      <p class="cs-body">I retired the public AI services to prevent ongoing API costs and abuse. The interfaces and source code remain available as project artifacts.</p>
+      <p class="cs-body">The most useful lesson was how much judgment sits inside an automated critique: what counts as evidence, how heavily to score a repeated issue, and when the tool has too little information to assess a page.</p>
 
 
-<details class="source-notes"><summary>Sources and measurement</summary><p><strong>How outcomes were measured:</strong> The evidence here is the shipped prototype architecture and source code. The public tools have been retired to prevent ongoing cost and abuse.</p><p><strong>About the visuals:</strong> The diagrams summarize the real prototype architecture; they are explanatory reconstructions rather than live product screens.</p></details>
+<details class="source-notes"><summary>Sources and measurement</summary><p><strong>How outcomes were measured:</strong> The architecture and source code document what I built. This case study does not report a formal evaluation of model accuracy.</p><p><strong>About the visuals:</strong> The diagrams summarize the real prototype architecture; they are explanatory reconstructions rather than live product screens.</p></details>
 <a class="next-project" href="/case-studies/answer-widgets.html"><span>Next case study</span><strong>Answer Widgets →</strong></a>
 </article>
   </div>

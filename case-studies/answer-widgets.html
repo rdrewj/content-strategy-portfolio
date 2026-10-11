@@ -71,12 +71,12 @@
 
       <!-- The Problem -->
       <p class="cs-section-label">The problem</p>
-      <h2 class="cs-h2">Automation stalled. The library needed a human system.</h2>
-      <p class="cs-body">When I joined Schwab in spring of 2021, Answer Widgets, contextual FAQ surfaces embedded in the site's search results page, had been live for less than a year. The pilot had produced 50 widgets. The goal was to scale to 500 by year's end through an automated ingestion process that would pull FAQs from across the ecosystem.</p>
-      <p class="cs-body">When the planned automation did not materialize, my role shifted from stewarding imported content to assembling the FAQ inventory and preparing it for manual delivery.</p>
+      <h2 class="cs-h2">A 500-widget target without the planned automation</h2>
+      <p class="cs-body">When I joined Schwab in spring 2021, Answer Widgets displayed FAQs directly in search results. The pilot had 50 widgets, with a goal of reaching 500 by year’s end through automated FAQ imports.</p>
+      <p class="cs-body">When that automation did not materialize, I assembled the inventory and prepared the content for manual delivery.</p>
 
       <blockquote class="cs-blockquote">
-        <p>The challenge wasn't just volume. It was creating a scalable taxonomy and keyword architecture that would allow the right answer to surface for the right search query, at a moment when users were trying to act, not browse.</p>
+        <p>Each answer needed to match the words clients actually searched for.</p>
       </blockquote>
 
       <hr class="cs-rule">
@@ -84,8 +84,8 @@
       <!-- The Strategy -->
       <p class="cs-section-label">The strategy</p>
       <h2 class="cs-h2">Build the master list. Get the keywords right.</h2>
-      <p class="cs-body">I started by pulling a full content report from the Drupal team: every page across both the client and prospect experiences. Filtering by accordion component type (the CMS pattern used for FAQs) gave me a rough inventory. That component filter identified candidate FAQs; I then reviewed the inventory and selected relevant content for Answer Widgets. The source component was a starting point for selection, rather than a reason to include every item.</p>
-      <p class="cs-body">The result was a master list organized by experience area — trade, wire, beneficiary, taxes, and more — that gave the team a single source of truth for the library. Keywords were the next critical layer. Using Adobe Analytics search data, I identified the actual terms users were entering for each topic, then mapped those phrases to the corresponding widgets. Getting this right was the difference between a widget that surfaces and one that doesn't.</p>
+      <p class="cs-body">I requested a report of all client and prospect pages from the Drupal team, then filtered for accordion components, the CMS pattern used for FAQs. I reviewed those candidates and selected the answers relevant to search.</p>
+      <p class="cs-body">I organized the selected FAQs by experience area, including trading, wires, beneficiaries, and taxes. Using Adobe Analytics search data, I mapped the terms clients entered to the corresponding widgets.</p>
 
       <figure class="cs-artifact aw-example">
         <figcaption class="cs-artifact-label"><strong>Fig. 01</strong> — Existing answers, surfaced in search</figcaption>
@@ -98,16 +98,16 @@
           <li><strong>An answer in context.</strong> Expanding the widget reveals relevant conditions within the search results.</li>
           <li><strong>A next step.</strong> The Extended Hours Trading link connects the answer to more detailed information.</li>
         </ol>
-        <figcaption class="cs-artifact-caption" style="color:var(--ink-light)">Source: original Answer Widgets presentation, page 3. These annotations explain the existing experience; they do not claim authorship of its interface or original copy.</figcaption>
+        <figcaption class="cs-artifact-caption" style="color:var(--ink-light)">Source: original Answer Widgets presentation, page 3. The interface and original copy predate my work.</figcaption>
       </figure>
-      <p class="cs-body">My contribution was the content layer behind this experience: selecting FAQs, grouping them by experience, adding keywords based on Adobe Analytics search data, and checking those mappings in QA. The saved presentation documents that method, but does not preserve the individual query-to-widget mappings.</p>
+      <p class="cs-body">The project presentation records the selection and mapping method, but does not preserve individual query-to-widget mappings.</p>
 
       <hr class="cs-rule">
 
       <!-- The Process -->
       <p class="cs-section-label">The process</p>
-      <h2 class="cs-h2">Batched sprints. Rigorous QA. Consistent velocity.</h2>
-      <p class="cs-body">With the master list complete, I designed a delivery workflow: batches of 50 widgets per biweekly sprint, moving from content build to development handoff to QA. My role shifted from inventory and mapping work to quality control at the back end of each sprint, reviewing each new experience to confirm keywords mapped correctly and that no formatting or grammatical errors had been introduced in development.</p>
+      <h2 class="cs-h2">Deliver and check 50 widgets every two weeks</h2>
+      <p class="cs-body">I organized delivery into biweekly batches of 50 widgets, from content preparation through development and QA. At the end of each sprint, I checked keyword mappings, formatting, and grammar in the implemented experience.</p>
 
       <figure class="cs-artifact">
         <figcaption class="cs-artifact-label"><strong>Fig. 02</strong> — The delivery pipeline, every two weeks</figcaption>
@@ -136,10 +136,9 @@
             <p class="cs-flow-step-desc">Keyword mapping verified, formatting and grammar checked, then live.</p>
           </div>
         </div>
-        <figcaption class="cs-artifact-caption">Each batch followed the same content and QA standards, making the delivery process repeatable.</figcaption>
+        <figcaption class="cs-artifact-caption">The same delivery and QA sequence applied to every batch.</figcaption>
       </figure>
 
-      <p class="cs-body">The batching approach kept the work manageable, and the QA step ensured every widget that went live met the same standard as the first.</p>
 
       <hr class="cs-rule">
 
@@ -151,7 +150,7 @@
         <div class="cs-outcome"><div class="cs-outcome-value">6 wks</div><div class="cs-outcome-label">Ahead of schedule, according to the project summary</div></div>
         <div class="cs-outcome"><div class="cs-outcome-value">101,419</div><div class="cs-outcome-label">Recorded widget views in February 2022</div></div>
       </div>
-      <p class="cs-body">The project summary records the final batch publishing in mid-November, ahead of the December deadline. The reporting chart shows 555 widgets in November 2021 and 557 in February 2022. Both support exceeding the 500-widget target.</p>
+      <p class="cs-body">The final batch published in mid-November, ahead of the December deadline. The reporting chart shows 557 widgets by February 2022.</p>
       <figure class="cs-artifact">
         <figcaption class="cs-artifact-label"><strong>Fig. 03</strong> — Demand for tax-document answers</figcaption>
         <p class="cs-body"><strong>28,745 interactions</strong> with the “find 1099” widget represented <strong>28.3%</strong> of all recorded widget views in February 2022.</p>
@@ -164,13 +163,13 @@
         <p>The project summary reports 605K expansions by the end of 2021. The analytics slide uses the label “views” and flags Adobe tracking issues in June and July. These records support reporting engagement, but not a precise causal estimate of the expansion program's impact.</p>
         <p>The presentation notes seasonal search spikes in February and March. Reduced support-call volume was an intended benefit; no measured reduction or task-completion result is included.</p>
       </details>
-      <details class="source-notes"><summary>Sources and measurement</summary><p><strong>How outcomes were measured:</strong> The original project presentation records delivery milestones and Adobe Analytics reporting through February 2022. Interaction counts indicate use, not confirmed task completion or avoided support calls.</p><p><strong>About the visuals:</strong> The interface screenshot comes from the original project presentation. The delivery diagram is a portfolio reconstruction. Historical interface copy is shown as project evidence, not current trading guidance.</p></details>
+      <details class="source-notes"><summary>Sources and measurement</summary><p><strong>How outcomes were measured:</strong> Delivery milestones and Adobe Analytics data come from the original project presentation, with reporting through February 2022. See the measurement notes above for limitations.</p><p><strong>About the visuals:</strong> The interface screenshot comes from the original project presentation. The delivery diagram is a portfolio reconstruction. Historical interface copy is shown as project evidence, not current trading guidance.</p></details>
 <hr class="cs-rule">
 
       <!-- What Came Next -->
       <p class="cs-section-label">What came next</p>
-      <h2 class="cs-h2">Maintenance, partnerships, and continuous improvement</h2>
-      <p class="cs-body">Following launch, the work shifted to stewardship. The full library was audited twice to address issues introduced by a site-wide design system update. New widgets were developed in partnership with business stakeholders to support seasonal moments (tax season) and product launches (Thematic Investing). The longer-term roadmap included re-initiating automation, integrating the Schwab Assistant into search, and adding an in-experience feedback mechanism to surface content gaps from user behavior.</p>
+      <h2 class="cs-h2">Keep the answers current</h2>
+      <p class="cs-body">After launch, the library was audited twice to address issues from a site-wide design-system update. Business stakeholders helped develop new widgets for tax season and product launches, including Thematic Investing. The roadmap included renewed automation, Schwab Assistant integration, and a way for clients to flag content gaps.</p>
 
 
 <a class="next-project" href="/case-studies/mckesson.html"><span>Next case study</span><strong>McKesson content standards →</strong></a>
